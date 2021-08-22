@@ -1,4 +1,5 @@
 import os
+import profile
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -19,10 +20,10 @@ mongo  = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/db_test")
-def db_test():
-    test = mongo.db.users.find()
-    return render_template("index.html", test=test)
+@app.route("/profile")
+def profiles():
+    profiles = mongo.db.users.find()
+    return render_template("profile.html", profiles=profiles)
 
 
 if __name__ == "__main__":
