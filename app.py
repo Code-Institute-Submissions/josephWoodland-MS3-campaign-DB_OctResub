@@ -9,7 +9,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
 
-
 app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = os.environ.get("MONGO_DBNAME")
@@ -20,8 +19,10 @@ mongo  = PyMongo(app)
 
 
 @app.route("/")
-def hello():
-    return "Hello World...."
+@app.route("/db_test")
+def db_test():
+    test = mongo.db.users.find()
+    return render_template("index.html", test=test)
 
 
 if __name__ == "__main__":
