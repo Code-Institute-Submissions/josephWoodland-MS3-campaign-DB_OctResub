@@ -1,0 +1,21 @@
+body{
+    background-color:#fafafa;
+}
+
+.nav-logo{
+    margin-left: 1rem;
+    margin-top: 3px ;
+    height: 3.5rem;
+}
+
+.margin-right{
+    margin-right: 1rem;
+}
+
+.primary-color{
+    color: #fd9c42 ;
+}
+
+.heading-color{
+    color: #707070;
+}

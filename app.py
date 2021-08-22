@@ -1,3 +1,4 @@
+from crypt import methods
 import os
 import profile
 from flask import (
@@ -20,10 +21,10 @@ mongo  = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/profile")
-def profiles():
+@app.route("/home")
+def home():
     profiles = mongo.db.users.find()
-    return render_template("profile.html", profiles=profiles)
+    return render_template("home.html", )
 
 
 if __name__ == "__main__":
