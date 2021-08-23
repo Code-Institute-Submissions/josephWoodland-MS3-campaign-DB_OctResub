@@ -27,8 +27,41 @@ def home():
     return render_template("home.html", campaigns=campaigns)
 
 
+@app.route("signin")
+def signin():
+    return render_template("signin.html")
+
 @app.route("/register", methods=["GET","POST"])
 def register():
+    if request.method == "POST":
+        email_check = mongo.db.users.find_one(
+            {"email": request.form.get("email").lower()})
+        email = request.form.get("email")
+        password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
+
+        # check if email is already in use
+        if email_check:
+            flash("Email already in use, please log in.")
+            return redirect(url_for("register"))
+
+        # check if the passwords match
+        if password != confirm_password:
+            flash("Passwords do not match!")
+            return redirect(url_for("register"))
+        # add the form details to a dictionary
+        register = {
+            "first_name": request.form.get('first_name'),
+            "last_name": request.form.get('last_name'),
+            "password": generate_password_hash(password),
+            "email": email.lower(),
+        }
+        mongo.db.users.insert_one(register)
+
+        # add user to a session
+        session["user"] = email
+        flash('Registered Welcome to the app!!')
+        
     return render_template("/register.html")
     
 

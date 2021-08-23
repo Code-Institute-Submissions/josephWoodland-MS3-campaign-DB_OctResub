@@ -1,47 +1,53 @@
-body{
-    background-color:#fafafa;
+/* /////////////////////////// Global styles ///////////////////// */
+
+body {
+  background-color: #fafafa;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* /////////////////////////// Helpers ///////////////////// */
 
-.brand-logo:hover{
-    height: 64px;
-    background-color: rgba(0,0,0,0.1);
+.card {
+  margin-right: 2rem;
 }
 
-.margin-right{
-    margin-right: 1rem;
+.brand-logo:hover {
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.primary-color{
-    color: #fd9c42 ;
+.margin-right {
+  margin-right: 1rem;
 }
 
-.heading-color{
-    color: #707070;
+/* /////////////////////////// Colours ///////////////////// */
+
+.primary-color {
+  color: #fd9c42;
 }
 
-.light-green{
-    background-color: #A5D4E2 !important;
+.heading-color {
+  color: #707070;
 }
 
-.card{
-    margin-right: 2rem;
+.light-green {
+  background-color: #a5d4e2 !important;
 }
 
-/* ////////////////////////////////// Font Awsome ///////////////////// */
+/* /////////////////////////// Font Awsome Icons ///////////////////// */
 
-.fa-beer{
-    margin-left: 1rem;
-    margin-top: 3px ;
-    font-size: 4rem;
+.fa-beer {
+  margin-left: 1rem;
+  margin-top: 3px;
+  font-size: 4rem;
 }
 
-.fa-image{
-    font-size: 8rem;
+.fa-image {
+  font-size: 8rem;
 }
 
-.fa-bars{
-    font-size: 3rem;
-    margin-left: 1rem;
-    margin-top: .5rem;
+.fa-bars {
+  font-size: 3rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
 }
