@@ -8,6 +8,11 @@ body{
     height: 3.5rem;
 }
 
+.brand-logo:hover{
+    height: 64px;
+    background-color: rgba(0,0,0,0.1);
+}
+
 .margin-right{
     margin-right: 1rem;
 }
@@ -18,4 +23,20 @@ body{
 
 .heading-color{
     color: #707070;
+}
+
+.orange-icon {
+    color: #fd9c42;
+}
+
+.light-green{
+    background-color: #A5D4E2 !important;
+}
+
+.card{
+    margin-right: 2rem;
+}
+
+.fa-image{
+    font-size: 8rem;
 }

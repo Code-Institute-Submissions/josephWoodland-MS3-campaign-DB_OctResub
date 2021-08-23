@@ -1,37 +1,66 @@
-{% extends "index.html" %}
-{% block content %}
-    <h2 class="heading-color">New this week</h2>
-    <a href=""><p>view all</p></a>
-    <div class="row">
-       <div class="card col s5 m4 l3">
-       <div class="card-image waves-effect waves-block waves-light">
-         <img class="activator" src="images/office.jpg">
-       </div>
-       <div class="card-content">
-         <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-         <p><a href="#">This is a link</a></p>
-       </div>
-       <div class="card-reveal">
-         <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-         <p>Here is some more information about this product that is only revealed once clicked on.</p>
-       </div>
-     </div>
+{% extends "index.html" %} {% block content %}
+<h2 class="heading-color">New this week</h2>
+<a href=""><p>view all</p></a>
+<div class="row">
+  {% for campaign in campaigns %}
+  <div class="card col s5 m4 l3 hoverable">
+    <div class="card-image waves-effect waves-block waves-light">
+      <i class="far fa-image"></i>
     </div>
-    <h2 class="heading-color">Nearly there!! These targets are nearly hit!!</h2>
-    <a href=""><p>view all</p></a>
-    <div class="row">
-       <div class="card col s5 m4 l3">
-       <div class="card-image waves-effect waves-block waves-light">
-         <img class="activator" src="images/office.jpg">
-       </div>
-       <div class="card-content">
-         <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-         <p><a href="#">This is a link</a></p>
-       </div>
-       <div class="card-reveal">
-         <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-         <p>Here is some more information about this product that is only revealed once clicked on.</p>
-       </div>
-     </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"
+        >{{ campaign.name }}<i
+          class="fas fa-chevron-circle-down orange-icon right"
+        ></i
+      ></span>
+      <progress
+        class="tooltipped"
+        value="{{ campaign.percentage_complete }}"
+        max="100"
+        data-position="top"
+        data-tooltip="{{ campaign.percentage_complete }}%"
+      ></progress>
+      <p><a href="#">Donate</a></p>
     </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4"
+        >{{ campaign.name }}<i class="fas fa-times right"></i
+      ></span>
+      <p>{{ campaign.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<h2 class="heading-color">Nearly there!! These targets are nearly hit!!</h2>
+<a href=""><p>view all</p></a>
+<div class="row">
+  {% for campaign in campaigns %}
+  <div class="card col s5 m4 l3 hoverable">
+    <div class="card-image waves-effect waves-block waves-light">
+      <i class="far fa-image"></i>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"
+        >{{ campaign.name }}<i
+          class="fas fa-chevron-circle-down orange-icon right"
+        ></i
+      ></span>
+      <progress
+        class="tooltipped"
+        value="{{ campaign.percentage_complete }}"
+        max="100"
+        data-position="top"
+        data-tooltip="{{ campaign.percentage_complete }}%"
+      ></progress>
+      <p><a href="#">Donate</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4"
+        >{{ campaign.name }}<i class="fas fa-times right"></i
+      ></span>
+      <p>{{ campaign.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

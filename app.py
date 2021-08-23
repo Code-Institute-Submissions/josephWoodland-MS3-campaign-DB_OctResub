@@ -23,8 +23,8 @@ mongo  = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    profiles = mongo.db.users.find()
-    return render_template("home.html", )
+    campaigns = list(mongo.db.campaigns.find())
+    return render_template("home.html", campaigns=campaigns)
 
 
 if __name__ == "__main__":
