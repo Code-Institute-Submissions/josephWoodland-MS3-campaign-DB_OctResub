@@ -27,7 +27,7 @@ def home():
     return render_template("home.html", campaigns=campaigns)
 
 
-@app.rout("/register", methods=["GET","POST"])
+@app.route("/register", methods=["GET","POST"])
 def register():
     return render_template("/resgister.html")
     
