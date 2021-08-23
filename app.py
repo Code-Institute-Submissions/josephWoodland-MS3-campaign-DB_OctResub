@@ -30,4 +30,4 @@ def home():
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
         port=int(os.environ.get("PORT")),
-        debug=True) # Don't forget to get rid of this!!!
+        debug=True) # Don't forget to change this to False!!!

@@ -2,11 +2,6 @@ body{
     background-color:#fafafa;
 }
 
-.nav-logo{
-    margin-left: 1rem;
-    margin-top: 3px ;
-    height: 3.5rem;
-}
 
 .brand-logo:hover{
     height: 64px;
@@ -25,10 +20,6 @@ body{
     color: #707070;
 }
 
-.orange-icon {
-    color: #fd9c42;
-}
-
 .light-green{
     background-color: #A5D4E2 !important;
 }
@@ -37,6 +28,20 @@ body{
     margin-right: 2rem;
 }
 
+/* ////////////////////////////////// Font Awsome ///////////////////// */
+
+.fa-beer{
+    margin-left: 1rem;
+    margin-top: 3px ;
+    font-size: 4rem;
+}
+
 .fa-image{
     font-size: 8rem;
+}
+
+.fa-bars{
+    font-size: 3rem;
+    margin-left: 1rem;
+    margin-top: .5rem;
 }
