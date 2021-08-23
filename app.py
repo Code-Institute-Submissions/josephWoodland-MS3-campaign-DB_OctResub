@@ -27,6 +27,19 @@ def home():
     return render_template("home.html", campaigns=campaigns)
 
 
+@app.rout("/register", methods=["GET","POST"])
+def register():
+    return render_template("/resgister.html")
+    
+
+@app.route("/campaigns/<campaign_id>", methods=["GET","POST"])
+def campaign_view(campaign_id):
+    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    user_id = campaign.get("creator_id")
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    return render_template('campaign_view.html', campaign=campaign, user=user)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
         port=int(os.environ.get("PORT")),

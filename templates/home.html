@@ -20,7 +20,11 @@
         data-position="top"
         data-tooltip="{{ campaign.percentage_complete }}%"
       ></progress>
-      <p><a href="#">Donate</a></p>
+      <p>
+        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+          >Donate</a
+        >
+      </p>
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4"

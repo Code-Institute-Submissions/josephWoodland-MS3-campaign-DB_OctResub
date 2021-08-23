@@ -1,0 +1,53 @@
+{% extends "index.html" %} {% block content %}
+<h1 class="header-color">
+  You want to donate to {{ user.first_name.capitalize() }}'s campaign!!
+</h1>
+
+<div class="col s12 m7">
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="https://lorempixel.com/100/190/nature/6" />
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <h2 class="header-color">{{ campaign.name }}</h2>
+        <p>{{ campaign.description }}</p>
+        <h3 class="primary-color">TARGET: {{ campaign.target_amount }}</h3>
+        <h3 class="primary-color">AMOUNT: {{ campaign.current_amount }}</h3>
+      </div>
+      <div class="card-action">
+        <!-- Modal Trigger -->
+        <a class="waves-effect waves-light btn modal-trigger" href="#modal1"
+          >Donate</a
+        >
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4>Donate</h4>
+            <form class="col s12" method="POST" action="">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input
+                    id="donate"
+                    name="donate"
+                    type="number"
+                    class="validate"
+                  />
+                  <label for="donate">amount</label>
+                  <button type="submit" class="btn-large text-shadow">Donate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close"
+              ><i class="fas fa-times right"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
