@@ -1,6 +1,7 @@
 from crypt import methods
 import os
 import profile
+from unicodedata import name
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -27,9 +28,29 @@ def home():
     return render_template("home.html", campaigns=campaigns)
 
 
-@app.route("signin")
+@app.route("/signin", methods=["GET","POST"])
 def signin():
+    if request.method == "POST":
+        user = mongo.db.users.find_one(
+            {"email": request.form.get("email".lower())}
+        )
+        # Check if user == true
+        if user:
+            # Check password match = True
+            if check_password_hash(
+                user["password"], request.form.get("password")):
+                    session['user'] = request.form.get('email').lower()
+                    name = user["first_name"].capitalize()
+
+                    flash(f"Welcome, {name}")
+                    return redirect(url_for("home", user=session['user']))
+            # Password match = False       
+            flash("Incorrect password")
+            return render_template("signin.html")
+        # Check if user = False - Email not found
+        flash("Incorrect email, please try again or sign up")
     return render_template("signin.html")
+
 
 @app.route("/register", methods=["GET","POST"])
 def register():
