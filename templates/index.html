@@ -27,55 +27,69 @@
   </head>
   <body>
     <header>
-        <!-- Nav bar  -->
-        <nav>
-            <div class="nav-wrapper light-green">
-              <a href="#" data-target="slide-out" class="brand-logo"><i class="fas fa-beer primary-color"></i></a>
-              <ul class="right hide-on-med-and-down">
-                <li><a href=""><i class="fas fa-search primary-color"></i></a></li>
-                <li><a href="{{ url_for('register')}}" class="primary-color"><i class="fas fa-sign-in-alt margin-right primary-color"></i>Sign In</a></li>
-              </ul>
-            </div>
-        </nav>
-        <!-- Side Nav  -->
-        <ul id="slide-out" class="sidenav">
+      <!-- Nav bar  -->
+      <nav>
+        <div class="nav-wrapper light-green">
+          <a
+            href="{{ url_for('home')}}"
+            data-target="slide-out"
+            class="brand-logo"
+            ><i class="fas fa-beer primary-color"></i
+          ></a>
+          <ul class="right hide-on-med-and-down">
             <li>
-            <div class="user-view">
-              <div class="background">
-                <img src="images/office.jpg">
-              </div>
-              <a href="#"><img class="circle" src="images/yuna.jpg"></a>
-              <a href="#"><span class="white-text name">John Doe</span></a>
-              <a href="#"><span class="white-text email">jdandturk@gmail.com</span></a>
-            </div>
+              <a href=""><i class="fas fa-search primary-color"></i></a>
             </li>
-            <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-            <li><a href="#!">Second Link</a></li>
-            <li><div class="divider"></div></li>
-            <li><a class="subheader">Subheader</a></li>
-            <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        </ul>
-        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fas fa-bars primary-color"></i></a>
-                
+            <li>
+              <a href="{{ url_for('register')}}" class="primary-color"
+                ><i class="fas fa-sign-in-alt margin-right primary-color"></i
+                >Sign In</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- Side Nav  -->
+      <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="images/office.jpg" />
+            </div>
+            <a href="#"><img class="circle" src="images/yuna.jpg" /></a>
+            <a href="#"><span class="white-text name">John Doe</span></a>
+            <a href="#"
+              ><span class="white-text email">jdandturk@gmail.com</span></a
+            >
+          </div>
+        </li>
+        <li>
+          <a href="#!"
+            ><i class="material-icons">cloud</i>First Link With Icon</a
+          >
+        </li>
+        <li><a href="#!">Second Link</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Subheader</a></li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      </ul>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"
+        ><i class="fas fa-bars primary-color"></i
+      ></a>
     </header>
     <section>
-        <!-- flash messages  -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                <div class="row flashes">
-                    <h4 class="light-blue header-color">{{ message }}</h4>
-                </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+      <!-- flash messages  -->
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <div class="row flashes">
+        <h4 class="light-blue header-color">{{ message }}</h4>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
     </section>
     <main class="container">
       <h1 class="primary-color center-align">Buy-Me-A-Drink.com</h1>
-            
-        {% block content %} 
-        {% endblock %}
-            
+
+      {% block content %} {% endblock %}
     </main>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -84,7 +98,6 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-      {% block script %} 
-      {% endblock %}
+    {% block script %} {% endblock %}
   </body>
 </html>

@@ -1,15 +1,57 @@
-{% extends "index.html" %}
-{% block content %}
+{% extends "index.html" %} {% block content %}
 
-    <h1 class="header-color">Sign Up</h1>
-    <div class="row">
-        <form class="col s12 m5">
-          <div class="card-panel">
-            <span>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-            </span>
-          </div>
-        </form>
+<h1 class="header-color center-align">Sign Up</h1>
+<div class="row">
+  <form class="col s12 m12" method="POST" action="{{ url_for('register')}}">
+    <div class="card-panel">
+        <!-- username -->
+        <div class="row">
+            <div class="input-field col s12 l6 offset-l3">
+              <i class="fas fa-address-card prefix primary-color"></i>
+              <input id="first_name" name="first_name" type="text" class="validate">
+              <label for="first_name">First Name</label>
+            </div>
+        </div>
+        <!-- username -->
+        <div class="row">
+            <div class="input-field col s12 l6 offset-l3">
+                <i class="fas fa-address-card prefix primary-color"></i>
+                <input id="last_name" name="last_name" type="text" class="validate">
+                <label for="last_name">Last Name</label>
+            </div>
+        </div>
+        <!-- email -->
+        <div class="row">
+            <div class="input-field col s12 l6 offset-l3">
+                <i class="fas fa-at prefix primary-color"></i>
+                <input id="email" name="email" type="email" class="validate">
+                <label for="email">Email</label>
+            </div>
+        </div>
+        <!-- password -->
+        <div class="row">
+            <div class="input-field col s12 l6 offset-l3">
+              <i class="fas fa-key prefix primary-color"></i>
+              <input id="password" type="password" name="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+        </div>
+        <!-- password -->
+        <div class="row">
+            <div class="input-field col s12 l6 offset-l3">
+              <i class="fas fa-key prefix primary-color"></i>
+              <input id="confirm_password" type="password" name="confirm_password" class="validate">
+              <label for="confirm_password">Confirm Password</label>
+            </div>
+        </div>
+        <!-- submit -->
+        <div class="row">
+            <button type="submit" class="col s12 m6 btn-large text-shadow offset-m3">
+                Sign me up! <i class="fas fa-sign-in-alt"></i>
+            </button>
+        </div>
     </div>
+  </form>
+</div>
 
 {% endblock %}

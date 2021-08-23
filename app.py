@@ -29,7 +29,7 @@ def home():
 
 @app.route("/register", methods=["GET","POST"])
 def register():
-    return render_template("/resgister.html")
+    return render_template("/register.html")
     
 
 @app.route("/campaigns/<campaign_id>", methods=["GET","POST"])
