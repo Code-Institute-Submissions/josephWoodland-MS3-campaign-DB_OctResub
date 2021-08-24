@@ -74,7 +74,7 @@
         </li>
         {% if session.user %}
             <li><a class="waves-effect" href="{{ url_for('profile', user=session['user'])}}"></i>Profile</a></li>
-            <li><a class="waves-effect" href="#!">Campaigns</a></li>
+            <li><a class="waves-effect" href="{{ url_for('user_campaigns', user=session['user'])}}">Campaigns</a></li>
             <li><a class="waves-effect" href="#!">Transactions</a></li>
             <li><a class="waves-effect" href="#!">History</a></li>
             <li><a class="waves-effect" href="#!">Search</a></li>

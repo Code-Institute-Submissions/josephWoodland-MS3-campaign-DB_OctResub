@@ -111,6 +111,7 @@ def logout():
     session.pop("user")
     return redirect( url_for("signin"))
 
+
 @app.route("/update_credits/<user>", methods=["GET","POST"])
 def add_credits(user):
     
@@ -125,6 +126,15 @@ def add_credits(user):
         return redirect(url_for("profile", user=user))
 
     return redirect(url_for("profile", user=user))
+
+@app.route("/user_campaigns/<user>")
+def user_campaigns(user):
+    user = mongo.db.users.find_one({ "email": session['user'] })
+    user_id = user["_id"]
+    campaigns = list(mongo.db.campaigns.find( { "creator_id" : user_id } ))
+    print (campaigns)
+    return render_template('user_campaigns.html', user=user, campaigns=campaigns)
+
 
 
 if __name__ == "__main__":

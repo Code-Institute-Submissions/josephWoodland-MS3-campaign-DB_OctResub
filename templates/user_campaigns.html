@@ -1,0 +1,48 @@
+{% extends "index.html" %} {% block content %}
+
+<h2 class="heading-color center-align">
+  Campaigns
+
+  <a href="{{ url_for('create_campaign', user=user }}" class="btn-small right">Create Campaign</a>
+</h2>
+
+{% if campaings|length > 0 %}
+<div class="row">
+  {% for campaign in campaigns %}
+  <div class="card col s5 m4 l3 hoverable">
+    <div class="card-image waves-effect waves-block waves-light">
+      <i class="far fa-image"></i>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"
+        >{{ campaign.name }}<i
+          class="fas fa-chevron-circle-down orange-icon right"
+        ></i
+      ></span>
+      <progress
+        class="tooltipped"
+        value="{{ campaign.percentage_complete }}"
+        max="100"
+        data-position="top"
+        data-tooltip="{{ campaign.percentage_complete }}%"
+      ></progress>
+      <p>
+        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+          >Donate</a
+        >
+      </p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4"
+        >{{ campaign.name }}<i class="fas fa-times right"></i
+      ></span>
+      <p>{{ campaign.description }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+
+<h2 class="heading-color center-align">You have no campaigns</h2>
+
+{% endif %} {% endblock %}
