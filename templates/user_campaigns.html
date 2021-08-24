@@ -3,10 +3,12 @@
 <h2 class="heading-color center-align">
   Campaigns
 
-  <a href="{{ url_for('create_campaign', user=user }}" class="btn-small right">Create Campaign</a>
+  <a href="{{ url_for('create_campaign', user=user ) }}" class="btn-small right"
+    >Create Campaign</a
+  >
 </h2>
 
-{% if campaings|length > 0 %}
+{% if campaigns|length > 0 %}
 <div class="row">
   {% for campaign in campaigns %}
   <div class="card col s5 m4 l3 hoverable">
@@ -28,7 +30,7 @@
       ></progress>
       <p>
         <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
-          >Donate</a
+          >Details</a
         >
       </p>
     </div>

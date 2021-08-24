@@ -1,13 +1,11 @@
-from crypt import methods
 import os
-import profile
-from unicodedata import name
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import (
+    generate_password_hash, check_password_hash)
 
 if os.path.exists("env.py"):
     import env
@@ -84,7 +82,7 @@ def register():
         flash('Registered Welcome to the app!!')
         return redirect( url_for("profile", user=session["user"]))
     
-    return render_template("/register.html")
+    return render_template("register.html")
     
 
 @app.route("/campaigns/<campaign_id>", methods=["GET","POST"])
@@ -99,7 +97,7 @@ def campaign_view(campaign_id):
 def profile(user):
     user = mongo.db.users.find_one({ "email": session['user'] })
     if session['user']:
-        return render_template("/profile.html", user=user)
+        return render_template("profile.html", user=user)
     
     return redirect(url_for("signin"))
 
@@ -127,14 +125,40 @@ def add_credits(user):
 
     return redirect(url_for("profile", user=user))
 
+
 @app.route("/user_campaigns/<user>")
 def user_campaigns(user):
     user = mongo.db.users.find_one({ "email": session['user'] })
-    user_id = user["_id"]
+    user_id = str(user["_id"])
     campaigns = list(mongo.db.campaigns.find( { "creator_id" : user_id } ))
-    print (campaigns)
+    print(campaigns)
     return render_template('user_campaigns.html', user=user, campaigns=campaigns)
 
+
+@app.route("/create_campaign", methods=["GET","POST"])
+def create_campaign():
+
+    if request.method == "POST":
+        user = mongo.db.users.find_one({ "email": session['user'] })
+        user_id = str(user["_id"])
+        
+        new_campaign = {
+            "name": request.form.get("name"),
+            "description":request.form.get("description"),
+            "target_amount":request.form.get("target"),
+            "current_amount": 0,
+            "percentage_complete": 0,
+            "creator_id": user_id,
+        }
+
+        mongo.db.campaigns.insert_one(new_campaign)
+        flash('You have added a new campaign')
+
+        campaigns = list(mongo.db.campaigns.find( { "creator_id" : "612526b069a8895a6b55c3b0" } ))
+        print(campaigns)
+        return render_template('user_campaigns.html', user=user, campaigns=campaigns)
+
+    return render_template("create_campaign.html")
 
 
 if __name__ == "__main__":
