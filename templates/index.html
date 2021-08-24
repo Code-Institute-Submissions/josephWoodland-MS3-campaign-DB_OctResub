@@ -63,7 +63,7 @@
             >
           </div>
         </li>
-        <li><a class="waves-effect" href="#"></i>Profile</a></li>
+        <li><a class="waves-effect" href="{{ url_for('profile', user=session['user'])}}"></i>Profile</a></li>
         <li><a class="waves-effect" href="#!">Campaigns</a></li>
         <li><a class="waves-effect" href="#!">Transactions</a></li>
         <li><a class="waves-effect" href="#!">History</a></li>

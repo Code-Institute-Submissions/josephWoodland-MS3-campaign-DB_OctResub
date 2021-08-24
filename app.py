@@ -41,9 +41,8 @@ def signin():
                 user["password"], request.form.get("password")):
                     session['user'] = request.form.get('email').lower()
                     name = user["first_name"].capitalize()
-
                     flash(f"Welcome, {name}")
-                    return redirect(url_for("home", user=session['user']))
+                    return redirect( url_for("profile", user=session["user"]))
             # Password match = False       
             flash("Incorrect password")
             return render_template("signin.html")
@@ -72,8 +71,8 @@ def register():
             return redirect(url_for("register"))
         # add the form details to a dictionary
         register = {
-            "first_name": request.form.get('first_name'),
-            "last_name": request.form.get('last_name'),
+            "first_name": request.form.get('first_name').lower().capitalize(),
+            "last_name": request.form.get('last_name').lower().capitalize(),
             "password": generate_password_hash(password),
             "email": email.lower(),
         }
@@ -82,7 +81,8 @@ def register():
         # add user to a session
         session["user"] = email
         flash('Registered Welcome to the app!!')
-        
+        return redirect( url_for("profile", user=session["user"]))
+    
     return render_template("/register.html")
     
 
@@ -92,6 +92,13 @@ def campaign_view(campaign_id):
     user_id = campaign.get("creator_id")
     user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
     return render_template('campaign_view.html', campaign=campaign, user=user)
+
+
+@app.route("/profile/<user>", methods=["GET","POST"])
+def profile(user):
+    user = mongo.db.users.find_one({ "email": session['user'] })
+    
+    return render_template("/profile.html", user=user)
 
 
 if __name__ == "__main__":
