@@ -97,8 +97,18 @@ def campaign_view(campaign_id):
 @app.route("/profile/<user>", methods=["GET","POST"])
 def profile(user):
     user = mongo.db.users.find_one({ "email": session['user'] })
+    if session['user']:
+        return render_template("/profile.html", user=user)
     
-    return render_template("/profile.html", user=user)
+    return redirect(url_for("signin"))
+
+
+@app.route('/logout')
+def logout():
+    # remove the session cookie
+    flash("Your have been logged out")
+    session.pop("user")
+    return redirect( url_for("signin"))
 
 
 if __name__ == "__main__":
