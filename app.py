@@ -75,6 +75,7 @@ def register():
             "last_name": request.form.get('last_name').lower().capitalize(),
             "password": generate_password_hash(password),
             "email": email.lower(),
+            "credits": 0,
         }
         mongo.db.users.insert_one(register)
 
@@ -109,6 +110,21 @@ def logout():
     flash("Your have been logged out")
     session.pop("user")
     return redirect( url_for("signin"))
+
+@app.route("/update_credits/<user>", methods=["GET","POST"])
+def add_credits(user):
+    
+    if request.method == "POST":
+        user = mongo.db.users.find_one({ "email": session['user'] })
+        amount = int(request.form.get("add_credits"))
+        credits = user["credits"]
+        new_total = credits + amount
+        mongo.db.users.update_one({ "email": session['user'] }, {"$set":{"credits": new_total}})
+        flash(f"You added {amount}, credits")
+
+        return redirect(url_for("profile", user=user))
+
+    return redirect(url_for("profile", user=user))
 
 
 if __name__ == "__main__":
