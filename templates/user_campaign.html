@@ -1,0 +1,30 @@
+{% extends "index.html" %} {% block content %}
+
+<div class="col s12 m7">
+  <div class="card horizontal">
+    <div class="card-image">
+      <img src="https://lorempixel.com/100/190/nature/6" />
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <h2 class="header-color">{{ campaign.name }}</h2>
+        <p>{{ campaign.description }}</p>
+        <h3 class="primary-color">TARGET: {{ campaign.target_amount }}</h3>
+        <h3 class="primary-color">AMOUNT: {{ campaign.current_amount }}</h3>
+      </div>
+      <div class="card-action">
+        
+        <a class="waves-effect waves-light btn" href="{{ url_for('edit_campaign', campaign_id=campaign._id )}}"
+          >Edit</a
+        >
+        <a class="waves-effect waves-light btn" href="#"
+          >Stop</a
+        >
+        <a class="waves-effect waves-light btn" href="#"
+          >Delete</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

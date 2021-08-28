@@ -93,6 +93,14 @@ def campaign_view(campaign_id):
     return render_template('campaign_view.html', campaign=campaign, user=user)
 
 
+@app.route("/user_campaign/<campaign_id>", methods=["GET","POST"])
+def user_campaign(campaign_id):
+    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    user_id = campaign.get("creator_id")
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    return render_template('user_campaign.html', campaign=campaign, user=user) 
+
+
 @app.route("/profile/<user>", methods=["GET","POST"])
 def profile(user):
     user = mongo.db.users.find_one({ "email": session['user'] })
@@ -141,7 +149,6 @@ def create_campaign():
     if request.method == "POST":
         user = mongo.db.users.find_one({ "email": session['user'] })
         user_id = str(user["_id"])
-        
         new_campaign = {
             "name": request.form.get("name"),
             "description":request.form.get("description"),
@@ -150,15 +157,21 @@ def create_campaign():
             "percentage_complete": 0,
             "creator_id": user_id,
         }
-
         mongo.db.campaigns.insert_one(new_campaign)
         flash('You have added a new campaign')
-
-        campaigns = list(mongo.db.campaigns.find( { "creator_id" : "612526b069a8895a6b55c3b0" } ))
+        campaigns = list(mongo.db.campaigns.find( { "creator_id" : user_id } ))
         print(campaigns)
         return render_template('user_campaigns.html', user=user, campaigns=campaigns)
 
     return render_template("create_campaign.html")
+
+
+@app.route("/edit_campaign/<campaign_id>", methods=["GET", "POST"])
+def edit_campaign(campaign_id):
+    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    print(campaign)
+
+    return render_template("edit_campaign.html", campaign=campaign)
 
 
 if __name__ == "__main__":
