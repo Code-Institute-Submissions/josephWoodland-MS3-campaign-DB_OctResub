@@ -187,6 +187,14 @@ def edit_campaign(campaign_id):
     return render_template("edit_campaign.html", campaign=campaign)
 
 
+@app.route("/delete_campaign/<campaign_id>")
+def delete_campaign(campaign_id):
+    mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
+    user = mongo.db.users.find_one({ "email": session['user'] })
+    flash("Campaign Deleted Credits have been added to your account")
+    return redirect(url_for("profile", user=user))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
         port=int(os.environ.get("PORT")),
