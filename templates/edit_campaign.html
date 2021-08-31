@@ -26,9 +26,9 @@
       </div>
       <!-- Target amount -->
       <div class="row">
-        <p class="header-color">
+        <p class="header-color center-align">
           Current amount generated: {{ campaign.current_amount }}
-      </p>
+        </p>
         <div class="input-field col s12 l6 offset-l3">
           <i class="fas fa-bullseye prefix primary-color"></i>
           <input
@@ -52,16 +52,38 @@
             name="description"
             maxlength="250"
             class="materialize-textarea"
-            required>
+            required
+          >
             {{- campaign.description -}}
           </textarea>
           <label for="description"
             >Description..... max length 250 characters</label
           >
         </div>
+        <div class="row hide">
+          <div class="input-field">
+            <input
+              id="percentage_complete"
+              name="percentage_complete"
+              minlength="3"
+              type="text"
+              class="validate"
+              value="{{ campaign.name }}"
+              required
+            />
+            <label for="percentage_complete">{{ campaign.percentage_complete }}</label>
+          </div>
+        </div>
       </div>
       <!-- submit -->
       <div class="row">
+        <a
+          href="{{ url_for('user_campaigns', user=session['user'])}}"
+          class="btn-large red"
+        >
+          Cancel
+          <i class="fas fa-times-circle right"></i>
+        </a>
         <button type="submit" class="col s12 m6 btn-large offset-m3">
           Edit <i class="fas fa-sign-in-alt"></i>
         </button>
