@@ -20,7 +20,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo  = PyMongo(app)
 
 
-def create_transaction(user_from_id, user_to_id , campaign_id, amount):
+def create_transaction(user_from_id, user_to_id, campaign_id, amount):
 
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
@@ -29,9 +29,6 @@ def create_transaction(user_from_id, user_to_id , campaign_id, amount):
     user_from = mongo.db.users.find_one(
         {"_id": ObjectId(user_from_id)})
     time = datetime.now()
-    print(user_to)
-
-    print("________________________------------------")
 
     new_transaction = {
         "user_to": user_to['first_name'] + ' ' + user_to['last_name'],
@@ -246,6 +243,19 @@ def delete_user(user):
     mongo.db.campaigns.remove(user)
     flash("User Deleted")
     return render_template("home.html")
+
+
+@app.route("/transactions/<user>")
+def transactions(user):
+    user = mongo.db.users.find_one({ "email": session['user'] })
+    user_id = str(user["_id"])
+    transaction_credits = list(mongo.db.transactions.find(
+             { "user_to_id" : user_id } ))
+    transaction_debits = list(mongo.db.transactions.find(
+             { "user_from_id" : user_id } ))
+    transaction_list = transaction_debits + transaction_credits
+    
+    return render_template("transactions.html", transaction_list=transaction_list)
 
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
