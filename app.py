@@ -195,6 +195,13 @@ def delete_campaign(campaign_id):
     return redirect(url_for("profile", user=user))
 
 
+@app.route("/delete_user/<user>")
+def delete_user(user):
+    mongo.db.campaigns.remove(user)
+    flash("User Deleted")
+    return redirect(url_for("home"))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
         port=int(os.environ.get("PORT")),
