@@ -1,3 +1,4 @@
+from hashlib import new
 import os
 from flask import (
     Flask, flash, render_template,
@@ -199,7 +200,41 @@ def delete_campaign(campaign_id):
 def delete_user(user):
     mongo.db.campaigns.remove(user)
     flash("User Deleted")
-    return redirect(url_for("home"))
+    return render_template("home.html")
+
+
+@app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
+def donate_campaign(campaign_id):
+    # Set all the selectors
+    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    creator_id = campaign.get("creator_id")
+    campaign_creator = mongo.db.users.find_one({"_id": ObjectId(creator_id)})
+    campaign_name = campaign['name']
+    current_user = mongo.db.users.find_one({ "email": session['user'] })
+    donation_amount = int(request.form.get("donate"))
+    user_credits = current_user['credits']
+
+    # Check if the user has enough credits to make the donation
+    if donation_amount > user_credits:
+        flash("You do not have enough credits to make this donation")
+        return render_template('campaign_view.html', campaign=campaign, user=campaign_creator)
+    
+    # The results of the donation
+    user_credits_left = user_credits - donation_amount
+    target_amount = campaign['target_amount']
+    current_amount_raised = campaign['current_amount']
+    new_amount = current_amount_raised + donation_amount
+    new_percentage = round(( new_amount / target_amount) * 100)
+
+    # Update the database with the new results
+    mongo.db.campaigns.update_one({ "_id": ObjectId(campaign_id) }, {"$set":{"current_amount": new_amount}})
+    mongo.db.campaigns.update_one({ "_id": ObjectId(campaign_id) }, {"$set":{"percentage_complete": new_percentage}})
+    mongo.db.users.update_one({ "email": session['user'] }, {"$set":{"credits": user_credits_left}})
+    
+    # User feedback on the results of the donation
+    flash(f"You have added to the {campaign_name} campaign they are now {new_percentage} percent towards their target")
+
+    return redirect( url_for('home'))
 
 
 if __name__ == "__main__":

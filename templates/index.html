@@ -84,7 +84,7 @@
         {% endif %}
             <li><div class="divider"></div></li>
         {% if session.user %}
-            <li><a class="waves-effect" href="{{ url_for('delete_profile', user=session['user'])}}">Delete Profile</a></li>
+            <li><a class="waves-effect" href="{{ url_for('delete_user', user=session['user'])}}">Delete Profile</a></li>
         {% endif %}
         </ul>
       <a href="#" data-target="slide-out" class="sidenav-trigger"
