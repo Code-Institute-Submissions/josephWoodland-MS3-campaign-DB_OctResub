@@ -1,4 +1,3 @@
-from hashlib import new
 import os
 from flask import (
     Flask, flash, render_template,
@@ -7,6 +6,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
+from datetime import datetime
 
 if os.path.exists("env.py"):
     import env
@@ -18,6 +18,31 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo  = PyMongo(app)
+
+
+def create_transaction(user_from_id, user_to_id , campaign_id, amount):
+
+    campaign = mongo.db.campaigns.find_one(
+        {"_id": ObjectId(campaign_id)})
+    user_to = mongo.db.users.find_one(
+        {"_id": ObjectId(user_to_id)})
+    user_from = mongo.db.users.find_one(
+        {"_id": ObjectId(user_from_id)})
+    time = datetime.now()
+    print(user_to)
+
+    print("________________________------------------")
+
+    new_transaction = {
+        "user_to": user_to['first_name'] + ' ' + user_to['last_name'],
+        "user_from": user_from['first_name'] + ' ' + user_from['last_name'],
+        "campaign": campaign['name'],
+        "amount": amount,
+        "transaction_time": time,
+        "user_to_id": user_to_id,
+        "user_from_id": user_from_id
+    }
+    mongo.db.transactions.insert_one(new_transaction)
 
 
 @app.route("/")
@@ -37,11 +62,14 @@ def signin():
         if user:
             # Check password match = True
             if check_password_hash(
-                user["password"], request.form.get("password")):
-                    session['user'] = request.form.get('email').lower()
+                user["password"], request.form.get(
+                    "password")):
+                    session['user'] = request.form.get(
+                        'email').lower()
                     name = user["first_name"].capitalize()
                     flash(f"Welcome, {name}")
-                    return redirect( url_for("profile", user=session["user"]))
+                    return redirect( url_for(
+                        "profile", user=session["user"]))
             # Password match = False       
             flash("Incorrect password")
             return render_template("signin.html")
@@ -70,8 +98,10 @@ def register():
             return redirect(url_for("register"))
         # add the form details to a dictionary
         register = {
-            "first_name": request.form.get('first_name').lower().capitalize(),
-            "last_name": request.form.get('last_name').lower().capitalize(),
+            "first_name": request.form.get(
+                'first_name').lower().capitalize(),
+            "last_name": request.form.get(
+                'last_name').lower().capitalize(),
             "password": generate_password_hash(password),
             "email": email.lower(),
             "credits": 0,
@@ -91,15 +121,18 @@ def campaign_view(campaign_id):
     campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
     user_id = campaign.get("creator_id")
     user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-    return render_template('campaign_view.html', campaign=campaign, user=user)
+    return render_template(
+        'campaign_view.html', campaign=campaign, user=user)
 
 
 @app.route("/user_campaign/<campaign_id>", methods=["GET","POST"])
 def user_campaign(campaign_id):
-    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    campaign = mongo.db.campaigns.find_one(
+        {"_id": ObjectId(campaign_id)})
     user_id = campaign.get("creator_id")
     user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-    return render_template('user_campaign.html', campaign=campaign, user=user) 
+    return render_template(
+        'user_campaign.html', campaign=campaign, user=user) 
 
 
 @app.route("/profile/<user>", methods=["GET","POST"])
@@ -123,11 +156,13 @@ def logout():
 def add_credits(user):
     
     if request.method == "POST":
-        user = mongo.db.users.find_one({ "email": session['user'] })
+        user = mongo.db.users.find_one(
+            { "email": session['user'] })
         amount = int(request.form.get("add_credits"))
         credits = user["credits"]
         new_total = credits + amount
-        mongo.db.users.update_one({ "email": session['user'] }, {"$set":{"credits": new_total}})
+        mongo.db.users.update_one(
+            { "email": session['user'] }, {"$set":{"credits": new_total}})
         flash(f"You added {amount}, credits")
 
         return redirect(url_for("profile", user=user))
@@ -137,18 +172,22 @@ def add_credits(user):
 
 @app.route("/user_campaigns/<user>")
 def user_campaigns(user):
-    user = mongo.db.users.find_one({ "email": session['user'] })
+    user = mongo.db.users.find_one(
+        { "email": session['user'] })
     user_id = str(user["_id"])
-    campaigns = list(mongo.db.campaigns.find( { "creator_id" : user_id } ))
+    campaigns = list(mongo.db.campaigns.find(
+         { "creator_id" : user_id } ))
     print(campaigns)
-    return render_template('user_campaigns.html', user=user, campaigns=campaigns)
+    return render_template(
+        'user_campaigns.html', user=user, campaigns=campaigns)
 
 
 @app.route("/create_campaign", methods=["GET","POST"])
 def create_campaign():
 
     if request.method == "POST":
-        user = mongo.db.users.find_one({ "email": session['user'] })
+        user = mongo.db.users.find_one(
+            { "email": session['user'] })
         user_id = str(user["_id"])
         new_campaign = {
             "name": request.form.get("name"),
@@ -160,7 +199,8 @@ def create_campaign():
         }
         mongo.db.campaigns.insert_one(new_campaign)
         flash('You have added a new campaign')
-        campaigns = list(mongo.db.campaigns.find( { "creator_id" : user_id } ))
+        campaigns = list(mongo.db.campaigns.find(
+             { "creator_id" : user_id } ))
         return render_template('user_campaigns.html', user=user, campaigns=campaigns)
 
     return render_template("create_campaign.html")
@@ -168,9 +208,11 @@ def create_campaign():
 
 @app.route("/edit_campaign/<campaign_id>", methods=["GET", "POST"])
 def edit_campaign(campaign_id):
-    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    campaign = mongo.db.campaigns.find_one(
+        {"_id": ObjectId(campaign_id)})
     if request.method == "POST":
-        user = mongo.db.users.find_one({ "email": session['user'] })
+        user = mongo.db.users.find_one(
+            { "email": session['user'] })
         user_id = str(user["_id"])
         update_campaign = {
             "name": request.form.get("name"),
@@ -180,9 +222,11 @@ def edit_campaign(campaign_id):
             "percentage_complete": request.form.get("percentage_complete"),
             "creator_id": user_id,
         }
-        mongo.db.campaigns.update({"_id": ObjectId(campaign_id)},update_campaign)
+        mongo.db.campaigns.update(
+            {"_id": ObjectId(campaign_id)},update_campaign)
         flash("You have edited the campaign")
-        campaigns = list(mongo.db.campaigns.find( { "creator_id" : user_id } ))
+        campaigns = list(mongo.db.campaigns.find(
+             { "creator_id" : user_id } ))
         return render_template('user_campaigns.html', user=user, campaigns=campaigns)
 
     return render_template("edit_campaign.html", campaign=campaign)
@@ -191,7 +235,8 @@ def edit_campaign(campaign_id):
 @app.route("/delete_campaign/<campaign_id>")
 def delete_campaign(campaign_id):
     mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
-    user = mongo.db.users.find_one({ "email": session['user'] })
+    user = mongo.db.users.find_one(
+        { "email": session['user'] })
     flash("Campaign Deleted Credits have been added to your account")
     return redirect(url_for("profile", user=user))
 
@@ -206,33 +251,45 @@ def delete_user(user):
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
 def donate_campaign(campaign_id):
     # Set all the selectors
-    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
-    creator_id = campaign.get("creator_id")
-    campaign_creator = mongo.db.users.find_one({"_id": ObjectId(creator_id)})
+    campaign = mongo.db.campaigns.find_one(
+        {"_id": ObjectId(campaign_id)})
+    creator_id = campaign["creator_id"]
+    campaign_creator = mongo.db.users.find_one(
+        {"_id": ObjectId(creator_id)})
     campaign_name = campaign['name']
-    current_user = mongo.db.users.find_one({ "email": session['user'] })
+    current_user = mongo.db.users.find_one(
+        { "email": session['user'] })
+    current_user_id = str(current_user['_id'])
     donation_amount = int(request.form.get("donate"))
     user_credits = current_user['credits']
 
     # Check if the user has enough credits to make the donation
     if donation_amount > user_credits:
         flash("You do not have enough credits to make this donation")
-        return render_template('campaign_view.html', campaign=campaign, user=campaign_creator)
+        return render_template(
+            'campaign_view.html', campaign=campaign, user=campaign_creator)
     
     # The results of the donation
     user_credits_left = user_credits - donation_amount
     target_amount = campaign['target_amount']
     current_amount_raised = campaign['current_amount']
     new_amount = current_amount_raised + donation_amount
-    new_percentage = round(( new_amount / target_amount) * 100)
+    new_percentage = round(
+        ( new_amount / target_amount) * 100)
 
     # Update the database with the new results
-    mongo.db.campaigns.update_one({ "_id": ObjectId(campaign_id) }, {"$set":{"current_amount": new_amount}})
-    mongo.db.campaigns.update_one({ "_id": ObjectId(campaign_id) }, {"$set":{"percentage_complete": new_percentage}})
-    mongo.db.users.update_one({ "email": session['user'] }, {"$set":{"credits": user_credits_left}})
+    mongo.db.campaigns.update_one(
+        { "_id": ObjectId(campaign_id) }, {"$set":{"current_amount": new_amount}})
+    mongo.db.campaigns.update_one(
+        { "_id": ObjectId(campaign_id) }, {"$set":{"percentage_complete": new_percentage}})
+    mongo.db.users.update_one(
+        { "email": session['user'] }, {"$set":{"credits": user_credits_left}})
     
     # User feedback on the results of the donation
     flash(f"You have added to the {campaign_name} campaign they are now {new_percentage} percent towards their target")
+    # Create a record of the transaction
+    create_transaction(
+        current_user_id, creator_id , campaign_id, donation_amount)
 
     return redirect( url_for('home'))
 
