@@ -28,7 +28,7 @@ def create_transaction(user_from_id, user_to_id, campaign_id, amount):
         {"_id": ObjectId(user_to_id)})
     user_from = mongo.db.users.find_one(
         {"_id": ObjectId(user_from_id)})
-    time = datetime.now()
+    time = datetime.now().isoformat(' ', 'seconds')
 
     new_transaction = {
         "user_to": user_to['first_name'] + ' ' + user_to['last_name'],
@@ -36,8 +36,8 @@ def create_transaction(user_from_id, user_to_id, campaign_id, amount):
         "campaign": campaign['name'],
         "amount": amount,
         "transaction_time": time,
-        "user_to_id": user_to_id,
-        "user_from_id": user_from_id
+        "user_to_id": str(user_to_id),
+        "user_from_id": str(user_from_id)
     }
     mongo.db.transactions.insert_one(new_transaction)
 
@@ -253,9 +253,10 @@ def transactions(user):
              { "user_to_id" : user_id } ))
     transaction_debits = list(mongo.db.transactions.find(
              { "user_from_id" : user_id } ))
-    transaction_list = transaction_debits + transaction_credits
-    
-    return render_template("transactions.html", transaction_list=transaction_list)
+    transactions = transaction_debits + transaction_credits
+
+    return render_template(
+        "transactions.html", transactions=transactions, user_id=user_id)
 
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
@@ -281,7 +282,7 @@ def donate_campaign(campaign_id):
     
     # The results of the donation
     user_credits_left = user_credits - donation_amount
-    target_amount = campaign['target_amount']
+    target_amount = int(campaign['target_amount'])
     current_amount_raised = campaign['current_amount']
     new_amount = current_amount_raised + donation_amount
     new_percentage = round(

@@ -1,33 +1,28 @@
 {% extends "index.html" %} {% block content %}
 <table class="highlight centered">
-    <thead>
-      <tr>
-          <th>Campaign</th>
-          <th>Amount</th>
-          <th>User</th>
-          <th>Time</th>
-      </tr>
-    </thead>
-    <h2>Payments in</h2>
-    <tbody>
-      <tr>
-        <td>Home</td>
-        <td>200</td>
-        <td>John Tester</td>
-        <td>date and Time</td>
-      </tr>
-      <tr>
-        <td>Home</td>
-        <td>200</td>
-        <td>John Tester</td>
-        <td>date and Time</td>
-      </tr>
-      <tr>
-        <td>Home</td>
-        <td>200</td>
-        <td>John Tester</td>
-        <td>date and Time</td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th>User</th>
+      <th>Amount</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <h2>Payments in</h2>
+  <tbody>
+    {% for transaction in transactions %}
+    <tr>
+      <td>{{ transaction.campaign }}</td>
+      {% if user_id == transaction.user_from_id %}
+        <td>{{ transaction.user_to }}</td>
+        <td class="color-red">-{{ transaction.amount }}</td>
+      {% else %}
+        <td>{{ transaction.user_from }}</td>
+        <td class="color-green">{{ transaction.amount }}</td>
+      {% endif %}
+      <td>{{ transaction.transaction_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

@@ -34,6 +34,14 @@ body {
   background-color: #a5d4e2 !important;
 }
 
+.color-red {
+  color: red;
+}
+
+.color-green {
+  color: greenyellow;
+}
+
 /* /////////////////////////// Font Awsome Icons ///////////////////// */
 
 .fa-beer {
