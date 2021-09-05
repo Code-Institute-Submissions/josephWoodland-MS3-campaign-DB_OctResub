@@ -253,10 +253,18 @@ def collect_campaign(campaign_id):
 
 @app.route("/delete_campaign/<campaign_id>")
 def delete_campaign(campaign_id):
-    mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
     user = mongo.db.users.find_one(
         { "email": session['user'] })
+    campaign = mongo.db.campaigns.find_one(
+        {"_id": ObjectId(campaign_id)})
+    current_user_credits = user["credits"]
+    campaign_credits = campaign['current_amount']
+    new_total = int(current_user_credits) + int(campaign_credits)
+    mongo.db.users.update_one(
+        { "email": session['user'] }, {"$set":{"credits": new_total }})
+    mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
     flash("Campaign Deleted Credits have been added to your account")
+    
     return redirect(url_for("profile", user=user))
 
 
