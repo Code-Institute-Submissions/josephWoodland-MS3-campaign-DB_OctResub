@@ -20,7 +20,8 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo  = PyMongo(app)
 
 
-def create_transaction(user_from_id, user_to_id, campaign_id, amount):
+def create_transaction(user_from_id, user_to_id,
+ campaign_id, amount):
 
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
@@ -128,8 +129,9 @@ def user_campaign(campaign_id):
         {"_id": ObjectId(campaign_id)})
     user_id = campaign.get("creator_id")
     user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-    return render_template(
-        'user_campaign.html', campaign=campaign, user=user) 
+    
+    return render_template('user_campaign.html',
+     campaign=campaign, user=user) 
 
 
 @app.route("/profile/<user>", methods=["GET","POST"])
@@ -174,9 +176,9 @@ def user_campaigns(user):
     user_id = str(user["_id"])
     campaigns = list(mongo.db.campaigns.find(
          { "creator_id" : user_id } ))
-    print(campaigns)
-    return render_template(
-        'user_campaigns.html', user=user, campaigns=campaigns)
+
+    return render_template('user_campaigns.html',
+     user=user, campaigns=campaigns)
 
 
 @app.route("/create_campaign", methods=["GET","POST"])
@@ -198,7 +200,8 @@ def create_campaign():
         flash('You have added a new campaign')
         campaigns = list(mongo.db.campaigns.find(
              { "creator_id" : user_id } ))
-        return render_template('user_campaigns.html', user=user, campaigns=campaigns)
+        return render_template('user_campaigns.html',
+         user=user, campaigns=campaigns)
 
     return render_template("create_campaign.html")
 
@@ -224,9 +227,28 @@ def edit_campaign(campaign_id):
         flash("You have edited the campaign")
         campaigns = list(mongo.db.campaigns.find(
              { "creator_id" : user_id } ))
-        return render_template('user_campaigns.html', user=user, campaigns=campaigns)
+        return render_template(
+            'user_campaigns.html', user=user,
+             campaigns=campaigns)
 
-    return render_template("edit_campaign.html", campaign=campaign)
+    return render_template("edit_campaign.html",
+     campaign=campaign)
+
+
+@app.route("/collect_campaign/<campaign_id>")
+def collect_campaign(campaign_id):
+    user = mongo.db.users.find_one(
+        { "email": session['user'] })
+    campaign = mongo.db.campaigns.find_one(
+        {"_id": ObjectId(campaign_id)})
+    current_user_credits = user["credits"]
+    campaign_credits = campaign['current_amount']
+    new_total = int(current_user_credits) + int(campaign_credits)
+    mongo.db.users.update_one(
+        { "email": session['user'] }, {"$set":{"credits": new_total }})
+    flash("You have debited the campign amount into your account")
+
+    return redirect(url_for("profile", user=user)) 
 
 
 @app.route("/delete_campaign/<campaign_id>")
@@ -256,7 +278,9 @@ def transactions(user):
     transactions = transaction_debits + transaction_credits
 
     return render_template(
-        "transactions.html", transactions=transactions, user_id=user_id)
+        "transactions.html",
+         transactions=transactions,
+          user_id=user_id)
 
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
@@ -297,7 +321,8 @@ def donate_campaign(campaign_id):
         { "email": session['user'] }, {"$set":{"credits": user_credits_left}})
     
     # User feedback on the results of the donation
-    flash(f"You have added to the {campaign_name} campaign they are now {new_percentage} percent towards their target")
+    flash(
+        f"You have added to the {campaign_name} campaign they are now {new_percentage} percent towards their target")
     # Create a record of the transaction
     create_transaction(
         current_user_id, creator_id , campaign_id, donation_amount)
