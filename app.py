@@ -1,4 +1,5 @@
 import os
+
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -245,7 +246,8 @@ def collect_campaign(campaign_id):
     campaign_credits = campaign['current_amount']
     new_total = int(current_user_credits) + int(campaign_credits)
     mongo.db.users.update_one(
-        { "email": session['user'] }, {"$set":{"credits": new_total }})
+        { "email": session['user'] },
+        {"$set":{"credits": new_total }})
     flash("You have debited the campign amount into your account")
 
     return redirect(url_for("profile", user=user)) 
@@ -261,7 +263,8 @@ def delete_campaign(campaign_id):
     campaign_credits = campaign['current_amount']
     new_total = int(current_user_credits) + int(campaign_credits)
     mongo.db.users.update_one(
-        { "email": session['user'] }, {"$set":{"credits": new_total }})
+        { "email": session['user'] },
+        {"$set":{"credits": new_total }})
     mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
     flash("Campaign Deleted Credits have been added to your account")
     
@@ -277,13 +280,12 @@ def delete_user(user):
 
 @app.route("/transactions/<user>")
 def transactions(user):
-    user = mongo.db.users.find_one({ "email": session['user'] })
+    user = mongo.db.users.find_one(
+        { "email": session['user'] })
     user_id = str(user["_id"])
-    transaction_credits = list(mongo.db.transactions.find(
-             { "user_to_id" : user_id } ))
-    transaction_debits = list(mongo.db.transactions.find(
-             { "user_from_id" : user_id } ))
-    transactions = transaction_debits + transaction_credits
+    transactions = list(mongo.db.transactions.find(
+        {'$or':[{"user_to_id":user_id},
+        {"user_from_id":user_id}]} ))
 
     return render_template(
         "transactions.html",
@@ -293,6 +295,12 @@ def transactions(user):
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
 def donate_campaign(campaign_id):
+    # Check if the user is logged in
+    
+    if not session.get('user'):
+        flash('You need to log in to be able to donate!')
+        return render_template("signin.html")
+    
     # Set all the selectors
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
@@ -322,11 +330,14 @@ def donate_campaign(campaign_id):
 
     # Update the database with the new results
     mongo.db.campaigns.update_one(
-        { "_id": ObjectId(campaign_id) }, {"$set":{"current_amount": new_amount}})
+        { "_id": ObjectId(campaign_id) },
+        {"$set":{"current_amount": new_amount}})
     mongo.db.campaigns.update_one(
-        { "_id": ObjectId(campaign_id) }, {"$set":{"percentage_complete": new_percentage}})
+        { "_id": ObjectId(campaign_id) },
+        {"$set":{"percentage_complete": new_percentage}})
     mongo.db.users.update_one(
-        { "email": session['user'] }, {"$set":{"credits": user_credits_left}})
+        { "email": session['user'] },
+        {"$set":{"credits": user_credits_left}})
     
     # User feedback on the results of the donation
     flash(
