@@ -8,28 +8,33 @@ from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 from datetime import datetime
+from werkzeug.utils import secure_filename
+
 
 if os.path.exists("env.py"):
     import env
+
 
 app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 mongo  = PyMongo(app)
-
 
 def create_transaction(user_from_id, user_to_id,
  campaign_id, amount):
 
     campaign = mongo.db.campaigns.find_one(
-        {"_id": ObjectId(campaign_id)})
+        { "_id": ObjectId(campaign_id) })
     user_to = mongo.db.users.find_one(
-        {"_id": ObjectId(user_to_id)})
+        { "_id": ObjectId(user_to_id) })
     user_from = mongo.db.users.find_one(
-        {"_id": ObjectId(user_from_id)})
+        { "_id": ObjectId(user_from_id) })
     time = datetime.now().isoformat(' ', 'seconds')
 
     new_transaction = {
@@ -43,6 +48,14 @@ def create_transaction(user_from_id, user_to_id,
     }
     mongo.db.transactions.insert_one(new_transaction)
 
+# Check what the type of file
+def allowed_file(filename):
+    	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/campaigns/<filename>")
+def file(filename):
+    return mongo.send_file(filename)
+    
 
 @app.route("/")
 @app.route("/home")
@@ -57,9 +70,7 @@ def signin():
         user = mongo.db.users.find_one(
             {"email": request.form.get("email".lower())}
         )
-        # Check if user == true
         if user:
-            # Check password match = True
             if check_password_hash(
                 user["password"], request.form.get(
                     "password")):
@@ -69,10 +80,10 @@ def signin():
                     flash(f"Welcome, {name}")
                     return redirect( url_for(
                         "profile", user=session["user"]))
-            # Password match = False       
+                 
             flash("Incorrect password")
             return render_template("signin.html")
-        # Check if user = False - Email not found
+        
         flash("Incorrect email, please try again or sign up")
     return render_template("signin.html")
 
@@ -86,16 +97,14 @@ def register():
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
 
-        # check if email is already in use
         if email_check:
             flash("Email already in use, please log in.")
             return redirect(url_for("register"))
 
-        # check if the passwords match
         if password != confirm_password:
             flash("Passwords do not match!")
             return redirect(url_for("register"))
-        # add the form details to a dictionary
+        
         register = {
             "first_name": request.form.get(
                 'first_name').lower().capitalize(),
@@ -107,7 +116,6 @@ def register():
         }
         mongo.db.users.insert_one(register)
 
-        # add user to a session
         session["user"] = email
         flash('Registered Welcome to the app!!')
         return redirect( url_for("profile", user=session["user"]))
@@ -117,9 +125,9 @@ def register():
 
 @app.route("/campaigns/<campaign_id>", methods=["GET","POST"])
 def campaign_view(campaign_id):
-    campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
+    campaign = mongo.db.campaigns.find_one({ "_id": ObjectId(campaign_id) })
     user_id = campaign.get("creator_id")
-    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    user = mongo.db.users.find_one({ "_id": ObjectId(user_id) })
     return render_template(
         'campaign_view.html', campaign=campaign, user=user)
 
@@ -146,7 +154,6 @@ def profile(user):
 
 @app.route('/logout')
 def logout():
-    # remove the session cookie
     flash("Your have been logged out")
     session.pop("user")
     return redirect( url_for("signin"))
@@ -189,14 +196,21 @@ def create_campaign():
         user = mongo.db.users.find_one(
             { "email": session['user'] })
         user_id = str(user["_id"])
+
+        if 'image' in request.files:
+            image = request.files["image"]
+            mongo.save_file(image.filename, image)
+
         new_campaign = {
             "name": request.form.get("name"),
             "description":request.form.get("description"),
             "target_amount":request.form.get("target"),
             "current_amount": 0,
+            "campaign_image_name": image.filename,
             "percentage_complete": 0,
             "creator_id": user_id,
         }
+
         mongo.db.campaigns.insert_one(new_campaign)
         flash('You have added a new campaign')
         campaigns = list(mongo.db.campaigns.find(
@@ -210,7 +224,7 @@ def create_campaign():
 @app.route("/edit_campaign/<campaign_id>", methods=["GET", "POST"])
 def edit_campaign(campaign_id):
     campaign = mongo.db.campaigns.find_one(
-        {"_id": ObjectId(campaign_id)})
+        { "_id": ObjectId(campaign_id) })
     if request.method == "POST":
         user = mongo.db.users.find_one(
             { "email": session['user'] })
@@ -224,7 +238,7 @@ def edit_campaign(campaign_id):
             "creator_id": user_id,
         }
         mongo.db.campaigns.update(
-            {"_id": ObjectId(campaign_id)},update_campaign)
+            { "_id": ObjectId(campaign_id) },update_campaign)
         flash("You have edited the campaign")
         campaigns = list(mongo.db.campaigns.find(
              { "creator_id" : user_id } ))
@@ -241,13 +255,17 @@ def collect_campaign(campaign_id):
     user = mongo.db.users.find_one(
         { "email": session['user'] })
     campaign = mongo.db.campaigns.find_one(
-        {"_id": ObjectId(campaign_id)})
+        { "_id": ObjectId(campaign_id) })
     current_user_credits = user["credits"]
     campaign_credits = campaign['current_amount']
     new_total = int(current_user_credits) + int(campaign_credits)
     mongo.db.users.update_one(
         { "email": session['user'] },
-        {"$set":{"credits": new_total }})
+        { "$set":{"credits": new_total } })
+    campaign = mongo.db.campaigns.update_one(
+        { "_id": ObjectId(campaign_id) },
+        { "$set":{"current_amount": 0 } })
+
     flash("You have debited the campign amount into your account")
 
     return redirect(url_for("profile", user=user)) 
@@ -258,13 +276,13 @@ def delete_campaign(campaign_id):
     user = mongo.db.users.find_one(
         { "email": session['user'] })
     campaign = mongo.db.campaigns.find_one(
-        {"_id": ObjectId(campaign_id)})
+        { "_id": ObjectId(campaign_id) })
     current_user_credits = user["credits"]
     campaign_credits = campaign['current_amount']
     new_total = int(current_user_credits) + int(campaign_credits)
     mongo.db.users.update_one(
         { "email": session['user'] },
-        {"$set":{"credits": new_total }})
+        { "$set":{"credits": new_total } })
     mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
     flash("Campaign Deleted Credits have been added to your account")
     
@@ -284,8 +302,8 @@ def transactions(user):
         { "email": session['user'] })
     user_id = str(user["_id"])
     transactions = list(mongo.db.transactions.find(
-        {'$or':[{"user_to_id":user_id},
-        {"user_from_id":user_id}]} ))
+        { '$or':[ {"user_to_id":user_id},
+        { "user_from_id":user_id} ]} ))
 
     return render_template(
         "transactions.html",
@@ -295,18 +313,16 @@ def transactions(user):
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])
 def donate_campaign(campaign_id):
-    # Check if the user is logged in
     
     if not session.get('user'):
         flash('You need to log in to be able to donate!')
         return render_template("signin.html")
     
-    # Set all the selectors
     campaign = mongo.db.campaigns.find_one(
-        {"_id": ObjectId(campaign_id)})
+        { "_id": ObjectId(campaign_id) })
     creator_id = campaign["creator_id"]
     campaign_creator = mongo.db.users.find_one(
-        {"_id": ObjectId(creator_id)})
+        { "_id": ObjectId(creator_id) })
     campaign_name = campaign['name']
     current_user = mongo.db.users.find_one(
         { "email": session['user'] })
@@ -314,13 +330,11 @@ def donate_campaign(campaign_id):
     donation_amount = int(request.form.get("donate"))
     user_credits = current_user['credits']
 
-    # Check if the user has enough credits to make the donation
     if donation_amount > user_credits:
         flash("You do not have enough credits to make this donation")
         return render_template(
             'campaign_view.html', campaign=campaign, user=campaign_creator)
     
-    # The results of the donation
     user_credits_left = user_credits - donation_amount
     target_amount = int(campaign['target_amount'])
     current_amount_raised = campaign['current_amount']
@@ -328,21 +342,18 @@ def donate_campaign(campaign_id):
     new_percentage = round(
         ( new_amount / target_amount) * 100)
 
-    # Update the database with the new results
     mongo.db.campaigns.update_one(
         { "_id": ObjectId(campaign_id) },
-        {"$set":{"current_amount": new_amount}})
+        { "$set":{"current_amount": new_amount} })
     mongo.db.campaigns.update_one(
         { "_id": ObjectId(campaign_id) },
-        {"$set":{"percentage_complete": new_percentage}})
+        { "$set":{"percentage_complete": new_percentage} })
     mongo.db.users.update_one(
         { "email": session['user'] },
-        {"$set":{"credits": user_credits_left}})
+        { "$set":{"credits": user_credits_left} })
     
-    # User feedback on the results of the donation
     flash(
         f"You have added to the {campaign_name} campaign they are now {new_percentage} percent towards their target")
-    # Create a record of the transaction
     create_transaction(
         current_user_id, creator_id , campaign_id, donation_amount)
 
