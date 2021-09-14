@@ -1,4 +1,5 @@
 import os
+from turtle import back
 
 from flask import (
     Flask, flash, render_template,
@@ -22,7 +23,6 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 mongo  = PyMongo(app)
 
@@ -49,10 +49,11 @@ def create_transaction(user_from_id, user_to_id,
     mongo.db.transactions.insert_one(new_transaction)
 
 
-# Check what the type of file
-def allowed_file(filename):
-    	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+@app.errorhandler(413)
+def file_to_large(err):
+    flash('File is too large! Max size 5')
+    
+    return redirect(request.referrer)
 
 # Route for images
 @app.route("/images/<filename>")

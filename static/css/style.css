@@ -20,9 +20,8 @@ body {
   margin-right: 1rem;
 }
 
-.profile_height{
-  height: 150px;
-  width: 150px;
+.profile_height {
+  width: 100px;
 }
 
 /* /////////////////////////// Colours ///////////////////// */
