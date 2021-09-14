@@ -48,14 +48,17 @@ def create_transaction(user_from_id, user_to_id,
     }
     mongo.db.transactions.insert_one(new_transaction)
 
+
 # Check what the type of file
 def allowed_file(filename):
     	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/campaigns/<filename>")
+
+# Route for images
+@app.route("/images/<filename>")
 def file(filename):
     return mongo.send_file(filename)
-    
+
 
 @app.route("/")
 @app.route("/home")
@@ -97,6 +100,11 @@ def register():
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
 
+        if 'profile_image' in request.files:
+            profile_image = request.files["profile_image"]
+            mongo.save_file(profile_image.filename, profile_image)
+            
+
         if email_check:
             flash("Email already in use, please log in.")
             return redirect(url_for("register"))
@@ -111,6 +119,7 @@ def register():
             "last_name": request.form.get(
                 'last_name').lower().capitalize(),
             "password": generate_password_hash(password),
+            "profile_image_name": profile_image.filename,
             "email": email.lower(),
             "credits": 0,
         }
@@ -145,7 +154,7 @@ def user_campaign(campaign_id):
 
 @app.route("/profile/<user>", methods=["GET","POST"])
 def profile(user):
-    user = mongo.db.users.find_one({ "email": session['user'] })
+    user = mongo.db.users.find_one_or_404({ "email": session['user'] })
     if session['user']:
         return render_template("profile.html", user=user)
     
