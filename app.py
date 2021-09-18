@@ -1,5 +1,4 @@
 import os
-from turtle import back
 
 from flask import (
     Flask, flash, render_template,
@@ -26,6 +25,7 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 mongo  = PyMongo(app)
 
+
 def create_transaction(user_from_id, user_to_id,
  campaign_id, amount):
 
@@ -51,36 +51,42 @@ def create_transaction(user_from_id, user_to_id,
 
 @app.errorhandler(413)
 def file_to_large(err):
-    flash('File is too large! Max size 5')
-    
+
+    flash('File is too large! Max size 5MB')
     return redirect(request.referrer)
 
 # Route for images
 @app.route("/images/<filename>")
 def file(filename):
+
     return mongo.send_file(filename)
 
 
 @app.route("/")
 @app.route("/home")
 def home():
+
     campaigns = list(mongo.db.campaigns.find())
     return render_template("home.html", campaigns=campaigns)
 
 
 @app.route("/signin", methods=["GET","POST"])
 def signin():
+
     if request.method == "POST":
         user = mongo.db.users.find_one(
             {"email": request.form.get("email".lower())}
         )
+
         if user:
+
             if check_password_hash(
                 user["password"], request.form.get(
                     "password")):
                     session['user'] = request.form.get(
                         'email').lower()
                     name = user["first_name"].capitalize()
+                    
                     flash(f"Welcome, {name}")
                     return redirect( url_for(
                         "profile", user=session["user"]))
@@ -94,6 +100,7 @@ def signin():
 
 @app.route("/register", methods=["GET","POST"])
 def register():
+
     if request.method == "POST":
         email_check = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
@@ -105,7 +112,6 @@ def register():
             profile_image = request.files["profile_image"]
             mongo.save_file(profile_image.filename, profile_image)
             
-
         if email_check:
             flash("Email already in use, please log in.")
             return redirect(url_for("register"))
@@ -127,6 +133,7 @@ def register():
         mongo.db.users.insert_one(register)
 
         session["user"] = email
+
         flash('Registered Welcome to the app!!')
         return redirect( url_for("profile", user=session["user"]))
     
@@ -135,6 +142,7 @@ def register():
 
 @app.route("/campaigns/<campaign_id>", methods=["GET","POST"])
 def campaign_view(campaign_id):
+    
     campaign = mongo.db.campaigns.find_one({ "_id": ObjectId(campaign_id) })
     user_id = campaign.get("creator_id")
     user = mongo.db.users.find_one({ "_id": ObjectId(user_id) })
@@ -144,6 +152,7 @@ def campaign_view(campaign_id):
 
 @app.route("/user_campaign/<campaign_id>", methods=["GET","POST"])
 def user_campaign(campaign_id):
+
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
     user_id = campaign.get("creator_id")
@@ -155,6 +164,7 @@ def user_campaign(campaign_id):
 
 @app.route("/profile/<user>", methods=["GET","POST"])
 def profile(user):
+
     user = mongo.db.users.find_one_or_404({ "email": session['user'] })
     if session['user']:
         return render_template("profile.html", user=user)
@@ -164,6 +174,7 @@ def profile(user):
 
 @app.route('/logout')
 def logout():
+
     flash("Your have been logged out")
     session.pop("user")
     return redirect( url_for("signin"))
@@ -189,6 +200,7 @@ def add_credits(user):
 
 @app.route("/user_campaigns/<user>")
 def user_campaigns(user):
+
     user = mongo.db.users.find_one(
         { "email": session['user'] })
     user_id = str(user["_id"])
@@ -233,8 +245,10 @@ def create_campaign():
 
 @app.route("/edit_campaign/<campaign_id>", methods=["GET", "POST"])
 def edit_campaign(campaign_id):
+
     campaign = mongo.db.campaigns.find_one(
         { "_id": ObjectId(campaign_id) })
+
     if request.method == "POST":
         user = mongo.db.users.find_one(
             { "email": session['user'] })
@@ -247,6 +261,7 @@ def edit_campaign(campaign_id):
             "percentage_complete": request.form.get("percentage_complete"),
             "creator_id": user_id,
         }
+
         mongo.db.campaigns.update(
             { "_id": ObjectId(campaign_id) },update_campaign)
         flash("You have edited the campaign")
@@ -262,6 +277,7 @@ def edit_campaign(campaign_id):
 
 @app.route("/collect_campaign/<campaign_id>")
 def collect_campaign(campaign_id):
+
     user = mongo.db.users.find_one(
         { "email": session['user'] })
     campaign = mongo.db.campaigns.find_one(
@@ -283,6 +299,7 @@ def collect_campaign(campaign_id):
 
 @app.route("/delete_campaign/<campaign_id>")
 def delete_campaign(campaign_id):
+
     user = mongo.db.users.find_one(
         { "email": session['user'] })
     campaign = mongo.db.campaigns.find_one(
@@ -293,14 +310,17 @@ def delete_campaign(campaign_id):
     mongo.db.users.update_one(
         { "email": session['user'] },
         { "$set":{"credits": new_total } })
-    mongo.db.campaigns.remove({"_id": ObjectId(campaign_id)})
-    flash("Campaign Deleted Credits have been added to your account")
+    mongo.db.campaigns.remove(
+        {"_id": ObjectId(campaign_id)})
+    flash(
+        "Campaign Deleted Credits have been added to your account")
     
     return redirect(url_for("profile", user=user))
 
 
 @app.route("/delete_user/<user>")
 def delete_user(user):
+
     mongo.db.campaigns.remove(user)
     flash("User Deleted")
     return render_template("home.html")
@@ -308,6 +328,7 @@ def delete_user(user):
 
 @app.route("/transactions/<user>")
 def transactions(user):
+
     user = mongo.db.users.find_one(
         { "email": session['user'] })
     user_id = str(user["_id"])
@@ -341,9 +362,11 @@ def donate_campaign(campaign_id):
     user_credits = current_user['credits']
 
     if donation_amount > user_credits:
-        flash("You do not have enough credits to make this donation")
+        flash(
+            "You do not have enough credits to make this donation")
         return render_template(
-            'campaign_view.html', campaign=campaign, user=campaign_creator)
+            'campaign_view.html',
+             campaign=campaign, user=campaign_creator)
     
     user_credits_left = user_credits - donation_amount
     target_amount = int(campaign['target_amount'])
