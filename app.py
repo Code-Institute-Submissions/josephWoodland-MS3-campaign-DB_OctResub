@@ -67,6 +67,12 @@ def file(filename):
 def home():
 
     campaigns = list(mongo.db.campaigns.find())
+    
+    if session['user']:
+        user = mongo.db.users.find_one_or_404({ "email": session['user'] })
+        
+        return render_template("home.html", campaigns=campaigns, user=user)
+    
     return render_template("home.html", campaigns=campaigns)
 
 
@@ -162,7 +168,7 @@ def user_campaign(campaign_id):
      campaign=campaign, user=user) 
 
 
-@app.route("/profile/<user>", methods=["GET","POST"])
+@app.route("/profile/<user>")
 def profile(user):
 
     user = mongo.db.users.find_one_or_404({ "email": session['user'] })
@@ -339,7 +345,7 @@ def transactions(user):
     return render_template(
         "transactions.html",
          transactions=transactions,
-          user_id=user_id)
+          user_id=user_id, user=user)
 
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET","POST"])

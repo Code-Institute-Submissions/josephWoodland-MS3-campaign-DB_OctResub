@@ -41,19 +41,19 @@
               <a href=""><i class="fas fa-search primary-color"></i></a>
             </li>
             {% if session.user %}
-                <li>
-                    <a href="{{ url_for('logout')}}" class="primary-color"
-                    ><i class="fas fa-sign-out-alt margin-right primary-color"></i
-                    >Sign Out</a
-                    >
-                </li>
+            <li>
+              <a href="{{ url_for('logout')}}" class="primary-color"
+                ><i class="fas fa-sign-out-alt margin-right primary-color"></i
+                >Sign Out</a
+              >
+            </li>
             {% else %}
-                <li>
-                <a href="{{ url_for('signin')}}" class="primary-color"
-                    ><i class="fas fa-sign-in-alt margin-right primary-color"></i
-                    >Sign In</a
-                >
-                </li>
+            <li>
+              <a href="{{ url_for('signin')}}" class="primary-color"
+                ><i class="fas fa-sign-in-alt margin-right primary-color"></i
+                >Sign In</a
+              >
+            </li>
             {% endif %}
           </ul>
         </div>
@@ -64,30 +64,57 @@
           <div class="user-view">
             {% if session.user %}
             <img
-            src="{{ url_for('file', filename=user['profile_image_name']) }}"
-            class="circle profile_height col s2 offset-s1"
-            alt=""
-            />            
+              src="{{ url_for('file', filename=user['profile_image_name']) }}"
+              class="circle profile_height col s2 offset-s1"
+              alt=""
+            />
             {% else %}
             <a href="#"><i class="fas fa-users large primary-color"></i></a>
             {% endif %}
           </div>
         </li>
         {% if session.user %}
-            <li><a class="waves-effect" href="{{ url_for('profile', user=session['user'])}}"></i>Profile</a></li>
-            <li><a class="waves-effect" href="{{ url_for('user_campaigns', user=session['user'])}}">Campaigns</a></li>
-            <li><a class="waves-effect" href="{{ url_for('transactions', user=session['user'])}}">Transactions</a></li>
-            <li><a class="waves-effect" href="#!">History</a></li>
-            <li><a class="waves-effect" href="#!">Search</a></li>
-            <li><a class="waves-effect" href="{{ url_for('logout')}}">Sign Out</a></li>
+        <li>
+          <a
+            class="waves-effect"
+            href="{{ url_for('profile', user=session['user'])}}"
+            >Profile</a
+          >
+        </li>
+        <li>
+          <a
+            class="waves-effect"
+            href="{{ url_for('user_campaigns', user=session['user'])}}"
+            >Campaigns</a
+          >
+        </li>
+        <li>
+          <a
+            class="waves-effect"
+            href="{{ url_for('transactions', user=session['user'])}}"
+            >Transactions</a
+          >
+        </li>
+        <li><a class="waves-effect" href="#!">Search</a></li>
+        <li>
+          <a class="waves-effect" href="{{ url_for('logout')}}">Sign Out</a>
+        </li>
         {% else %}
-            <li><a class="waves-effect" href="{{ url_for('signin')}}">Sign In</a></li>
+        <li>
+          <a class="waves-effect" href="{{ url_for('signin')}}">Sign In</a>
+        </li>
         {% endif %}
-            <li><div class="divider"></div></li>
+        <li><div class="divider"></div></li>
         {% if session.user %}
-            <li><a class="waves-effect" href="{{ url_for('delete_user', user=session['user'])}}">Delete Profile</a></li>
+        <li>
+          <a
+            class="waves-effect"
+            href="{{ url_for('delete_user', user=session['user'])}}"
+            >Delete Profile</a
+          >
+        </li>
         {% endif %}
-        </ul>
+      </ul>
       <a href="#" data-target="slide-out" class="sidenav-trigger"
         ><i class="fas fa-bars primary-color"></i
       ></a>
@@ -102,9 +129,7 @@
       {% endfor %} {% endif %} {% endwith %}
     </section>
     <h1 class="primary-color center-align">My-Campaign.com</h1>
-    <main class="container">
-      {% block content %} {% endblock %}
-    </main>
+    <main class="container">{% block content %} {% endblock %}</main>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
