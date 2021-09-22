@@ -62,14 +62,15 @@
       <ul id="slide-out" class="sidenav">
         <li>
           <div class="user-view">
-            <div class="background">
-              <img src="images/office.jpg" />
-            </div>
-            <a href="#"><img class="circle" src="images/yuna.jpg" /></a>
-            <a href="#"><span class="white-text name"></span></a>
-            <a href="#"
-              ><span class="white-text email"></span></a
-            >
+            {% if session.user %}
+            <img
+            src="{{ url_for('file', filename=user['profile_image_name']) }}"
+            class="circle profile_height col s2 offset-s1"
+            alt=""
+            />            
+            {% else %}
+            <a href="#"><i class="fas fa-users large primary-color"></i></a>
+            {% endif %}
           </div>
         </li>
         {% if session.user %}
