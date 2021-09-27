@@ -3,7 +3,7 @@ import os
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
@@ -66,14 +66,26 @@ def file(filename):
 @app.route("/home")
 def home():
 
+    campaign = mongo.db.campaigns
     campaigns = list(mongo.db.campaigns.find())
     
-    if session['user']:
-        user = mongo.db.users.find_one_or_404({ "email": session['user'] })
+    limit = 4
+
+    newest_campaigns = list(campaign.find().sort('time_created', pymongo.ASCENDING).limit(limit))
+    nearly_completed = list(campaign.find().sort('percentage_complete', pymongo.ASCENDING).limit(limit))
+
+    print(campaigns)
+    print(newest_campaigns)
+    print(nearly_completed)
+
+    try:
+        if session['user']:
+            user = mongo.db.users.find_one_or_404({ "email": session['user'] })
         
         return render_template("home.html", campaigns=campaigns, user=user)
-    
-    return render_template("home.html", campaigns=campaigns)
+    except KeyError:
+
+        return render_template("home.html", campaigns=campaigns)
 
 
 @app.route("/signin", methods=["GET","POST"])
@@ -224,6 +236,7 @@ def create_campaign():
         user = mongo.db.users.find_one(
             { "email": session['user'] })
         user_id = str(user["_id"])
+        time = datetime.now().isoformat(' ', 'seconds')
 
         if 'image' in request.files:
             image = request.files["image"]
@@ -236,6 +249,7 @@ def create_campaign():
             "current_amount": 0,
             "campaign_image_name": image.filename,
             "percentage_complete": 0,
+            "time_created": time,
             "creator_id": user_id,
         }
 
