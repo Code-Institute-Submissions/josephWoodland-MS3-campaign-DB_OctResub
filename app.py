@@ -2,13 +2,12 @@ import os
 
 from flask import (
     Flask, flash, render_template,
-    redirect, request, session, url_for)
+    redirect, request, session, url_for, g)
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 from datetime import datetime
-from werkzeug.utils import secure_filename
 
 
 if os.path.exists("env.py"):
@@ -54,6 +53,16 @@ def file_to_large(err):
 
     flash('File is too large! Max size 5MB')
     return redirect(request.referrer)
+
+
+@app.before_request
+def before_request_func():
+
+    user = mongo.db.users.find_one_or_404(
+            { "email": session.get('user') })
+    
+    g.user = user
+
 
 # Route for images
 @app.route("/images/<filename>")
@@ -180,12 +189,11 @@ def user_campaign(campaign_id):
      campaign=campaign, user=user) 
 
 
-@app.route("/profile/<user>")
-def profile(user):
+@app.route("/profile")
+def profile():
 
-    user = mongo.db.users.find_one_or_404({ "email": session['user'] })
     if session['user']:
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=g.user)
     
     return redirect(url_for("signin"))
 
@@ -198,29 +206,27 @@ def logout():
     return redirect( url_for("signin"))
 
 
-@app.route("/update_credits/<user>", methods=["GET","POST"])
-def add_credits(user):
+@app.route("/update_credits", methods=["GET","POST"])
+def add_credits():
     
     if request.method == "POST":
-        user = mongo.db.users.find_one(
-            { "email": session['user'] })
+        
         amount = int(request.form.get("add_credits"))
-        credits = user["credits"]
+        credits = g.user["credits"]
         new_total = credits + amount
         mongo.db.users.update_one(
             { "email": session['user'] }, {"$set":{"credits": new_total}})
         flash(f"You added {amount}, credits")
 
-        return redirect(url_for("profile", user=user))
+        return redirect(url_for("profile", user=g.user))
 
-    return redirect(url_for("profile", user=user))
+    return redirect(url_for("profile", user=g.user))
 
 
-@app.route("/user_campaigns/<user>")
-def user_campaigns(user):
+@app.route("/user_campaigns")
+def user_campaigns():
 
-    user = mongo.db.users.find_one(
-        { "email": session['user'] })
+    user = g.user
     user_id = str(user["_id"])
     campaigns = list(mongo.db.campaigns.find(
          { "creator_id" : user_id } ))
@@ -260,7 +266,7 @@ def create_campaign():
         return render_template('user_campaigns.html',
          user=user, campaigns=campaigns)
 
-    return render_template("create_campaign.html")
+    return render_template("create_campaign.html", user=g.user)
 
 
 @app.route("/edit_campaign/<campaign_id>", methods=["GET", "POST"])
@@ -338,19 +344,18 @@ def delete_campaign(campaign_id):
     return redirect(url_for("profile", user=user))
 
 
-@app.route("/delete_user/<user>")
-def delete_user(user):
+@app.route("/delete_user")
+def delete_user():
 
-    mongo.db.campaigns.remove(user)
+    mongo.db.campaigns.remove(g.user)
     flash("User Deleted")
     return render_template("home.html")
 
 
-@app.route("/transactions/<user>")
-def transactions(user):
+@app.route("/transactions")
+def transactions():
 
-    user = mongo.db.users.find_one(
-        { "email": session['user'] })
+    user = g.user
     user_id = str(user["_id"])
     transactions = list(mongo.db.transactions.find(
         { '$or':[ {"user_to_id":user_id},
