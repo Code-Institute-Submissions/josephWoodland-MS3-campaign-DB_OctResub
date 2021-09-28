@@ -1,11 +1,15 @@
 {% extends "index.html" %} {% block content %}
 <h2 class="heading-color">New this week</h2>
-<a href=""><p>view all</p></a>
+<a href="{{ url_for('campaigns') }}"><p>view all</p></a>
 <div class="row">
   {% for campaign in campaigns %}
   <div class="card col s5 m4 l3 hoverable">
     <div class="card-image waves-effect waves-block waves-light">
-      <i class="far fa-image"></i>
+      <img
+        src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
+        class="col s5"
+        alt=""
+      />
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4"
@@ -35,13 +39,19 @@
   </div>
   {% endfor %}
 </div>
-<h2 class="heading-color">Nearly there!! These targets are nearly hit!!</h2>
+<h2 class="heading-color">
+  Overfunded! These campaigns are past there target!!
+</h2>
 <a href=""><p>view all</p></a>
 <div class="row">
-  {% for campaign in campaigns %}
+  {% for campaign in overfunded %}
   <div class="card col s5 m4 l3 hoverable">
     <div class="card-image waves-effect waves-block waves-light">
-      <i class="far fa-image"></i>
+      <img
+        src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
+        class="circle profile_height col s2 offset-s1"
+        alt=""
+      />
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4"

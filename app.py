@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 from datetime import datetime
+from operator import itemgetter
 
 
 if os.path.exists("env.py"):
@@ -55,13 +56,21 @@ def file_to_large(err):
     return redirect(request.referrer)
 
 
+#Function to assing the user when a request is made
 @app.before_request
 def before_request_func():
 
-    user = mongo.db.users.find_one_or_404(
+    try:
+        if session['user']:
+            user = mongo.db.users.find_one_or_404(
             { "email": session.get('user') })
     
-    g.user = user
+            g.user = user
+
+            return 
+        
+    except KeyError:
+        return
 
 
 # Route for images
@@ -76,25 +85,18 @@ def file(filename):
 def home():
 
     campaign = mongo.db.campaigns
-    campaigns = list(mongo.db.campaigns.find())
-    
-    limit = 4
 
-    newest_campaigns = list(campaign.find().sort('time_created', pymongo.ASCENDING).limit(limit))
-    nearly_completed = list(campaign.find().sort('percentage_complete', pymongo.ASCENDING).limit(limit))
-
-    print(campaigns)
-    print(newest_campaigns)
-    print(nearly_completed)
+    campaigns = list(campaign.find().sort('time_created', pymongo.ASCENDING).limit(4))
+    overfunded = list(campaign.find({ "percentage_complete":{ '$gt': 100}} ).limit(4))
 
     try:
         if session['user']:
             user = mongo.db.users.find_one_or_404({ "email": session['user'] })
         
-        return render_template("home.html", campaigns=campaigns, user=user)
+        return render_template("home.html", campaigns=campaigns, user=user, overfunded=overfunded)
     except KeyError:
 
-        return render_template("home.html", campaigns=campaigns)
+        return render_template("home.html", campaigns=campaigns, overfunded=overfunded)
 
 
 @app.route("/signin", methods=["GET","POST"])
@@ -173,6 +175,7 @@ def campaign_view(campaign_id):
     campaign = mongo.db.campaigns.find_one({ "_id": ObjectId(campaign_id) })
     user_id = campaign.get("creator_id")
     user = mongo.db.users.find_one({ "_id": ObjectId(user_id) })
+    
     return render_template(
         'campaign_view.html', campaign=campaign, user=user)
 
@@ -189,6 +192,14 @@ def user_campaign(campaign_id):
      campaign=campaign, user=user) 
 
 
+@app.route("/campaigns")
+def campaigns():
+        
+    campaigns = list(mongo.db.campaigns.find())
+
+    return render_template('campaigns.html', campaigns=campaigns, user=g.user)
+
+
 @app.route("/profile")
 def profile():
 
@@ -203,7 +214,8 @@ def logout():
 
     flash("Your have been logged out")
     session.pop("user")
-    return redirect( url_for("signin"))
+
+    return redirect( url_for("home"))
 
 
 @app.route("/update_credits", methods=["GET","POST"])
@@ -357,9 +369,11 @@ def transactions():
 
     user = g.user
     user_id = str(user["_id"])
-    transactions = list(mongo.db.transactions.find(
-        { '$or':[ {"user_to_id":user_id},
-        { "user_from_id":user_id} ]} ))
+    transactions_list = list(mongo.db.transactions.find(
+        { '$or':[ {"user_to_id": user_id},
+        { "user_from_id": user_id} ]} ))
+    
+    transactions = sorted(transactions_list, key=itemgetter('transaction_time'), reverse=True)
 
     return render_template(
         "transactions.html",

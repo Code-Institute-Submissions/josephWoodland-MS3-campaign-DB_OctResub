@@ -6,7 +6,10 @@
 <div class="col s12 m7">
   <div class="card horizontal">
     <div class="card-image">
-      <img src="https://lorempixel.com/100/190/nature/6" />
+      <img
+        src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
+        alt=""
+      />
     </div>
     <div class="card-stacked">
       <div class="card-content">
@@ -25,19 +28,24 @@
         <div id="modal1" class="modal">
           <div class="modal-content">
             <h4>Donate</h4>
-            <form class="col s12" method="POST" action="{{ url_for('donate_campaign', campaign_id=campaign._id )}}">
+            <form
+              class="col s12"
+              method="POST"
+              action="{{ url_for('donate_campaign', campaign_id=campaign._id )}}"
+            >
               <div class="row">
                 <div class="input-field col s6">
                   <input
                     id="donate"
                     name="donate"
                     type="number"
+                    min="1"
+                    pattern="[0-9.]+"
                     class="validate"
+                    required
                   />
                   <label for="donate">amount</label>
-                  <button type="submit" class="btn-large">
-                    Donate
-                  </button>
+                  <button type="submit" class="btn-large">Donate</button>
                 </div>
               </div>
             </form>

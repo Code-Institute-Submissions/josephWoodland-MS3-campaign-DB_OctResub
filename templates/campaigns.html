@@ -1,19 +1,20 @@
 {% extends "index.html" %} {% block content %}
-
-<h2 class="heading-color center-align">
-  Campaigns
-
-  <a href="{{ url_for('create_campaign') }}" class="btn-small right"
-    >Create Campaign</a
-  >
-</h2>
-
-{% if campaigns|length > 0 %}
+<h2 class="heading-color">A list of all our campaigns</h2>
+<div class="row col m3 offset-m3">
+  <input type="search" name='search' id="search">
+  <label for="search">
+    <i class="fas fa-search"></i>
+  </label>
+</div>
 <div class="row">
   {% for campaign in campaigns %}
   <div class="card col s5 m4 l3 hoverable">
     <div class="card-image waves-effect waves-block waves-light">
-      <img src="{{url_for('file', filename=campaign[campaign_image_name])}}" alt="">
+      <img
+          src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
+          class="col s5"
+          alt=""
+        />
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4"
@@ -29,8 +30,8 @@
         data-tooltip="{{ campaign.percentage_complete }}%"
       ></progress>
       <p>
-        <a href="{{ url_for('user_campaign', campaign_id=campaign._id )}}"
-          >Details</a
+        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+          >Donate</a
         >
       </p>
     </div>
@@ -43,8 +44,4 @@
   </div>
   {% endfor %}
 </div>
-{% else %}
-
-<h2 class="heading-color center-align">You have no campaigns</h2>
-
-{% endif %} {% endblock %}
+{% endblock %}
