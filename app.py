@@ -320,7 +320,7 @@ def edit_campaign(campaign_id):
              campaigns=campaigns)
 
     return render_template("edit_campaign.html",
-     campaign=campaign)
+     campaign=campaign, user=g.user)
 
 
 @app.route("/collect_campaign/<campaign_id>")
@@ -332,18 +332,24 @@ def collect_campaign(campaign_id):
         { "_id": ObjectId(campaign_id) })
     current_user_credits = user["credits"]
     campaign_credits = campaign['current_amount']
-    new_total = int(current_user_credits) + int(campaign_credits)
-    mongo.db.users.update_one(
-        { "email": session['user'] },
-        { "$set":{"credits": new_total } })
-    campaign = mongo.db.campaigns.update_one(
-        { "_id": ObjectId(campaign_id) },
-        { "$set":{"current_amount": 0 } })
 
-    flash("You have debited the campign amount into your account")
+    if campaign_credits == int:
+        new_total = int(current_user_credits) + int(campaign_credits)
+        mongo.db.users.update_one(
+            { "email": session['user'] },
+            { "$set":{"credits": new_total } })
+        campaign = mongo.db.campaigns.update_one(
+            { "_id": ObjectId(campaign_id) },
+            { "$set":{"current_amount": 0 } })
 
-    return redirect(url_for("profile", user=user)) 
+        flash("You have debited the campign amount into your account")
 
+        return redirect(url_for("profile", user=user)) 
+    else:
+
+        flash("You did not take any credits from this campaign")
+
+        return redirect(url_for("profile", user=user)) 
 
 @app.route("/delete_campaign/<campaign_id>")
 def delete_campaign(campaign_id):
@@ -354,17 +360,24 @@ def delete_campaign(campaign_id):
         { "_id": ObjectId(campaign_id) })
     current_user_credits = user["credits"]
     campaign_credits = campaign['current_amount']
-    new_total = int(current_user_credits) + int(campaign_credits)
-    mongo.db.users.update_one(
-        { "email": session['user'] },
-        { "$set":{"credits": new_total } })
-    mongo.db.campaigns.remove(
-        {"_id": ObjectId(campaign_id)})
-    flash(
-        "Campaign Deleted Credits have been added to your account")
-    
-    return redirect(url_for("profile", user=user))
 
+    if campaign_credits == int:
+        new_total = int(current_user_credits) + int(campaign_credits)
+        mongo.db.users.update_one(
+            { "email": session['user'] },
+            { "$set":{"credits": new_total } })
+        mongo.db.campaigns.remove(
+            {"_id": ObjectId(campaign_id)})
+        flash(
+            "Campaign Deleted Credits have been added to your account")
+        
+        return redirect(url_for("profile", user=user))
+    
+    else:
+    
+        flash("You did not take any credits from this campaign")
+
+        return redirect(url_for("profile", user=user)) 
 
 @app.route("/delete_user")
 def delete_user():
