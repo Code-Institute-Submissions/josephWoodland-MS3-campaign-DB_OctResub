@@ -200,6 +200,16 @@ def campaigns():
     return render_template('campaigns.html', campaigns=campaigns, user=g.user)
 
 
+@app.route('/search', methods=["GET", "POST"])
+def search():
+
+    search = request.form.get("search")
+
+    campaigns = list(mongo.db.campaigns.find({"$text": {"$search": search }}))
+
+    return render_template('campaigns.html', campaigns=campaigns, user=g.user)
+
+
 @app.route("/profile")
 def profile():
 

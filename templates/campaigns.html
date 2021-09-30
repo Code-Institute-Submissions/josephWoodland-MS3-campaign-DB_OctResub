@@ -1,14 +1,30 @@
 {% extends "index.html" %} {% block content %}
 <h2 class="heading-color">A list of all our campaigns</h2>
-<div class="row col m3 offset-m3">
-  <input type="search" name='search' id="search">
-  <label for="search">
-    <i class="fas fa-search"></i>
-  </label>
+<div class="row card-panel col s9">
+  <form action="{{ url_for('search')}}" method="post" class="col s9">
+    <div class="row valign-wrapper center-align">
+      <div class="input-field col s9">
+        <i class="fas fa-search prefix primary-color"></i>
+        <input type="text" name="search" id="search"  minlength="3" class="validate" required>
+        <label for="search">Search campaigns</label>
+        <div class="col s12 m8">
+          <a href="{{ url_for('campaigns') }}" class="red btn text-shadow">Reset</a>
+          <button type="submit" class="light-green btn text-shadow right">
+            <i class="fas fa-search left"></i> Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
+{% if campaigns|length > 0 %}
 <div class="row">
   {% for campaign in campaigns %}
-  <div class="card col s5 m4 l3 hoverable">
+    {% if campaign.percentage_complete > 100 %}
+    <div class="card col s5 m4 l3 hoverable light-green">
+    {% else %}
+    <div class="card col s5 m4 l3 hoverable">
+    {% endif %} 
     <div class="card-image waves-effect waves-block waves-light">
       <img
           src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
@@ -22,6 +38,9 @@
           class="fas fa-chevron-circle-down orange-icon right"
         ></i
       ></span>
+      {% if campaign.percentage_complete > 100 %}
+        <p class="primary-color">Overfunded!! {{ campaign.percentage_complete }}%!!!!!!</p>
+      {% endif %} 
       <progress
         class="tooltipped"
         value="{{ campaign.percentage_complete }}"
@@ -43,5 +62,9 @@
     </div>
   </div>
   {% endfor %}
+    </div>
 </div>
+{% else %}
+<h2 class="primary-color">No Results Found</h2>
+{% endif %}
 {% endblock %}
