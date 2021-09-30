@@ -216,7 +216,7 @@ def profile():
     if session['user']:
         return render_template("profile.html", user=g.user)
     
-    return redirect(url_for("signin"))
+    return redirect(url_for("signin", user=g.user))
 
 
 @app.route('/logout')
@@ -351,6 +351,7 @@ def collect_campaign(campaign_id):
 
         return redirect(url_for("profile", user=user)) 
 
+
 @app.route("/delete_campaign/<campaign_id>")
 def delete_campaign(campaign_id):
 
@@ -379,12 +380,14 @@ def delete_campaign(campaign_id):
 
         return redirect(url_for("profile", user=user)) 
 
+
 @app.route("/delete_user")
 def delete_user():
 
     mongo.db.campaigns.remove(g.user)
     flash("User Deleted")
-    return render_template("home.html")
+
+    return redirect( url_for("logout"))
 
 
 @app.route("/transactions")
@@ -452,7 +455,7 @@ def donate_campaign(campaign_id):
     create_transaction(
         current_user_id, creator_id , campaign_id, donation_amount)
 
-    return redirect( url_for('home'))
+    return redirect( url_for('home', user=g.user))
 
 
 if __name__ == "__main__":
