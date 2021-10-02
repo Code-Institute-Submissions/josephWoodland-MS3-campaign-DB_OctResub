@@ -11,14 +11,14 @@
 {% if campaigns|length > 0 %}
 <div class="row">
   {% for campaign in campaigns %}
-  <div class="card col s5 m4 l3 hoverable">
+  <div class="card col s12 m5 l3 hoverable">
     <div class="card-image waves-effect waves-block waves-light">
       <img
         src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
         alt=""
       />
     </div>
-    <div class="card-content no-padding">
+    <div class="card-content">
       <span class="card-title activator grey-text text-darken-4"
         >{{ campaign.name }}<i
           class="fas fa-chevron-circle-down orange-icon right"
