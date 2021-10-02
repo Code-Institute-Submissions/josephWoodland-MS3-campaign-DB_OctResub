@@ -9,16 +9,16 @@
           class="circle profile_height col s2 offset-s1"
           alt=""
         />
-        <h2 class="header-color center-align col s9">
+        <h4 class="header-color center-align col s9">
           {{ user.first_name }}'s Profile
-        </h2>
+        </h4>
       </div>
-      <h2>Name: {{ user.first_name + ' ' + user.last_name}}</h2>
-      <h2>Email: {{ user.email }}</h2>
+      <h4>Name: {{ user.first_name + ' ' + user.last_name}}</h4>
+      <h4>Email: {{ user.email }}</h4>
       {% if user.credits %}
-      <h2>Credits: {{ user.credits }}</h2>
+      <h4>Credits: {{ user.credits }}</h4>
       {% else %}
-      <h2>You have no credits</h2>
+      <h4>You have no credits</h4>
       {% endif %}
       <div class="row">
         <a href="#modal1" class="col m2 btn-large offset-m4 modal-trigger">
