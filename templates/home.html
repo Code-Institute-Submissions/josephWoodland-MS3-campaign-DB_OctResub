@@ -11,7 +11,7 @@
         alt=""
       />
     </div>
-    <div class="card-content">
+    <div class="card-content no-padding">
       <span class="card-title activator grey-text text-darken-4"
         >{{ campaign.name }}<i
           class="fas fa-chevron-circle-down orange-icon right"
@@ -53,7 +53,7 @@
         alt=""
       />
     </div>
-    <div class="card-content">
+    <div class="card-content no-padding">
       <span class="card-title activator grey-text text-darken-4"
         >{{ campaign.name }}<i
           class="fas fa-chevron-circle-down orange-icon right"
@@ -66,7 +66,11 @@
         data-position="top"
         data-tooltip="{{ campaign.percentage_complete }}%"
       ></progress>
-      <p><a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}">Donate</a></p>
+      <p>
+        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+          >Donate</a
+        >
+      </p>
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4"

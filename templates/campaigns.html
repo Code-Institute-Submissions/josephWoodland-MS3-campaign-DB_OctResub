@@ -5,10 +5,19 @@
     <div class="row valign-wrapper center-align">
       <div class="input-field col s9">
         <i class="fas fa-search prefix primary-color"></i>
-        <input type="text" name="search" id="search"  minlength="3" class="validate" required>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          minlength="3"
+          class="validate"
+          required
+        />
         <label for="search">Search campaigns</label>
         <div class="col s12 m8">
-          <a href="{{ url_for('campaigns') }}" class="red btn text-shadow">Reset</a>
+          <a href="{{ url_for('campaigns') }}" class="red btn text-shadow"
+            >Reset</a
+          >
           <button type="submit" class="light-green btn text-shadow right">
             <i class="fas fa-search left"></i> Search
           </button>
@@ -19,52 +28,52 @@
 </div>
 {% if campaigns|length > 0 %}
 <div class="row">
-  {% for campaign in campaigns %}
-    {% if campaign.percentage_complete > 100 %}
-    <div class="card col s5 m4 l3 hoverable light-green">
+  {% for campaign in campaigns %} {% if campaign.percentage_complete > 100 %}
+  <div class="card col s5 m4 l3 hoverable light-green">
     {% else %}
     <div class="card col s5 m4 l3 hoverable">
-    {% endif %} 
-    <div class="card-image waves-effect waves-block waves-light">
-      <img
+      {% endif %}
+      <div class="card-image waves-effect waves-block waves-light">
+        <img
           src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
           class="col s5"
           alt=""
         />
+      </div>
+      <div class="card-content no-padding">
+        <span class="card-title activator grey-text text-darken-4"
+          >{{ campaign.name }}<i
+            class="fas fa-chevron-circle-down orange-icon right"
+          ></i
+        ></span>
+        {% if campaign.percentage_complete > 100 %}
+        <p class="primary-color">
+          Overfunded!! {{ campaign.percentage_complete }}%!!!!!!
+        </p>
+        {% endif %}
+        <progress
+          class="tooltipped left"
+          value="{{ campaign.percentage_complete }}"
+          max="100"
+          data-position="top"
+          data-tooltip="{{ campaign.percentage_complete }}%"
+        ></progress>
+        <p>
+          <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+            >Donate</a
+          >
+        </p>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4"
+          >{{ campaign.name }}<i class="fas fa-times right"></i
+        ></span>
+        <p>{{ campaign.description }}</p>
+      </div>
     </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"
-        >{{ campaign.name }}<i
-          class="fas fa-chevron-circle-down orange-icon right"
-        ></i
-      ></span>
-      {% if campaign.percentage_complete > 100 %}
-        <p class="primary-color">Overfunded!! {{ campaign.percentage_complete }}%!!!!!!</p>
-      {% endif %} 
-      <progress
-        class="tooltipped"
-        value="{{ campaign.percentage_complete }}"
-        max="100"
-        data-position="top"
-        data-tooltip="{{ campaign.percentage_complete }}%"
-      ></progress>
-      <p>
-        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
-          >Donate</a
-        >
-      </p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"
-        >{{ campaign.name }}<i class="fas fa-times right"></i
-      ></span>
-      <p>{{ campaign.description }}</p>
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-    </div>
 </div>
 {% else %}
 <h2 class="primary-color">No Results Found</h2>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

@@ -14,11 +14,11 @@
     <tr>
       <td>{{ transaction.campaign }}</td>
       {% if user_id == transaction.user_from_id %}
-        <td>{{ transaction.user_to }}</td>
-        <td class="color-red">-{{ transaction.amount }}</td>
+      <td>{{ transaction.user_to }}</td>
+      <td class="color-red">-{{ transaction.amount }}</td>
       {% else %}
-        <td>{{ transaction.user_from }}</td>
-        <td class="color-green">{{ transaction.amount }}</td>
+      <td>{{ transaction.user_from }}</td>
+      <td class="color-green">{{ transaction.amount }}</td>
       {% endif %}
       <td>{{ transaction.transaction_time }}</td>
     </tr>

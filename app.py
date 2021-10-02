@@ -25,9 +25,9 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 mongo  = PyMongo(app)
 
-"""
-This function is used to record transactions between users.
-"""
+
+# --------------- Functions ------------------
+
 def create_transaction(user_from_id, user_to_id,
  campaign_id, amount):
 
@@ -58,7 +58,6 @@ def file_to_large(err):
     return redirect(request.referrer)
 
 
-#Function to assing the user when a request is made
 @app.before_request
 def before_request_func():
 
@@ -78,7 +77,8 @@ def before_request_func():
         return
 
 
-# Route for images
+# ------------------ app.routes ---------------
+
 @app.route("/images/<filename>")
 def file(filename):
 
