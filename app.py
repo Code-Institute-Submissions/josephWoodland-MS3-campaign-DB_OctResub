@@ -101,7 +101,7 @@ def home():
         
         return render_template("home.html", campaigns=campaigns, user=user, overfunded=overfunded)
     
-    except KeyError:
+    except (AttributeError, KeyError):
 
         return render_template("home.html", campaigns=campaigns, overfunded=overfunded)
 
@@ -223,7 +223,7 @@ def campaigns():
         
             return render_template('campaigns.html', campaigns=campaigns, user=g.user)
     
-    except KeyError:
+    except (AttributeError, KeyError):
 
         return render_template('campaigns.html', campaigns=campaigns)
 
@@ -239,7 +239,7 @@ def overfunded():
         
             return render_template('overfunded.html', campaigns=campaigns, user=g.user)
     
-    except KeyError:
+    except (AttributeError, KeyError):
 
         return render_template('overfunded.html', campaigns=campaigns)
 
@@ -251,7 +251,14 @@ def search():
 
     campaigns = list(mongo.db.campaigns.find({"$text": {"$search": search }}))
 
-    return render_template('campaigns.html', campaigns=campaigns, user=g.user)
+    try:
+        if session['user']:
+
+            return render_template('campaigns.html', campaigns=campaigns, user=g.user)
+    
+    except (AttributeError, KeyError):
+
+            return render_template('campaigns.html', campaigns=campaigns)
 
 
 @app.route("/profile")
