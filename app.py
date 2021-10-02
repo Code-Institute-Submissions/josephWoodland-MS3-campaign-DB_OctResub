@@ -190,8 +190,14 @@ def campaign_view(campaign_id):
     creator_id = campaign.get("creator_id")
     creator = mongo.db.users.find_one({ "_id": ObjectId(creator_id) })
     
-    return render_template(
-        'campaign_view.html', campaign=campaign, user=g.user, creator=creator)
+    try:
+        if session['user']:
+
+            return render_template('campaign_view.html', campaign=campaign, user=g.user, creator=creator)
+
+    except (AttributeError, KeyError):
+
+        return render_template('campaign_view.html', campaign=campaign, creator=creator)
 
 
 @app.route("/user_campaign/<campaign_id>", methods=["GET","POST"])
