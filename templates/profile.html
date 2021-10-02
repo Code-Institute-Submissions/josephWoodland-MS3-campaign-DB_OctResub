@@ -9,9 +9,9 @@
           class="circle profile_height col s2 offset-s1"
           alt=""
         />
-        <h1 class="header-color center-align col s9">
+        <h2 class="header-color center-align col s9">
           {{ user.first_name }}'s Profile
-        </h1>
+        </h2>
       </div>
       <h2>Name: {{ user.first_name + ' ' + user.last_name}}</h2>
       <h2>Email: {{ user.email }}</h2>
@@ -29,7 +29,14 @@
       <!-- Modal Structure -->
       <div id="modal1" class="modal">
         <div class="modal-content">
-          <h4>Add Credits</h4>
+          <div class="row">
+            <h4 class="col s6">Add Credits</h4>
+            <div class="col s6">
+              <a class="modal-close"
+                ><i class="fas fa-times right primary-color"></i
+              ></a>
+            </div>            
+          </div>
           <form
             class="col s12"
             method="POST"
@@ -54,11 +61,6 @@
               </div>
             </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-close"
-            ><i class="fas fa-times right"></i
-          ></a>
         </div>
       </div>
     </div>

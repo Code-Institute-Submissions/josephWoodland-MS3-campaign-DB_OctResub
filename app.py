@@ -312,6 +312,8 @@ def edit_campaign(campaign_id):
         user = mongo.db.users.find_one(
             { "email": session['user'] })
         user_id = str(user["_id"])
+        image = campaign['campaign_image_name']
+
         update_campaign = {
             "name": request.form.get("name"),
             "description":request.form.get("description"),
@@ -319,13 +321,16 @@ def edit_campaign(campaign_id):
             "current_amount": request.form.get("current_amount"),
             "percentage_complete": request.form.get("percentage_complete"),
             "creator_id": user_id,
+            "campaign_image_name": image,
         }
 
         mongo.db.campaigns.update(
             { "_id": ObjectId(campaign_id) },update_campaign)
         flash("You have edited the campaign")
+
         campaigns = list(mongo.db.campaigns.find(
              { "creator_id" : user_id } ))
+
         return render_template(
             'user_campaigns.html', user=user,
              campaigns=campaigns)
