@@ -45,7 +45,7 @@
 <a href=""><p>view all</p></a>
 <div class="row">
   {% for campaign in overfunded %}
-  <div class="card col s5 m4 l3 hoverable">
+  <div class="card col s5 m4 l3 hoverable light-green">
     <div class="card-image waves-effect waves-block waves-light">
       <img
         src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
@@ -66,7 +66,7 @@
         data-position="top"
         data-tooltip="{{ campaign.percentage_complete }}%"
       ></progress>
-      <p><a href="#">Donate</a></p>
+      <p><a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}">Donate</a></p>
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4"

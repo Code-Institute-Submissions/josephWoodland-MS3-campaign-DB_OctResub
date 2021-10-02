@@ -61,6 +61,7 @@ def file_to_large(err):
 def before_request_func():
 
     try:
+        
         if session['user']:
             user = mongo.db.users.find_one_or_404(
             { "email": session.get('user') })
@@ -70,6 +71,7 @@ def before_request_func():
             return 
         
     except KeyError:
+        
         return
 
 
@@ -94,6 +96,7 @@ def home():
             user = mongo.db.users.find_one_or_404({ "email": session['user'] })
         
         return render_template("home.html", campaigns=campaigns, user=user, overfunded=overfunded)
+    
     except KeyError:
 
         return render_template("home.html", campaigns=campaigns, overfunded=overfunded)
@@ -196,10 +199,18 @@ def user_campaign(campaign_id):
 def campaigns():
         
     campaigns = list(mongo.db.campaigns.find())
+    
+    try:
+        
+        if session['user']:
+        
+            return render_template('campaigns.html', campaigns=campaigns, user=g.user)
+    
+    except KeyError:
 
-    return render_template('campaigns.html', campaigns=campaigns, user=g.user)
+        return render_template('campaigns.html', campaigns=campaigns)
 
-
+        
 @app.route('/search', methods=["GET", "POST"])
 def search():
 
