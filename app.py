@@ -227,7 +227,23 @@ def campaigns():
 
         return render_template('campaigns.html', campaigns=campaigns)
 
+@app.route("/overfunded")
+def overfunded():
+
+    campaign = mongo.db.campaigns    
+    campaigns = list(campaign.find({ "percentage_complete":{ '$gt': 100}} ))
+    
+    try:
         
+        if session['user']:
+        
+            return render_template('overfunded.html', campaigns=campaigns, user=g.user)
+    
+    except KeyError:
+
+        return render_template('overfunded.html', campaigns=campaigns)
+
+
 @app.route('/search', methods=["GET", "POST"])
 def search():
 

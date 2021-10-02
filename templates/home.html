@@ -8,7 +8,7 @@
       <img
         src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
         class="col s5 margin-top"
-        alt=""
+        alt="Campaign Image"
       />
     </div>
     <div class="card-content">
@@ -42,15 +42,15 @@
 <h2 class="heading-color">
   Overfunded! These campaigns are past there target!!
 </h2>
-<a href=""><p>view all</p></a>
+<a href="{{ url_for('overfunded')}}"><p>view all</p></a>
 <div class="row">
   {% for campaign in overfunded %}
   <div class="card col s12 m5 l3 hoverable light-green">
     <div class="card-image waves-effect waves-block waves-light">
       <img
         src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
-        class="circle profile_height col s2 offset-s1"
-        alt=""
+        class="col s5 margin-top"
+        alt="Campaign Image"
       />
     </div>
     <div class="card-content">
