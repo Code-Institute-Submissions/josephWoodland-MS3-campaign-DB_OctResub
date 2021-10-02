@@ -376,6 +376,7 @@ def delete_campaign(campaign_id):
     campaign = mongo.db.campaigns.find_one(
         { "_id": ObjectId(campaign_id) })
     current_user_credits = user["credits"]
+    
     campaign_credits = campaign['current_amount']
 
     if campaign_credits == int:
@@ -391,7 +392,10 @@ def delete_campaign(campaign_id):
         return redirect(url_for("profile", user=user))
     
     else:
-    
+        
+        mongo.db.campaigns.remove(
+            {"_id": ObjectId(campaign_id)})
+            
         flash("You did not take any credits from this campaign")
 
         return redirect(url_for("profile", user=user)) 
