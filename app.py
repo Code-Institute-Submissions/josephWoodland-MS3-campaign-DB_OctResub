@@ -25,7 +25,9 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 mongo  = PyMongo(app)
 
-
+"""
+This function is used to record transactions between users.
+"""
 def create_transaction(user_from_id, user_to_id,
  campaign_id, amount):
 
@@ -185,11 +187,11 @@ def register():
 def campaign_view(campaign_id):
     
     campaign = mongo.db.campaigns.find_one({ "_id": ObjectId(campaign_id) })
-    user_id = campaign.get("creator_id")
-    user = mongo.db.users.find_one({ "_id": ObjectId(user_id) })
+    creator_id = campaign.get("creator_id")
+    creator = mongo.db.users.find_one({ "_id": ObjectId(creator_id) })
     
     return render_template(
-        'campaign_view.html', campaign=campaign, user=user)
+        'campaign_view.html', campaign=campaign, user=g.user, creator=creator)
 
 
 @app.route("/user_campaign/<campaign_id>", methods=["GET","POST"])
@@ -295,8 +297,8 @@ def create_campaign():
 
         new_campaign = {
             "name": request.form.get("name"),
-            "description":request.form.get("description"),
-            "target_amount":request.form.get("target"),
+            "description": request.form.get("description"),
+            "target_amount": int(request.form.get("target")),
             "current_amount": 0,
             "campaign_image_name": image.filename,
             "percentage_complete": 0,
@@ -327,13 +329,14 @@ def edit_campaign(campaign_id):
             { "email": session['user'] })
         user_id = str(user["_id"])
         image = campaign['campaign_image_name']
+        percentage_complete = campaign['percentage_complete']
 
         update_campaign = {
             "name": request.form.get("name"),
             "description":request.form.get("description"),
             "target_amount":request.form.get("target"),
             "current_amount": request.form.get("current_amount"),
-            "percentage_complete": request.form.get("percentage_complete"),
+            "percentage_complete": percentage_complete,
             "creator_id": user_id,
             "campaign_image_name": image,
         }
