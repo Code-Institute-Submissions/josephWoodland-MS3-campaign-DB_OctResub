@@ -458,7 +458,7 @@ def delete_user():
     return redirect( url_for("logout"))
 
 
-@app.route("/transactions")
+@app.route("/transactions",methods=["GET", "POST"])
 def transactions():
 
     user = g.user
@@ -468,8 +468,23 @@ def transactions():
         { '$or':[ {"user_to_id": user_id},
         { "user_from_id": user_id} ]} ))
     
+    if request.method == 'POST':
+        
+        print('new POST --------')
+        user_option = request.form.getlist('user_choice')
+        print('User Option: ', type(user_option[0]))
+        
+        if user_option[0] == '1':
+
+            transactions.reverse()
+
+        return render_template(
+        "transactions.html",
+         transactions=transactions,
+          user_id=user_id, user=user)
+
     transactions.reverse()
-    
+
     return render_template(
         "transactions.html",
          transactions=transactions,

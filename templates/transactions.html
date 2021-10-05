@@ -8,7 +8,21 @@
       <th>Time</th>
     </tr>
   </thead>
-  <h2>Payments in</h2>
+  <div class="row">
+    <h2>Transactions</h2>
+    <form
+      action="{{ url_for('transactions') }}"
+      method="POST"
+    >
+    <label>Select Display</label>
+    <select class="browser-default" id="user_choice" name="user_choice">
+      <option value="" disabled>Newest/Oldest</option>
+      <option value="1">Newest First</option>
+      <option value="2">Oldest First</option>
+    </select>
+    <input type="submit" class="btn light-green" value="Select">
+    </form>
+  </div>
   <tbody>
     {% for transaction in transactions %}
     <tr>
