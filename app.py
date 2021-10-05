@@ -463,11 +463,13 @@ def transactions():
 
     user = g.user
     user_id = str(user["_id"])
-    transactions_list = list(mongo.db.transactions.find(
+    
+    transactions = list(mongo.db.transactions.find(
         { '$or':[ {"user_to_id": user_id},
         { "user_from_id": user_id} ]} ))
-    transactions = sorted(transactions_list, key=itemgetter('transaction_time'), reverse=True)
-
+    
+    transactions.reverse()
+    
     return render_template(
         "transactions.html",
          transactions=transactions,
