@@ -519,7 +519,7 @@ def donate_campaign(campaign_id):
         
         return render_template(
             'campaign_view.html',
-             campaign=campaign, user=campaign_creator)
+             campaign=campaign, creator=campaign_creator, user=g.user)
     
     user_credits_left = user_credits - donation_amount
     target_amount = int(campaign['target_amount'])
