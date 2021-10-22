@@ -7,41 +7,51 @@
 <a href="{{ url_for('campaigns') }}"><p>view all</p></a>
 <div class="row">
   {% for campaign in campaigns %}
-  <div class="card col s12 m5 l3 hoverable">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img
-        src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
-        class="col s5 margin-top"
-        alt="Campaign Image"
-      />
+  {% if campaign.percentage_complete > 100 %}
+    <div class="card col s12 m5 l3 hoverable light-green">
+    {% else %}
+    <div class="card col s12 m5 l3 hoverable">
+    {% endif %}
+      <div class="card-image waves-effect waves-block waves-light">
+        <img
+          src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
+          class="col s5 margin-top"
+          alt="Campaign Image"
+        />
+      </div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4"
+          >{{ campaign.name }}<i
+            class="fas fa-chevron-circle-down orange-icon right"
+          ></i
+        ></span>
+        {% if campaign.percentage_complete > 100 %}
+        <p class="primary-color">
+          Overfunded!! {{ campaign.percentage_complete }}%!!!!!!
+        </p>
+        {% endif %}
+        <progress
+          class="tooltipped left"
+          value="{{ campaign.percentage_complete }}"
+          max="100"
+          data-position="top"
+          data-tooltip="{{ campaign.percentage_complete }}%"
+        ></progress>
+        <p>
+          <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+            >Donate</a
+          >
+        </p>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4"
+          >{{ campaign.name }}<i class="fas fa-times right"></i
+        ></span>
+        <p>{{ campaign.description }}</p>
+      </div>
     </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"
-        >{{ campaign.name }}<i
-          class="fas fa-chevron-circle-down orange-icon right"
-        ></i
-      ></span>
-      <progress
-        class="tooltipped"
-        value="{{ campaign.percentage_complete }}"
-        max="100"
-        data-position="top"
-        data-tooltip="{{ campaign.percentage_complete }}%"
-      ></progress>
-      <p>
-        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
-          >Donate</a
-        >
-      </p>
+    {% endfor %}
     </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"
-        >{{ campaign.name }}<i class="fas fa-times right"></i
-      ></span>
-      <p>{{ campaign.description }}</p>
-    </div>
-  </div>
-  {% endfor %}
 </div>
 <h2 class="heading-color">
   Overfunded! These campaigns are past there target!!

@@ -456,7 +456,8 @@ def delete_user():
     user_id = str(user["_id"])
     mongo.db.campaigns.remove(
          { "creator_id" : user_id } )
-         
+
+    session.pop("user")     
     mongo.db.campaigns.remove(g.user)
     
     flash("User Deleted")
