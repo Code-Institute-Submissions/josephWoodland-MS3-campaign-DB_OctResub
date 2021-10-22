@@ -28,11 +28,12 @@
 </div>
 {% if campaigns|length > 0 %}
 <div class="row">
-  {% for campaign in campaigns %} {% if campaign.percentage_complete > 100 %}
-  <div class="card col s12 m5 l3 hoverable light-green">
+  {% for campaign in campaigns %} 
+    {% if campaign.percentage_complete > 100 %}
+    <div class="card col s12 m5 l3 hoverable light-green">
     {% else %}
     <div class="card col s12 m5 l3 hoverable">
-      {% endif %}
+    {% endif %}
       <div class="card-image waves-effect waves-block waves-light">
         <img
           src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
@@ -72,7 +73,7 @@
       </div>
     </div>
     {% endfor %}
-  </div>
+    </div>
 </div>
 {% else %}
 <h2 class="primary-color">No Results Found</h2>
