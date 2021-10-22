@@ -452,7 +452,13 @@ def delete_campaign(campaign_id):
 @app.route("/delete_user")
 def delete_user():
 
+    user = g.user
+    user_id = str(user["_id"])
+    mongo.db.campaigns.remove(
+         { "creator_id" : user_id } )
+         
     mongo.db.campaigns.remove(g.user)
+    
     flash("User Deleted")
 
     return redirect( url_for("logout"))
