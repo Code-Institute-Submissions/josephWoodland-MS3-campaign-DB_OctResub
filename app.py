@@ -363,7 +363,7 @@ def edit_campaign(campaign_id):
             "name": request.form.get("name"),
             "description":request.form.get("description"),
             "target_amount":request.form.get("target"),
-            "current_amount": request.form.get("current_amount"),
+            "current_amount": campaign['current_amount'],
             "percentage_complete": percentage_complete,
             "creator_id": user_id,
             "campaign_image_name": image,
