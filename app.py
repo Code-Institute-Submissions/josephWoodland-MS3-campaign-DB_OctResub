@@ -458,11 +458,12 @@ def delete_user():
          { "creator_id" : user_id } )
 
     session.pop("user")     
-    mongo.db.campaigns.remove(g.user)
+    mongo.db.users.remove(
+        { "_id" : user["_id"] })
     
     flash("User Deleted")
 
-    return redirect( url_for("logout"))
+    return redirect( url_for("home"))
 
 
 @app.route("/transactions",methods=["GET", "POST"])
