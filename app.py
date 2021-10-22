@@ -8,8 +8,6 @@ from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 from datetime import datetime
-from operator import itemgetter
-
 
 if os.path.exists("env.py"):
     import env
@@ -226,6 +224,7 @@ def campaigns():
     except (AttributeError, KeyError):
 
         return render_template('campaigns.html', campaigns=campaigns)
+
 
 @app.route("/overfunded")
 def overfunded():
@@ -523,7 +522,7 @@ def donate_campaign(campaign_id):
     
     user_credits_left = user_credits - donation_amount
     target_amount = int(campaign['target_amount'])
-    current_amount_raised = campaign['current_amount']
+    current_amount_raised = int(campaign['current_amount'])
     new_amount = current_amount_raised + donation_amount
     new_percentage = round(
         ( new_amount / target_amount) * 100)
