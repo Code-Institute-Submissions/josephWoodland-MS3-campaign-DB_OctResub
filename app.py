@@ -391,9 +391,9 @@ def collect_campaign(campaign_id):
     campaign = mongo.db.campaigns.find_one(
         { "_id": ObjectId(campaign_id) })
     current_user_credits = user["credits"]
-    campaign_credits = campaign['current_amount']
+    campaign_credits = int(campaign['current_amount'])
 
-    if campaign_credits == int:
+    if campaign_credits > 0:
 
         new_total = int(current_user_credits) + int(campaign_credits)
         mongo.db.users.update_one(
@@ -401,7 +401,8 @@ def collect_campaign(campaign_id):
             { "$set":{"credits": new_total } })
         campaign = mongo.db.campaigns.update_one(
             { "_id": ObjectId(campaign_id) },
-            { "$set":{"current_amount": 0 } })
+            { "$set":{"current_amount": 0 } },
+            { "$set":{"percentage_complete": 0 } })
 
         flash("You have debited the campign amount into your account")
 
