@@ -40,15 +40,15 @@ id="#The-Website-Brief">
 
 ## The App Brief
 
-This is a copy of the brief [here](assets/readme/assets/Brief%20-%20Cook%20It.pdf)
+This is a copy of the brief [here](static/assets/readme/assets/Brief%20-%20Cook%20It.pdf)
 
 ## Summary of the brief
 
-The client requested a simple MVP to test the concept of the app. Something that they can put out into the marketplace to test the reaction. This meant that the app should have the core functionality of the business idea, giving the first test users the chance to create campaign's and then donate to other users campaigns.
+The client requested a MVP to test the concept of the app. A product that can be put out into a small test group to gauge the interest of the idea.
 
 The app will be accessible from marketing campaigns through social media, this means that the app must be functional from mobile, even if the design on mobile is limited, the basic functionality must be there.
 
-The look of the app must be clean and more importantly functional, and clear to the user what is going on. They have expressed that the design of the app can be looked at further down the Road map and to make sure that the vast majority of the budget to be spent on the functionality.
+The look of the app must be clean and more importantly functional, and clear to the user how to use the app. They have expressed that the design of the app can be looked at further down the product road map, and to focus on the functionality.
 
 <span
 id="#ux">
@@ -58,7 +58,15 @@ id="#ux">
 
 ### Target Audience
 
-The target audience for this project can be split into two camps. Professional users with a decent disposable income can donate money to what they can determine as a good cause, and also users who are looking to achieve something and need the money for whatever their goal is. Both users are predicted to be millennials and gen Z so will be familiar with technology, so as long as the design follows what could be thought of as traditional placements of UI objects then =the users should be comfortable navigating to achieve the set goals.
+The target audience for this project can be divided into two groups. 
+
+### Donor's
+
+Professional users with a high level of disposable income, looking to donate to a good cause.
+
+### Campaigners
+
+This group are goal oriented people who are trying to do something to make a change, passionate about the issue that matter two them.
 
 ## Website Goals
 
@@ -118,7 +126,7 @@ This is the journey of a campaigner.
 
 ## User Stories
 
-For each of the interactions between user and software to complete a successful user journey, I will create a user story around essential actions. I will classify the users into either Donor or Campaigner
+For each of the interactions between user and software to complete a successful user journey, these are the individual user story around essential actions.
 
 - As a Donor, I want to see more information about a live campaign so I can choose which campaign to donate to.
 
@@ -138,7 +146,7 @@ For each of the interactions between user and software to complete a successful 
 
 ### General Layout
 
-Given the brief from the client, we are looking for a mobile responsive design where the basic features of the app can be achieved on mobile and also on the desktop. Not having the design process and layout to prefer one or the other
+Given the brief from the client, we are looking for a mobile responsive design where the basic features of the app can be achieved on mobile and also on the desktop.
 
 ### Side Navigation Bar
 
@@ -166,9 +174,9 @@ This should be a simple HTML form, easily identifiable tags for the user to fill
 
 Here is a sample of the original wireframes for the app approved by the client.
 
-![desktop](assets/readme/xd/landing.png)
+![desktop](static/assets/readme/xd/landing.png)
 
-All the wire-frames and design boards can be downloaded [here](assets/readme/xd/CookIt%20-%20Wireframes.xd)
+All the wire-frames and design boards can be downloaded [here](static/assets/readme/xd/CookIt%20-%20Wireframes.xd)
 
 <span
 id="#design">
@@ -206,7 +214,7 @@ HTML5 - I used HTML 5 for the layout and structure of the website.
 
 CSS - CSS has been used to style some HTML elements.
 
-Jquery - Jquery has been used to add to the front end interactivity of some HTML elements
+jQuery - jQuery has been used to add to the front end interactivity of some HTML elements
 
 Python - The Python language has been used the most in the making of this app. It has been used so the app can interact with the database.
 
@@ -218,12 +226,18 @@ Jinja - I used jinja HTML template language to make it easy for the HTML to be m
 
 ## Styling - Materialize
 
-I have used Google materialize to standardize the styling of this app. Selecting the elements that I want and then copying and pasting the code into the HTML and also any Jquery code that is needed to make the element interactive.
+I have used Google materialize to standardize the styling of this app. Selecting the elements that I want and then copying and pasting the code into the HTML and also any jQuery code that is needed to make the element interactive.
 
 ## Website Structure
 
 The diagram here is a layout of the information structure of the website and how it will flow for the user.
-![image](static/assets/readme/User%20flow%20chart.jpg)
+<details>
+
+<summary>Click here to view the image</summary>
+
+![flowchart](static/assets/readme/User%20flow%20chart.jpg)
+
+</details>
 
 ## Coding Architecture
 
@@ -239,9 +253,33 @@ Using a one-to-few approach to the relationship of my data, using referencing to
 
 The reason behind this is there is a hard limit in the size of documents that can be saved to MongoDB of 16MB. As each user can have an unlimited number of transactions and an unlimited number of campaigns, saving each of these in a separate collection, with all the necessary tags to connect the user activity.
 
+### Database collections
+
 User - This will keep all of the user data.
+<details>
+
+<summary>Click here to view the database</summary>
+
+![Image of the database](static/assets/readme/Users%20-%20Database%20.png)
+
+</details>
+
 Campaigns - This will store all the data from each campaign.
+<details>
+
+<summary>Click here to view the database</summary>
+
+![Image of the database](static/assets/readme/Campaigns%20-%20Database.png)
+
+</details>
 Transactions - This will store data around each transaction that is completed through the app.
+<details>
+
+<summary>Click here to view the database</summary>
+
+![Image of the database](static/assets/readme/Transactions%20-%20Database.png)
+
+</details>
 
 ## VS Code
 
@@ -263,7 +301,7 @@ I used modules to help me code the app faster using pre-written code to speed up
 
 ## Outside libraries
 
-- Google font: I used the Google font library for the font family on the website.
+- Font Awesome - I used font awesome for some of my icons.
 
 ## Flask modules
 
