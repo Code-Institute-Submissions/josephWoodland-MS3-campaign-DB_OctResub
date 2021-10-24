@@ -1,4 +1,20 @@
 {% extends "index.html" %} {% block content %}
+<h2>Transactions</h2>
+<div class="row">
+  <form action="{{ url_for('transactions') }}" method="POST">
+    <label class="col s12">Select Display</label>
+    <select
+    class="col s6 browser-default"
+    id="user_choice"
+    name="user_choice"
+    >
+    <option value="" disabled>Newest/Oldest</option>
+    <option value="1">Newest First</option>
+    <option value="2">Oldest First</option>
+  </select>
+  <input type="submit" class="btn light-green right" value="Select" />
+</form>
+</div>
 <table class="highlight centered">
   <thead>
     <tr>
@@ -8,21 +24,6 @@
       <th>Time</th>
     </tr>
   </thead>
-  <div class="row">
-    <h2>Transactions</h2>
-    <form
-      action="{{ url_for('transactions') }}"
-      method="POST"
-    >
-    <label class="col s12">Select Display</label>
-    <select class="col s6 browser-default" id="user_choice" name="user_choice">
-      <option value="" disabled>Newest/Oldest</option>
-      <option value="1">Newest First</option>
-      <option value="2">Oldest First</option>
-    </select>
-    <input type="submit" class="btn light-green right" value="Select">
-    </form>
-  </div>
   <tbody>
     {% for transaction in transactions %}
     <tr>

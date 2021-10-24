@@ -13,7 +13,7 @@ The Web app will need to have the following features to function completely:
 
 ![image]()
 
-[live site]
+[[live site](http://ms3-beer-db.herokuapp.com/home)]
 
 ## Index
 
@@ -93,46 +93,46 @@ The app must:
 
 This is an example of a successful user journey.
 
-This is the journey of someone who wants to donate.
+This is the journey of a donor.
 
-I have been redirected to the app via a marketing campaign.
-I have noticed a campaign that I would like to donate to.
-I have been redirected to the signup page.
-I have successfully created an account and given the ability to deposit some funds to my account.
-I have managed to search or easily find the campaign I wanted to donate to.
-I have usefully managed to donate to the campaign - noticing the change in the amount the campaign has been funded.
-I can check my account to see that my credits have been reduced by the right amount
-I can also verify this by looking at the transaction page to see a report of the transaction.
+- I have been redirected to the app via a marketing campaign.
+- I have noticed a campaign that I would like to donate to.
+- I have been redirected to the signup page.
+- I have successfully created an account and given the ability to deposit some funds to my account.
+- I have managed to search or easily find the campaign I wanted to donate to.
+- I have usefully managed to donate to the campaign - noticing the change in the amount the campaign has been funded.
+- I can check my account to see that my credits have been reduced by the right amount
+- I can also verify this by looking at the transaction page to see a report of the transaction.
 
-This is the journey of someone who has a campaign that they are trying to raise money for.
+This is the journey of a campaigner.
 
-I am trying to raise money for my local school and came across this website.
-I can see that you can raise money for a cause
-I can see that some campaigns have already been successful in raising their targeted amount of money.
-I have been directed to the user sign up page
-I have managed to create a profile for myself.
-I have managed to create engaging camping for the School
-I have seen that money has come into the campaign.
-I can see which users have sent me the money via the transaction page.
-I can withdraw money from the camping pot and it will credit my account.
+- I am trying to raise money for my local school and came across this website.
+- I can see that you can raise money for a cause
+- I can see that some campaigns have already been successful in raising their targeted amount of money.
+- I have been directed to the user sign up page
+- I have managed to create a profile for myself.
+- I have managed to create engaging camping for the School
+- I have seen that money has come into the campaign.
+- I can see which users have sent me the money via the transaction page.
+- I can withdraw money from the camping pot and it will credit my account.
 
 ## User Stories
 
 For each of the interactions between user and software to complete a successful user journey, I will create a user story around essential actions. I will classify the users into either Donor or Campaigner
 
-As a Donor, I want to see more information about a live campaign so I can choose which campaign to donate to.
+- As a Donor, I want to see more information about a live campaign so I can choose which campaign to donate to.
 
-As a Doner, I want to add credits to my account so I can donate to a campaign.
+- As a Donor, I want to add credits to my account so I can donate to a campaign.
 
-As a Donor, I want to search for campaigns so I can see the progress of previous campaigns I have donated to.
+- As a Donor, I want to search for campaigns so I can see the progress of previous campaigns I have donated to.
 
-As a Campaigner, I want to create a campaign so I can raise money for a cause I believe in.
+- As a Campaigner, I want to create a campaign so I can raise money for a cause I believe in.
 
-As a Campaigner, I want to see how much money a campaign has made so I can see if I have support for my cause.
+- As a Campaigner, I want to see how much money a campaign has made so I can see if I have support for my cause.
 
-As a Campaigner, I want to withdraw money from the campaign account so I can fund the project.
+- As a Campaigner, I want to withdraw money from the campaign account so I can fund the project.
 
-As a Campaigner, I want to see who has donated to me so I can send them a thank you email, and keep them updated with the progress of the campaign.
+- As a Campaigner, I want to see who has donated to me so I can send them a thank you email, and keep them updated with the progress of the campaign.
 
 ## Sections of the Web App
 
@@ -140,7 +140,7 @@ As a Campaigner, I want to see who has donated to me so I can send them a thank 
 
 Given the brief from the client, we are looking for a mobile responsive design where the basic features of the app can be achieved on mobile and also on the desktop. Not having the design process and layout to prefer one or the other
 
-### Navigation bar
+### Side Navigation Bar
 
 The navigation bar should be simple and easy to understand and should be easily identifiable to the user whether they are logged in or not.
 
@@ -182,11 +182,11 @@ The design elements were influenced and informed by the client’s brief, that e
 
 ### Copy
 
-- Noto Sans JP and as a back up sans-serif
+- Arial and as a back up sans-serif
 
 ### Main colours
 
-Brand colours are ![brand](assets/readme/xd/colourPalette.png)
+Brand colours are ![brand](static/assets/readme/Brand%20colours.jpg)
 
 ## Features for the website
 
@@ -220,9 +220,14 @@ Jinja - I used jinja HTML template language to make it easy for the HTML to be m
 
 I have used Google materialize to standardize the styling of this app. Selecting the elements that I want and then copying and pasting the code into the HTML and also any Jquery code that is needed to make the element interactive.
 
+## Website Structure
+
+The diagram here is a layout of the information structure of the website and how it will flow for the user.
+![image](static/assets/readme/User%20flow%20chart.jpg)
+
 ## Coding Architecture
 
-I have used a simple architecture for this app with having all the code from each language in one file only. With all the Python code on an app.py file. I have separated the route functions from the other functions to help with the navigation, but have kept all the code in one place.
+I have used a simple architecture for this app with having all the code from each language in one file only. With all the Python code on an `app.py` file. I have separated the route functions from the other functions to help with the navigation, but have kept all the code in one place.
 
 ## Database
 
@@ -230,7 +235,7 @@ I am using MongoDB to store the data for the app, trying to take advantage of th
 
 ### Schema
 
-Using a one-to-few approach to the relationship of my data, using referencing to connect given data together. I have decided to split the database up into three main collections, with the rationale of limiting the size of each document, each document having its own ‘\_id’.
+Using a one-to-few approach to the relationship of my data, using referencing to connect given data together. I have decided to split the database up into three main collections, with the rationale of limiting the size of each document, each document having its own `\_id`.
 
 The reason behind this is there is a hard limit in the size of documents that can be saved to MongoDB of 16MB. As each user can have an unlimited number of transactions and an unlimited number of campaigns, saving each of these in a separate collection, with all the necessary tags to connect the user activity.
 
@@ -317,7 +322,43 @@ id="#testing">
 
 ### Automated Code Validation
 
-### Chrome DevTools
+### HTML
+
+I used the [W3C HTML validator](https://validator.w3.org/) to validate each page. I had one recurring issue around the function of the website to show if a campaign is overfunded, this is around the value of the tooltip should not be greater than the maximum, this is shown as the tooltip Error below:
+
+- Home - Tooltop Error - Pass
+
+- Profile - Pass
+  
+- User_campaigns - Pass
+  
+- Campaigns - Tooltip error - Pass
+
+- Transactions - Pass
+  
+- Signin - Pass
+
+- Register - Pass
+
+### CSS
+
+I used the [W3C CSS validator](https://jigsaw.w3.org/css-validator/) to validate the css:
+
+- style.css - Pass
+
+### jQuery
+
+I used [JSHint](https://jshint.com/) to validate the JavaScript:
+
+As I was using JQuery I had to use `/*globals $:false */` at the top of the page to declare the $ is a variable to stop the Error of undefined variable.
+
+- script.js - Pass
+
+### Python
+
+I used [PEP8 online](http://pep8online.com/) to validate the Python:
+
+- app.py - Pass
 
 ## Manual testing
 
@@ -401,21 +442,21 @@ User Three - This user used a laptop, experienced an issue when deleting some te
 
 ### Donors
 
-As a Donor, I want to see more information about a live campaign so I can choose which campaign to donate to - completed
+- As a Donor, I want to see more information about a live campaign so I can choose which campaign to donate to - completed
 
-As a Donor, I want to add credits to my account so I can donate to a campaign - completed
+- As a Donor, I want to add credits to my account so I can donate to a campaign - completed
 
-As a Donor, I want to search for campaigns so I can see the progress of previous campaigns I have donated to - completed
+- As a Donor, I want to search for campaigns so I can see the progress of previous campaigns I have donated to - completed
 
 ### Campaigners
 
-As a Campaigner, I want to create a campaign so I can raise money for a cause I believe in - completed
+- As a Campaigner, I want to create a campaign so I can raise money for a cause I believe in - completed
 
-As a Campaigner, I want to see how much money a campaign has made so I can see if I have support for my cause - completed
+- As a Campaigner, I want to see how much money a campaign has made so I can see if I have support for my cause - completed
 
-As a Campaigner, I want to withdraw money from the campaign account so I can fund the project - completed
+- As a Campaigner, I want to withdraw money from the campaign account so I can fund the project - completed
 
-As a Campaigner, I want to see who has donated to me so I can send them a thank you email, and keep them updated with the progress of the campaign - completed
+- As a Campaigner, I want to see who has donated to me so I can send them a thank you email, and keep them updated with the progress of the campaign - completed
 
 ### Side Bar
 
@@ -451,30 +492,32 @@ Update
 - Update the Campaign information by the campaign edit form - check
 - Update the number of credits a profile has when adding credits via the profile section
 - Update the number of credits a profile has when the user donates - check
-- Update the number of credits camping has when the campaign has received a donation
-- Update the number of credits a user has when they withdraw credits from a campaign
+- Update the number of credits campaign has when the campaign has received a donation - check
+- Update the number of credits a user has when they withdraw credits from a campaign - check
 
 Delete
 
-Delete a campaign from the database - check
-Delete a user from the database - check
+- Delete a campaign from the database - check
+- Delete a user from the database - check
 
 ### Functionality testing
 
-have the ability to have different user profiles - check
-have the ability to add credits to the user profile - check
-when a user donates the amount donated is deducted from the user balance and added to the campaign balance - check
-when a campaign has hit its target there is some sort of user feedback to suggest this - check
-have a way to track the user transaction activity - check
-have the ability to easily search through campaigns - check
+- have the ability to have different user profiles - check
+- have the ability to add credits to the user profile - check
+- when a user donates the amount donated is deducted from the user balance and - added to the campaign balance - check
+- when a campaign has hit its target there is some sort of user feedback to suggest this - check
+- have a way to track the user transaction activity - check
+- have the ability to easily search through campaigns - check
 
 ## Issues and challenges I encountered
 
-The main issue I had with the app was with storing images in the database and then rendering them to the HTML. Overall I
+The main issue I had with the app was with storing images in the database and then rendering them to the HTML. After researching this on the internet I found a very good video that explained the process.
 
 ## Known bugs
 
-Image bug - If users upload an image with the same name as one and another the same image would be used as the program searches for image name - I think I could get around this by adding user_id to the name of the image.
+- Image bug - If users upload an image with the same name as one and another the same image would be used as the program searches for image name - I think I could get around this by adding user_id to the name of the image.
+
+- AttributeError - One test user experienced an `AttributError: user` Error, which went a away with reloading the page, I have not been able to recreate this Error, the user was traveling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal and the time the app is sending the user data to the server to populate the HTML, so it has no user Attribute, throws the error but clears once the user reloads the page. I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am not sure if this would have the desired effect. 
 
 <span
 id="#deployment">
@@ -510,7 +553,7 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 ### Running the code
 
 To deploy the app locally once you have cloned the repository you will need to create an env.py file in the directory to create the development environment.
-
+`
 import os
 
     os.environ.setdefault("IP", "0.0.0.0")
@@ -520,7 +563,7 @@ import os
         "MONGO_URI", "mongodb+srv://<user>:<password>@<project>.af8bz.mongodb.net/<database>?retryWrites=true&w=majority")
     os.environ.setdefault("MONGO_DBNAME", "<database>")
 
-‘
+`
 
 ### Deploying to Heroku
 
@@ -562,7 +605,7 @@ My mentor Jack helped guide me throughout the project.
 
 I used some youtube videos to help me with figuring out how to upload pictures to the DB and how to use them in the app. This is from the pretty printed youtube channel.
 
-https://www.youtube.com/watch?v=DsgAuceHha4
+<https://www.youtube.com/watch?v=DsgAuceHha4>
 
 I also used the Code Instatutute support for a bug around deleting users.
 
