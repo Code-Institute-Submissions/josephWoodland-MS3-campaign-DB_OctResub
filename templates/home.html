@@ -1,17 +1,17 @@
-{% extends "index.html" %} {% block content %}
-{% if session.user %}
-  {% else %}
-  <h3>Here at campaign.com you can create a profile, add a campaign, post it to the site and start fundrasing!! Good luck!</h3>
+{% extends "index.html" %} {% block content %} {% if session.user %} {% else %}
+<h3>
+  Here at campaign.com you can create a profile, add a campaign, post it to the
+  site and start fundrasing!! Good luck!
+</h3>
 {% endif %}
 <h2 class="heading-color">New this week</h2>
 <a href="{{ url_for('campaigns') }}"><p>view all</p></a>
 <div class="row">
-  {% for campaign in campaigns %}
-  {% if campaign.percentage_complete > 100 %}
-    <div class="card col s12 m5 l3 hoverable light-green">
+  {% for campaign in campaigns %} {% if campaign.percentage_complete > 100 %}
+  <div class="card col s12 m5 l3 hoverable light-green">
     {% else %}
     <div class="card col s12 m5 l3 hoverable">
-    {% endif %}
+      {% endif %}
       <div class="card-image waves-effect waves-block waves-light">
         <img
           src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
@@ -51,48 +51,49 @@
       </div>
     </div>
     {% endfor %}
-    </div>
-</div>
-<h2 class="heading-color">
-  Overfunded! These campaigns are past there target!!
-</h2>
-<a href="{{ url_for('overfunded')}}"><p>view all</p></a>
-<div class="row">
-  {% for campaign in overfunded %}
-  <div class="card col s12 m5 l3 hoverable light-green">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img
-        src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
-        class="col s5 margin-top"
-        alt="Campaign Image"
-      />
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"
-        >{{ campaign.name }}<i
-          class="fas fa-chevron-circle-down orange-icon right"
-        ></i
-      ></span>
-      <progress
-        class="tooltipped"
-        value="{{ campaign.percentage_complete }}"
-        max="100"
-        data-position="top"
-        data-tooltip="{{ campaign.percentage_complete }}%"
-      ></progress>
-      <p>
-        <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
-          >Donate</a
-        >
-      </p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"
-        >{{ campaign.name }}<i class="fas fa-times right"></i
-      ></span>
-      <p>{{ campaign.description }}</p>
-    </div>
   </div>
-  {% endfor %}
+
+  <h2 class="heading-color">
+    Overfunded! These campaigns are past there target!!
+  </h2>
+  <a href="{{ url_for('overfunded')}}"><p>view all</p></a>
+  <div class="row">
+    {% for campaign in overfunded %}
+    <div class="card col s12 m5 l3 hoverable light-green">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img
+          src="{{ url_for('file', filename=campaign['campaign_image_name']) }}"
+          class="col s5 margin-top"
+          alt="Campaign Image"
+        />
+      </div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4"
+          >{{ campaign.name }}<i
+            class="fas fa-chevron-circle-down orange-icon right"
+          ></i
+        ></span>
+        <progress
+          class="tooltipped"
+          value="{{ campaign.percentage_complete }}"
+          max="100"
+          data-position="top"
+          data-tooltip="{{ campaign.percentage_complete }}%"
+        ></progress>
+        <p>
+          <a href="{{ url_for('campaign_view', campaign_id=campaign._id )}}"
+            >Donate</a
+          >
+        </p>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4"
+          >{{ campaign.name }}<i class="fas fa-times right"></i
+        ></span>
+        <p>{{ campaign.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endblock %}
 </div>
-{% endblock %}

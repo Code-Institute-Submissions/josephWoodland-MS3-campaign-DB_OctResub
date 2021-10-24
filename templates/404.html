@@ -1,0 +1,9 @@
+{% extends "index.html" %} {% block content %}
+<h3>
+  OOOPPPPPS somethig went wrong, we don't know where you are trying to get to!!
+</h3>
+<h4>Please click on the icon to return Home!!!</h4>
+<a href="{{ url_for('home')}}" data-target="slide-out" class="brand-logo"
+  ><i class="fas fa-beer primary-color center-align"></i
+></a>
+{% endblock %}
