@@ -40,7 +40,7 @@ id="#The-Website-Brief">
 
 ## The App Brief
 
-This is a copy of the brief [here](static/assets/readme/assets/Brief%20-%20Cook%20It.pdf)
+This is a copy of the brief [here](static/assets/readme/design_brief_campaign.com.pdf)
 
 ## Summary of the brief
 
@@ -58,7 +58,7 @@ id="#ux">
 
 ### Target Audience
 
-The target audience for this project can be divided into two groups. 
+The target audience for this project can be divided into two groups.
 
 ### Donor's
 
@@ -174,9 +174,9 @@ This should be a simple HTML form, easily identifiable tags for the user to fill
 
 Here is a sample of the original wireframes for the app approved by the client.
 
-![desktop](static/assets/readme/xd/landing.png)
+![desktop](static/assets/readme/wireframes/home.jpg)
 
-All the wire-frames and design boards can be downloaded [here](static/assets/readme/xd/CookIt%20-%20Wireframes.xd)
+All the wire-frames and design boards can be downloaded [here](https://github.com/josephWoodland/MS3-beer-DB/tree/master/static/assets/readme/wireframes)
 
 <span
 id="#design">
@@ -231,6 +231,7 @@ I have used Google materialize to standardize the styling of this app. Selecting
 ## Website Structure
 
 The diagram here is a layout of the information structure of the website and how it will flow for the user.
+
 <details>
 
 <summary>Click here to view the image</summary>
@@ -256,6 +257,7 @@ The reason behind this is there is a hard limit in the size of documents that ca
 ### Database collections
 
 User - This will keep all of the user data.
+
 <details>
 
 <summary>Click here to view the database</summary>
@@ -265,17 +267,22 @@ User - This will keep all of the user data.
 </details>
 
 Campaigns - This will store all the data from each campaign.
-<details>
 
-<summary>Click here to view the database</summary>
+<details
+>
+
+<summary
+>Click here to view the database</summary>
 
 ![Image of the database](static/assets/readme/Campaigns%20-%20Database.png)
 
 </details>
 Transactions - This will store data around each transaction that is completed through the app.
-<details>
+<details
+>
 
-<summary>Click here to view the database</summary>
+<summary
+> Click here to view the database</summary>
 
 ![Image of the database](static/assets/readme/Transactions%20-%20Database.png)
 
@@ -332,17 +339,17 @@ I used different validation methods to make sure that the imputed data is valid.
 
 ### HTML
 
-Name validation - Using the ‘type=”text”’ attribute on the form with a ‘minlength=”3”’
-Username validation - Using the ‘type=”email”’ attribute to make sure that the input follows the traditional email format.
-Profile and campaign images - Using the ‘type=”file”’ attribute and specifying that it will only accept a ‘.jpg’ file.
-Password - Using the ‘type=”password”’ attribute on the form with a ‘minlength=”5”’
+- Name validation - Using the `type=”text”` attribute on the form with a `minlength=”3”`
+- Username validation - Using the `type=”email”` attribute to make sure that the input follows the traditional email format.
+- Profile and campaign images - Using the `type=”file”` attribute and specifying that it will only accept a `.jpg` file.
+- Password - Using the `type=”password”` attribute on the form with a `minlength=”5”`
 
 ### Python
 
-Username Validation - As we are using user emails as usernames, in the register function we check to see if the email is already in the database giving a different response on whether the user is registering or trying to login.
-Password - For registering we do basic checks to see if the two password inputs match for creating the user password.
-Password - When the user is logging in, we grab the user data from the database and check the hashed password with the one that is stored for that user.
-Images - I am using ‘app.config['MAX_CONTENT_LENGTH']’ to set the max size of the file, giving a flash message for the user.
+- Username Validation - As we are using user emails as usernames, in the register function we check to see if the email is already in the database giving a different response on whether the user is registering or trying to login.
+- Password - For registering we do basic checks to see if the two password inputs match for creating the user password.
+- Password - When the user is logging in, we grab the user data from the database and check the hashed password with the one that is stored for that user.
+  -Images - I am using `app.config['MAX_CONTENT_LENGTH']` to set the max size of the file, giving a flash message for the user.
 
 ## Online resources
 
@@ -350,7 +357,7 @@ Images - I am using ‘app.config['MAX_CONTENT_LENGTH']’ to set the max size o
 
 ### [Stack Overflow](https://stackoverflow.com/)
 
-### [youtube](https://www.youtube.com/)
+### [YouTube](https://www.youtube.com/)
 
 <span
 id="#testing">
@@ -360,31 +367,25 @@ id="#testing">
 
 ### Automated Code Validation
 
-### HTML
+### HTML Test
 
 I used the [W3C HTML validator](https://validator.w3.org/) to validate each page. I had one recurring issue around the function of the website to show if a campaign is overfunded, this is around the value of the tooltip should not be greater than the maximum, this is shown as the tooltip Error below:
 
 - Home - Tooltop Error - Pass
-
 - Profile - Pass
-  
 - User_campaigns - Pass
-  
 - Campaigns - Tooltip error - Pass
-
 - Transactions - Pass
-  
 - Signin - Pass
-
 - Register - Pass
 
-### CSS
+### CSS Test
 
 I used the [W3C CSS validator](https://jigsaw.w3.org/css-validator/) to validate the css:
 
 - style.css - Pass
 
-### jQuery
+### jQuery Test
 
 I used [JSHint](https://jshint.com/) to validate the JavaScript:
 
@@ -392,7 +393,7 @@ As I was using JQuery I had to use `/*globals $:false */` at the top of the page
 
 - script.js - Pass
 
-### Python
+### Python Tests
 
 I used [PEP8 online](http://pep8online.com/) to validate the Python:
 
@@ -421,8 +422,8 @@ Browsers:
 
 Mobile testing:
 
-- Pixel 3 (Android 11)
-- iPhone 7 (IOS 14)
+- Pixel 4 (Android 11)
+- iPhone 12 (IOS 14)
 
 Browsers:
 
@@ -478,7 +479,7 @@ User Three - This user used a laptop, experienced an issue when deleting some te
 
 ## Testing User Stories Checklists
 
-### Donors
+### Donors stories
 
 - As a Donor, I want to see more information about a live campaign so I can choose which campaign to donate to - completed
 
@@ -486,7 +487,7 @@ User Three - This user used a laptop, experienced an issue when deleting some te
 
 - As a Donor, I want to search for campaigns so I can see the progress of previous campaigns I have donated to - completed
 
-### Campaigners
+### Campaigners stories
 
 - As a Campaigner, I want to create a campaign so I can raise money for a cause I believe in - completed
 
@@ -555,7 +556,7 @@ The main issue I had with the app was with storing images in the database and th
 
 - Image bug - If users upload an image with the same name as one and another the same image would be used as the program searches for image name - I think I could get around this by adding user_id to the name of the image.
 
-- AttributeError - One test user experienced an `AttributError: user` Error, which went a away with reloading the page, I have not been able to recreate this Error, the user was traveling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal and the time the app is sending the user data to the server to populate the HTML, so it has no user Attribute, throws the error but clears once the user reloads the page. I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am not sure if this would have the desired effect. 
+- AttributeError - One test user experienced an `AttributError: user` Error, which went a away with reloading the page, I have not been able to recreate this Error, the user was traveling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal and the time the app is sending the user data to the server to populate the HTML, so it has no user Attribute, throws the error but clears once the user reloads the page. I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am not sure if this would have the desired effect.
 
 <span
 id="#deployment">
@@ -611,8 +612,8 @@ Select the region closest to you and give the APP a name
 Set your deployment method to 'GitHub'
 Connect to GitHub and login
 Search for the repository you wish to deploy from
-You will have to add your ‘Config Vars’ this will be everything that you have in your env.py so that Heroku will have all the keys needed to use the app.
-You will need to have a Procfile and you will have to update a requirements.txt so the app has all the necessary extensions to be able to run.
+You will have to add your `Config Vars` this will be everything that you have in your env.py so that Heroku will have all the keys needed to use the app.
+You will need to have a `Procfile` and you will have to update a requirements.txt so the app has all the necessary extensions to be able to run.
 From there you should be able to deploy the app.
 
 <span
@@ -645,6 +646,6 @@ I used some youtube videos to help me with figuring out how to upload pictures t
 
 <https://www.youtube.com/watch?v=DsgAuceHha4>
 
-I also used the Code Instatutute support for a bug around deleting users.
+I also used the Code Institute support for a bug around deleting users.
 
 I used StackOverflow as a reference point throughout the project whenever I got stuck.
