@@ -232,9 +232,11 @@ I have used Google materialize to standardize the styling of this app. Selecting
 
 The diagram here is a layout of the information structure of the website and how it will flow for the user.
 
-<details>
+<details
+>
 
-<summary>Click here to view the image</summary>
+<summary
+>Click here to view the image</summary>
 
 ![flowchart](static/assets/readme/User%20flow%20chart.jpg)
 
@@ -258,9 +260,11 @@ The reason behind this is there is a hard limit in the size of documents that ca
 
 User - This will keep all of the user data.
 
-<details>
+<details
+>
 
-<summary>Click here to view the database</summary>
+<summary
+>Click here to view the database</summary>
 
 ![Image of the database](static/assets/readme/Users%20-%20Database%20.png)
 
