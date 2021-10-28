@@ -174,7 +174,7 @@ This should be a simple HTML form, easily identifiable tags for the user to fill
 
 Here is a sample of the original wireframes for the app approved by the client.
 
-![desktop](static/assets/readme/Wireframes/home.jpg)
+![desktop](static/assets/readme/Wireframes/Home.jpg)
 
 All the wire-frames and design boards can be downloaded [here](https://github.com/josephWoodland/MS3-beer-DB/tree/master/static/assets/readme/Wireframes)
 
@@ -238,7 +238,7 @@ The diagram here is a layout of the information structure of the website and how
 <summary
 >Click here to view the image</summary>
 
-![flowchart](static/assets/readme/User_flow_chart.jpg)
+![flowchart](static/assets/readme/user_flow_chart.jpg)
 
 </details>
 
