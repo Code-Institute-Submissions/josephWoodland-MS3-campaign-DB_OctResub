@@ -238,7 +238,7 @@ The diagram here is a layout of the information structure of the website and how
 <summary
 >Click here to view the image</summary>
 
-![flowchart](static/assets/readme/User_flow_chart.jpg)
+![flowchart](static/assets/readme/user_flow_chart.jpg)
 
 </details>
 
