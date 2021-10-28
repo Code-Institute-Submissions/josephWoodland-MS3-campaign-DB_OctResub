@@ -11,7 +11,7 @@ The Web app will need to have the following features to function completely:
 - The ability to create a campaign.
 - The ability to donate to another user's campaign.
 
-![image]()
+![image](static/assets/readme/moc_up.png)
 
 [[live site](http://ms3-beer-db.herokuapp.com/home)]
 
