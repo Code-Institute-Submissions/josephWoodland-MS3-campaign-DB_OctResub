@@ -34,10 +34,10 @@ def create_transaction(user_from_id, user_to_id,
     """Creates an transaction object
 
     Args:
-        user_from_id (str): [description]
-        user_to_id (str): [description]
-        campaign_id (str): [description]
-        amount (number): [description]
+        user_from_id (str): User id of the donating user
+        user_to_id (str): User id of the campaign owner
+        campaign_id (str): Id of the campaign
+        amount (number): The amount of credits that is being donated
     Returns:
         Dictionary to be stored in the Database as a document
     """
@@ -117,9 +117,10 @@ def file(filename):
 @app.route("/home")
 def home():
     """Home page HTML
-
+        Check to see if there is a user in session
+        Get the list of all the campaigns
     Returns:
-        HTML: Renders the Home template
+        List: Renders the list in the Home template
     """
     campaign = mongo.db.campaigns
 
@@ -258,7 +259,8 @@ def user_campaign(campaign_id):
         campaign_id (str): Campaign id string
 
     Returns:
-        Dictionary: [description]
+        Dictionary: Campaign dictionary
+        passed into the user campaign HMTL template
     """
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
@@ -274,7 +276,7 @@ def campaigns():
     """Renders a list of campaigns
 
     Returns:
-        Lits: Lists of campaigns
+        List: Lists of campaigns to be renderd in the campaigns HTML
     """
     campaigns = list(mongo.db.campaigns.find())
 
@@ -293,7 +295,7 @@ def overfunded():
     """Searches for all the overfunded campaigns in the database
 
     Returns:
-        List: List of overfunded campaigns
+        List: List of overfunded campaigns to be rendered in the overfunded HTML
     """
     campaign = mongo.db.campaigns
     campaigns = list(campaign.find({"percentage_complete": {'$gt': 100}}))
@@ -312,7 +314,7 @@ def search():
     """Search campaign collection
 
     Returns:
-        List: Searched campaigns
+        List: Searched campaigns list rendered to campaigns
     """
     search = request.form.get("search")
     campaigns = list(mongo.db.campaigns.find({"$text": {"$search": search}}))
@@ -375,7 +377,7 @@ def user_campaigns():
     """Gets user Campaings
 
     Returns:
-        List: list of all user campaings
+        List: list of all user campaings to user campaigns
     """
     user = g.user
     user_id = str(user["_id"])
@@ -666,4 +668,4 @@ def donate_campaign(campaign_id):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)  # Don't forget to change this to False!!!
+            debug=False)
