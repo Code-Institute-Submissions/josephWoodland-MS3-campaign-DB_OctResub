@@ -13,12 +13,10 @@ The Web app will need to have the following features to function completely:
 
 ![image](static/assets/readme/moc_up.png)
 
-[[live site](http://ms3-beer-db.herokuapp.com/home)]
+[live site](http://ms3-beer-db.herokuapp.com/home)
 
 ## Index
 
-- <a
-  href="#The-Website-Brief">The Website Brief</a>
 - <a
   href="#ux">UX</a>
 - <a
@@ -34,10 +32,6 @@ The Web app will need to have the following features to function completely:
   Credits
   </a>
 
-<span
-id="#The-Website-Brief">
-</span>
-
 ## The App Brief
 
 This is a copy of the brief [here](https://github.com/josephWoodland/MS3-beer-DB/blob/master/static/assets/readme/design_brief_campaign.pdf)
@@ -51,7 +45,7 @@ The app will be accessible from marketing campaigns through social media, this m
 The look of the app must be clean and more importantly functional, and clear to the user how to use the app. They have expressed that the design of the app can be looked at further down the product road map, and to focus on the functionality.
 
 <span
-id="#ux">
+id="ux">
 </span>
 
 ## UX
@@ -179,7 +173,7 @@ Here is a sample of the original wireframes for the app approved by the client.
 All the wire-frames and design boards can be downloaded [here](https://github.com/josephWoodland/MS3-beer-DB/tree/master/static/assets/readme/Wireframes)
 
 <span
-id="#design">
+id="design">
 </span>
 
 ## Design
@@ -366,7 +360,7 @@ These are the online resources that I used throughout the project
 ### [YouTube](https://www.youtube.com/)
 
 <span
-id="#testing">
+id="testing">
 </span>
 
 ## Testing
@@ -435,9 +429,9 @@ Browsers:
 
 - Chrome
 - Safari
-  <span
-  id="#testing-responsive">
-  </span>
+<span
+  id="testing-responsive">
+</span>
 
 ## Testing - Design Responsiveness
 
@@ -565,7 +559,7 @@ The main issue I had with the app was with storing images in the database and th
 - AttributeError - One test user experienced an `AttributError: user` Error, which went a away with reloading the page, I have not been able to recreate this Error, the user was traveling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal and the time the app is sending the user data to the server to populate the HTML, so it has no user Attribute, throws the error but clears once the user reloads the page. I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am not sure if this would have the desired effect.
 
 <span
-id="#deployment">
+id="deployment">
 </span>
 
 ## Deployment
@@ -623,7 +617,7 @@ You will need to have a `Procfile` and you will have to update a requirements.tx
 From there you should be able to deploy the app.
 
 <span
-id="#future">
+ id="future">
 </span>
 
 ## Future Features
@@ -641,7 +635,7 @@ I would like to have a feature where there is a message section for the users, w
 - I would like to redesign the home screen so there are more sections, making it easier to find a campaign that you want to donate to, and also highlight some specific campaigns easier.
 
 <span
-id="#credits">
+id="credits">
 </span>
 
 ## CREDITS
