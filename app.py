@@ -1,3 +1,7 @@
+"""
+Main File app.py, for the campaign app by Joseph Woodland
+"""
+
 import os
 
 from flask import (
@@ -27,6 +31,17 @@ mongo = PyMongo(app)
 
 def create_transaction(user_from_id, user_to_id,
                        campaign_id, amount):
+    """Creates an transaction object
+
+    Args:
+        user_from_id (str): [description]
+        user_to_id (str): [description]
+        campaign_id (str): [description]
+        amount (number): [description]
+    Returns:
+        Dictionary to be stored in the Database as a document
+    """
+
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
     user_to = mongo.db.users.find_one(
@@ -47,9 +62,28 @@ def create_transaction(user_from_id, user_to_id,
     mongo.db.transactions.insert_one(new_transaction)
 
 
+@app.before_request
+def before_request_func():
+    """Function to set a global variable for the user object
+       Also set up to catch errors that have been thrown by no having a user
+    """
+    try:
+        if session['user']:
+            user = mongo.db.users.find_one_or_404(
+                {"email": session.get('user')})
+
+            g.user = user
+
+            return
+
+    except (AttributeError, KeyError):
+        return
+
+
+# --------------- Error Handling Functions ------------------
+
 @app.errorhandler(413)
 def file_to_large(err):
-
     flash('File is too large! Max size 5MB')
     return redirect(request.referrer)
 
@@ -64,31 +98,29 @@ def internal_error(e):
     return render_template("500.html", user=g.user)
 
 
-@app.before_request
-def before_request_func():
-    try:
-        if session['user']:
-            user = mongo.db.users.find_one_or_404(
-                {"email": session.get('user')})
-
-            g.user = user
-
-            return
-
-    except (AttributeError, KeyError):
-        return 
-
-
 # ------------------ app.routes ---------------
 
 @app.route("/images/<filename>")
 def file(filename):
+    """Creats a html route for a image
+
+    Args:
+        filename (str): filename of the image
+
+    Returns:
+        URL : sends this to the database
+    """
     return mongo.send_file(filename)
 
 
 @app.route("/")
 @app.route("/home")
 def home():
+    """Home page HTML
+
+    Returns:
+        HTML: Renders the Home template
+    """
     campaign = mongo.db.campaigns
 
     campaigns = list(campaign.find()
@@ -113,6 +145,13 @@ def home():
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
+    """Renders the signin page
+
+    Checks if the user is in the sytem on POST
+
+    Returns:
+        Dictionary: User object to be stored in session
+    """
     if request.method == "POST":
         user = mongo.db.users.find_one(
             {"email": request.form.get("email".lower())}
@@ -141,6 +180,11 @@ def signin():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """Creates a new user from HTML form
+
+    Returns:
+        Dictionary: User object to be stored on the database
+    """
     if request.method == "POST":
         email_check = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
@@ -182,6 +226,14 @@ def register():
 
 @app.route("/campaigns/<campaign_id>", methods=["GET", "POST"])
 def campaign_view(campaign_id):
+    """Gets campaign information
+
+    Args:
+        campaign_id (str)): Unique campaign id
+
+    Returns:
+        Dictionary: Campaign object to passed into HTML template
+    """
     campaign = mongo.db.campaigns.find_one({"_id": ObjectId(campaign_id)})
     creator_id = campaign.get("creator_id")
     creator = mongo.db.users.find_one({"_id": ObjectId(creator_id)})
@@ -200,6 +252,14 @@ def campaign_view(campaign_id):
 
 @app.route("/user_campaign/<campaign_id>", methods=["GET", "POST"])
 def user_campaign(campaign_id):
+    """Gets campaign data
+
+    Args:
+        campaign_id (str): Campaign id string
+
+    Returns:
+        Dictionary: [description]
+    """
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
     user_id = campaign.get("creator_id")
@@ -211,6 +271,11 @@ def user_campaign(campaign_id):
 
 @app.route("/campaigns")
 def campaigns():
+    """Renders a list of campaigns
+
+    Returns:
+        Lits: Lists of campaigns
+    """
     campaigns = list(mongo.db.campaigns.find())
 
     try:
@@ -225,6 +290,11 @@ def campaigns():
 
 @app.route("/overfunded")
 def overfunded():
+    """Searches for all the overfunded campaigns in the database
+
+    Returns:
+        List: List of overfunded campaigns
+    """
     campaign = mongo.db.campaigns
     campaigns = list(campaign.find({"percentage_complete": {'$gt': 100}}))
 
@@ -239,6 +309,11 @@ def overfunded():
 
 @app.route('/search', methods=["GET", "POST"])
 def search():
+    """Search campaign collection
+
+    Returns:
+        List: Searched campaigns
+    """
     search = request.form.get("search")
     campaigns = list(mongo.db.campaigns.find({"$text": {"$search": search}}))
 
@@ -252,6 +327,11 @@ def search():
 
 @app.route("/profile")
 def profile():
+    """Renders user pofile
+
+    Returns:
+        Dictionary: User dictionary
+    """
     if session['user']:
         return render_template("profile.html", user=g.user)
     return redirect(url_for("signin", user=g.user))
@@ -259,6 +339,11 @@ def profile():
 
 @app.route('/logout')
 def logout():
+    """Logs user out
+
+    Returns:
+        Deletes the session cookie
+    """
     flash("Your have been logged out")
     session.pop("user")
 
@@ -267,6 +352,11 @@ def logout():
 
 @app.route("/update_credits", methods=["GET", "POST"])
 def add_credits():
+    """Adds credits to a profile
+
+    Returns:
+        Database Update: Updates user credit amount
+    """
     if request.method == "POST":
         amount = int(request.form.get("add_credits"))
         credits = g.user["credits"]
@@ -282,6 +372,11 @@ def add_credits():
 
 @app.route("/user_campaigns")
 def user_campaigns():
+    """Gets user Campaings
+
+    Returns:
+        List: list of all user campaings
+    """
     user = g.user
     user_id = str(user["_id"])
     campaigns = list(mongo.db.campaigns.find(
@@ -293,6 +388,11 @@ def user_campaigns():
 
 @app.route("/create_campaign", methods=["GET", "POST"])
 def create_campaign():
+    """Creates a new campaign
+
+    Returns:
+        Dictionary: Campaign dictionary to be sotred on the DB
+    """
     if request.method == "POST":
         user = mongo.db.users.find_one(
             {"email": session['user']})
@@ -327,7 +427,14 @@ def create_campaign():
 
 @app.route("/edit_campaign/<campaign_id>", methods=["GET", "POST"])
 def edit_campaign(campaign_id):
+    """Ability to edit a campaign
 
+    Args:
+        campaign_id (str): unique campaign id
+
+    Returns:
+        Dictionary: Updated campaign dictionary to be stored in the database
+    """
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
 
@@ -363,6 +470,14 @@ def edit_campaign(campaign_id):
 
 @app.route("/collect_campaign/<campaign_id>")
 def collect_campaign(campaign_id):
+    """Transfure credits form the campaign to user
+
+    Args:
+        campaign_id (str): Unique campaign id
+
+    Returns:
+        Database Update: Updates the relivent values in each document
+    """
     user = mongo.db.users.find_one(
         {"email": session['user']})
     campaign = mongo.db.campaigns.find_one(
@@ -392,6 +507,15 @@ def collect_campaign(campaign_id):
 
 @app.route("/delete_campaign/<campaign_id>")
 def delete_campaign(campaign_id):
+    """Removes campaign from the database
+
+    Args:
+        campaign_id (str): Campaign id
+
+    Returns:
+        Update: Updates the relevent values in the databse
+        Remove: Removes the relevent document from the collection
+    """
     user = mongo.db.users.find_one(
         {"email": session['user']})
     campaign = mongo.db.campaigns.find_one(
@@ -422,6 +546,11 @@ def delete_campaign(campaign_id):
 
 @app.route("/delete_user")
 def delete_user():
+    """Deletes User
+
+    Returns:
+        Remove: Remove the user and campaign documents from the collection
+    """
     user = g.user
     user_id = str(user["_id"])
     mongo.db.campaigns.remove(
@@ -438,6 +567,11 @@ def delete_user():
 
 @app.route("/transactions", methods=["GET", "POST"])
 def transactions():
+    """Gets user transactions
+
+    Returns:
+        List: List of all user transactions
+    """
     user = g.user
     user_id = str(user["_id"])
     transactions = list(
@@ -465,12 +599,22 @@ def transactions():
 
 @app.route("/donate_campaign/<campaign_id>", methods=["GET", "POST"])
 def donate_campaign(campaign_id):
+    """Creates the donation credit exchange flow
+        'Added further comments in the code,
+        as the function is handling alot of data.
+    Args:
+        campaign_id (str): Campaign id
 
+    Returns:
+        Updates: Update the relivent values in each document
+        Function Call: Calls function to create a transaction dictionary
+    """
+    # Check if there is a user in session
     if not session.get('user'):
         flash('You need to log in to be able to donate!')
 
         return render_template("signin.html")
-
+    # Find the relevent user dictionarys
     campaign = mongo.db.campaigns.find_one(
         {"_id": ObjectId(campaign_id)})
     creator_id = campaign["creator_id"]
@@ -482,21 +626,21 @@ def donate_campaign(campaign_id):
     current_user_id = str(current_user['_id'])
     donation_amount = int(request.form.get("donate"))
     user_credits = current_user['credits']
-
+    # Check if user has enough to donate
     if donation_amount > user_credits:
         flash(
             "You do not have enough credits to make this donation")
         return render_template(
             'campaign_view.html',
             campaign=campaign, creator=campaign_creator, user=g.user)
-
+    # Store the new values as variables
     user_credits_left = user_credits - donation_amount
     target_amount = int(campaign['target_amount'])
     current_amount_raised = int(campaign['current_amount'])
     new_amount = current_amount_raised + donation_amount
     new_percentage = round(
         (new_amount / target_amount) * 100)
-
+    # Update the database with the new variables
     mongo.db.campaigns.update_one(
         {"_id": ObjectId(campaign_id)},
         {"$set": {"current_amount": new_amount}})
@@ -512,6 +656,7 @@ def donate_campaign(campaign_id):
         " campaign they are now " +
         str(new_percentage) +
         " percent towards their target")
+    # Call the create_transaction function with the updated data
     create_transaction(
         current_user_id, creator_id, campaign_id, donation_amount)
 
