@@ -40,7 +40,7 @@ id="#The-Website-Brief">
 
 ## The App Brief
 
-This is a copy of the brief [here](static/assets/readme/design_brief_campaign.com.pdf)
+This is a copy of the brief [here](https://github.com/josephWoodland/MS3-beer-DB/blob/master/static/assets/readme/design_brief_campaign.pdf)
 
 ## Summary of the brief
 
@@ -194,7 +194,7 @@ The design elements were influenced and informed by the client’s brief, that e
 
 ### Main colours
 
-Brand colours are ![brand](static/assets/readme/Brand%20colours.jpg)
+Brand colours are ![brand](static/assets/readme/brand_colours.jpg)
 
 ## Features for the website
 
@@ -238,7 +238,7 @@ The diagram here is a layout of the information structure of the website and how
 <summary
 >Click here to view the image</summary>
 
-![flowchart](static/assets/readme/User%20flow%20chart.jpg)
+![flowchart](static/assets/readme/User_flow_chart.jpg)
 
 </details>
 
@@ -266,7 +266,7 @@ User - This will keep all of the user data.
 <summary
 >Click here to view the database</summary>
 
-![Image of the database](static/assets/readme/Users%20-%20Database%20.png)
+![Image of the database](static/assets/readme/users_database%20.png)
 
 </details>
 
@@ -278,7 +278,7 @@ Campaigns - This will store all the data from each campaign.
 <summary
 >Click here to view the database</summary>
 
-![Image of the database](static/assets/readme/Campaigns%20-%20Database.png)
+![Image of the database](static/assets/readme/users_database%20.png)
 
 </details>
 Transactions - This will store data around each transaction that is completed through the app.
@@ -288,7 +288,7 @@ Transactions - This will store data around each transaction that is completed th
 <summary
 > Click here to view the database</summary>
 
-![Image of the database](static/assets/readme/Transactions%20-%20Database.png)
+![Image of the database](static/assets/readme/transactions_database.png)
 
 </details>
 
@@ -357,7 +357,9 @@ I used different validation methods to make sure that the imputed data is valid.
 
 ## Online resources
 
-### [W3 Schools](https://www.w3schools.com/)
+These are the online resources that I used throughout the project
+
+### [Materialize](https://materializecss.com/)
 
 ### [Stack Overflow](https://stackoverflow.com/)
 
@@ -648,11 +650,7 @@ My mentor Jack helped guide me throughout the project.
 
 I used some youtube videos to help me with figuring out how to upload pictures to the DB and how to use them in the app. This is from the pretty printed youtube channel.
 
-<https://www.youtube.com/watch?v=DsgAuceHha4>
-
-To have a pop up come up to confirm deletion of a profile I used this article.
-
-<https://www.infinetsoft.com/Post/Show-confirmation-message-before-deleting-record/2676#.YXqiadZuedY>
+[Pretty Printed](<https://www.youtube.com/watch?v=DsgAuceHha4>)
 
 I also used the Code Institute support for a bug around deleting users.
 
