@@ -1,5 +1,8 @@
-$(document).ready(function(){
-    $('.tooltipped').tooltip();
-    $('.sidenav').sidenav();
-    $('.modal').modal();
-  });
+// Materlize Functions //
+
+$(document).ready(function () {
+  $(".tooltipped").tooltip();
+  $(".sidenav").sidenav();
+  $(".modal").modal();
+});
+

@@ -24,9 +24,12 @@
         <a href="#modal1" class="col m2 btn-large offset-m4 modal-trigger">
           Add Credits <i class="fas fa-coins"></i>
         </a>
+        <a href="#modal2" class="col m2 red btn-large offset-m1 modal-trigger">
+          Delete profile <i class="fas fa-user-minus"></i>
+        </a>
       </div>
 
-      <!-- Modal Structure -->
+      <!-- Modal -->
       <div id="modal1" class="modal">
         <div class="modal-content">
           <div class="row">
@@ -60,6 +63,22 @@
               </div>
             </div>
           </form>
+        </div>
+      </div>
+
+      <!-- Modal Structure -->
+      <div id="modal2" class="modal">
+        <div class="modal-content">
+          <h4>Delete Your Profile?</h4>
+          <p>Are yo usure you want to delete your profile for ever?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="{{ url_for('delete_user')}}" class="modal-close waves-effect waves-green btn-flat"
+            >Yes</a
+          >
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+            >No</a
+          >
         </div>
       </div>
     </div>

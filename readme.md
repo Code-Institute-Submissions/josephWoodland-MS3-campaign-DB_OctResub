@@ -650,6 +650,10 @@ I used some youtube videos to help me with figuring out how to upload pictures t
 
 <https://www.youtube.com/watch?v=DsgAuceHha4>
 
+To have a pop up come up to confirm deletion of a profile I used this article.
+
+<https://www.infinetsoft.com/Post/Show-confirmation-message-before-deleting-record/2676#.YXqiadZuedY>
+
 I also used the Code Institute support for a bug around deleting users.
 
 I used StackOverflow as a reference point throughout the project whenever I got stuck.
