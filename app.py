@@ -373,6 +373,12 @@ def add_credits():
     """
     if request.method == "POST":
         amount = int(request.form.get("add_credits"))
+        if amount < 0:
+            flash(
+                'You need to add a number bigger the 0'
+            )
+            return redirect(url_for("profile", user=g.user))
+
         credits = g.user["credits"]
         new_total = credits + amount
         mongo.db.users.update_one(
@@ -643,6 +649,14 @@ def donate_campaign(campaign_id):
     current_user_id = str(current_user['_id'])
     donation_amount = int(request.form.get("donate"))
     user_credits = current_user['credits']
+
+    if donation_amount < 0:
+        flash(
+            "The donation amount needs to be bigger than 0")
+        return render_template(
+            'campaign_view.html',
+            campaign=campaign, creator=campaign_creator, user=g.user)
+
     # Check if user has enough to donate
     if donation_amount > user_credits:
         flash(
@@ -683,4 +697,4 @@ def donate_campaign(campaign_id):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
+            debug=True) # Change this to false
