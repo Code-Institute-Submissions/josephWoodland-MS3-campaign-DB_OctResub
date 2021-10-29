@@ -1,6 +1,6 @@
 # README for Campaign.com
 
-## 
+## Info
 
 Campaign.com is a GoFundMe style fundraising website. We are giving users the ability to sign up and donate to other users' campaigns.
 
@@ -13,24 +13,24 @@ The Web app will need to have the following features to function completely:
 
 ![image](static/assets/readme/moc_up.png)
 
-[live site](http://ms3-beer-db.herokuapp.com/home)
+[live site](http://ms3-campaign-db.herokuapp.com/home)
 
 ## Index
 
 - <a
-  href="#ux">UX</a>
+ href="#ux">UX</a>
 - <a
-  href="#design">Design</a>
+ href="#design">Design</a>
 - <a
-  href="#testing">Testing</a>
+ href="#testing">Testing</a>
 - <a
-  href="#deployment">Deployment</a>
+ href="#deployment">Deployment</a>
 - <a
-  href="#future">Future Features</a>
+ href="#future">Future Features</a>
 - <a
-  href="#credits">
-  Credits
-  </a>
+ href="#credits">
+ Credits
+ </a>
 
 ## The App Brief
 
@@ -85,9 +85,9 @@ As a user, I want:
 The app must:
 
 - have the ability to have different user profiles.
-- have the ability to add credits to the user profile
-- when a user donates, the amount donated is deducted from the user balance and added to the campaign balance
-- when a campaign has hit its target, there is some sort of user feedback to suggest this
+- have the ability to add credits to the user profile.
+- when a user donates, the amount donated is deducted from the user balance and added to the campaign balance.
+- when a campaign has hit its target, there is some sort of user feedback to suggest this.
 - have a way to track the user transaction activity.
 - have the ability to search through campaigns quickly.
 
@@ -99,22 +99,22 @@ Here is the successful journey of a donor.
 
 - I have been redirected to the app via a marketing campaign.
 - I have noticed a campaign that I like, and I would like to donate.
-- I have been redirected to the signup page.
-- I have successfully created an account and given the ability to deposit some funds to my account.
-- I have managed to search or quickly find the campaign so I can donate.
-- I have successfully managed to donate to a campaign, I can see that the amount the campaign has been funded has changed.
+- I have been redirected to the registration page.
+- I have successfully created an account and deposited some funds into my account.
+- I have managed to search or quickly find the campaign again so that I can donate.
+- I have successfully managed to donate to a campaign, I can see that the amount of the campaign pot has increased.
 - I can check my account to see that the correct amount has reduced my credits.
 - I can also verify this by looking at the transaction page to see a transaction report.
 
 Here is the successful journey of a campaigner.
 
 - I am currently trying to raise money for my local school and came across this website.
-- I can see that you can raise money for a cause
+- I can see that you can raise money for a cause.
 - I can see that some campaigns have already been successful in raising their targeted amount of money.
-- I have been directed to the user sign up page
+- I have been directed to the user sign up page.
 - I have managed to create a profile for myself.
-- I have managed to create engaging camping for the School
-- I have seen that money has come into the campaign.
+- I have managed to create an engaging campaign for the School.
+- I can see that money has come into the campaign from donations.
 - I can see which users have sent me the money via the transaction page.
 - I can withdraw money from the campaign pot, and it will credit my account.
 
@@ -122,7 +122,7 @@ Here is the successful journey of a campaigner.
 
 The user story revolves around essential actions for each user and software interaction to complete a successful user journey.
 
-- As a Donor, I want to see more information about a live campaign, so I can choose to donate.
+- As a Donor, I want to see more information about a particular campaign, so I can choose to donate.
 
 - As a Donor, I want to add credits to my account to donate to a campaign.
 
@@ -130,17 +130,17 @@ The user story revolves around essential actions for each user and software inte
 
 - As a Campaigner, I want to create a campaign to raise money for a cause I support.
 
-- As a Campaigner, I want to see how much money a campaign has made to see if I have support for my cause.
+- As a Campaigner, I want to see how much money a campaign has made to see if people support my cause.
 
-- As a Campaigner, I want to withdraw money from the campaign account so I can fund the project.
+As a Campaigner, I want to withdraw money from the campaign account to fund the project.
 
-- As a Campaigner, I want to see who has donated to me so I can send them a thank you email, and keep them updated with the progress of the campaign.
+- As a Campaigner, I want to see who has donated to me to send them a thank you email and keep them updated with the campaign’s progress.
 
 ## Sections of the Web App
 
 ### General Layout
 
-Given the brief from the client, we are looking for a mobile responsive design where the basic features of the app can be achieved on mobile and also on the desktop.
+The client is looking for an MVP product with an equally focused design for mobile and desktop.
 
 ### Side Navigation Bar
 
@@ -150,11 +150,11 @@ Having a side navigation bar with all the different pages a user can navigate wi
 
 ### Home page
 
-The home page should list some of the active campaigns and have a section where users can see successful campaignss. But, again, just to reassure some potential users that previous campaigns have reached their intended targets.
+The home page should list some active campaigns and have a section where users can see successful campaigns. These will be there to reassure potential users that previous campaigns have reached their intended targets.
 
 ### Profile page
 
-The profile page must have all the basic user information, including the number of credits that the user has and the ability to add more if needed.
+The profile page must have all the basic user information, including the number of credits that the user has and adding more if needed.
 
 ### Campaign View page
 
@@ -208,19 +208,68 @@ HTML5 - I used HTML 5 for the layout and structure of the website.
 
 CSS - CSS has been used to style some HTML elements.
 
-jQuery - jQuery, has been used to create front end interactivity of some HTML elements
+jQuery - jQuery language has been used to create front end interactivity of some HTML elements
 
 Python - Python, has been used so the app can interact with the database.
 
 MongoDB - I chose to use MongoDB as the database to store all of the necessary data that the app uses.
 
-Flask - I used the flask framework to build the app around. This framework has sped up the coding process and given a solid foundation to the app when years are navigating through the different functionalities.
+Jinja - The jinja language was used to manipulate the HTML depending on what data returned from various Python functions.
 
-Jinja - The jinja language was used to manipulate the HTML depending on what data was being returned from various Python functions.
+## Frameworks
+
+## App - Flask
+
+I used the flask framework to build the app. This framework has sped up the coding process and given a solid foundation to the app.
 
 ## Styling - Materialize
 
-I have used Google materialize to standardise the styling of this app. For example, selecting the elements that I want and then copying and pasting the code into the HTML and any jQuery code needed to make the element interactive.
+I have used Google Materialize to standardise the styling of this app. For example, selecting the elements I want and then copying and pasting the code into the HTML and any jQuery code needed to make the element interactive.
+
+## Python Libraries
+
+I used modules to help me code the app faster using pre-written code to speed up the process.
+
+- os - This module allows the app to have access to the operating system, giving the app the ability to access environment variables
+- flask - This module is the framework for the app, allowing the app to have a user
+- flask_pymongo - This module allows the flask framework to connect with the MongoDB database.
+- werkzeug.security - This module has been used to create user passwords and for verification.
+- datetime - This module has been used to record timestamps by the app.
+
+## Outside libraries
+
+- Font Awesome - I used font awesome for some of my icons.
+
+## Flask modules
+
+- Flask - This is the main library of code for the framework
+- flash - This allows the app to display flash messages on the screen when the user completes a specific action.
+- render_template - This directs the app to render a specific HTML template
+- redirect - This directs the app to an HTML page inside the app on a user action
+- request - This allows the app to interact with POST or GET requests from the HTML
+- session - This allows the app to create user sessions, allowing the user to log in to the app.
+- url_for - This allows the HTML to have links that can interact with the flask code.
+- g - I used this to set a global variable for users.
+
+## Software Used
+
+- Git: I used Git to manage the development of the app, committing regularly.
+
+- Git Desktop: I used this to manage commits and push them to the GitHub repository.
+
+- Source tree: I used this to manage my git branch and edit some of my commit messages.
+
+- GitHub: I used GitHub to store the version of the project remotely.
+
+- Adobe XD: I used XD to create and build the wireframes.
+
+## VS Code
+
+I used VS Code as my code editor. In the code editor, the extensions that I used were:
+
+- Prettier: automatically format my code for basic formatting mistakes and have a consistent style throughout the code.
+- Image preview: I used this extension to identify whether or not the image URL path is correct.
+- Markdown all in one: I used this extension to help me edit the readme file in VS Code.
 
 ## Website Structure
 
@@ -238,7 +287,7 @@ The diagram here is a layout of the website’s information structure and how it
 
 ## Coding Architecture
 
-I have used a simple architecture for this app with all the code from each language in one file only but separated the code into sections by comment lines.
+I have used a simple architecture for this app with all the code from each language in one file and separated the code into sections by comment lines.
 
 ## Database
 
@@ -246,9 +295,9 @@ I am using MongoDB to store the data for the app, trying to take advantage of th
 
 ### Schema
 
-I am using a one-to-few approach to the relationship of my data, using referencing to connect given data together. I have decided to split the database up into three main collections, with the rationale of limiting the size of each document, each document having its own `\_id`.
+I am using a one-to-few approach to the relationship of my data, using referencing to connect given data together. I have decided to split the database up into three main collections, with the rationale of limiting the size of each document and each document having its own `\_id`.
 
-This is because there is a hard limit in the size of documents that can be saved to MongoDB of 16MB. Each user can have an unlimited number of transactions and an unlimited number of campaigns, holding each of these in a separate collection, with all the necessary tags to connect the user activity.
+This is because there is a hard limit in the size of documents that can be saved to MongoDB of 16MB. Each user can have an unlimited number of transactions and an unlimited number of campaigns, so I will have to hold each of these documents in a separate collection, with all the necessary tags to connect the user activity.
 
 ### Database collections
 
@@ -271,9 +320,9 @@ Campaigns - This will store all the data from each campaign.
 
 <summary
 >Click here to view the database</summary>
-
+ 
 ![Image of the database](static/assets/readme/users_database%20.png)
-
+ 
 </details>
 Transactions - This will store data from each transaction in the app.
 <details
@@ -286,54 +335,9 @@ Transactions - This will store data from each transaction in the app.
 
 </details>
 
-## VS Code
-
-I used VS Code as my code editor. In the code editor, the extensions that I used were:
-
-- Prettier: to automatically format my code for basic formatting mistakes and have a consistent style throughout the code.
-- Image preview: I used this extension to identify whether or not the image URL path is correct.
-- Markdown all in one: I used this extension to help me edit the readme file in VS Code.
-
-## Python Libraries
-
-I used modules to help me code the app faster using pre-written code to speed up the process.
-
-- os - This module allows the app to have access to the operating system, giving the app the ability to access environment variables
-- flask - This module is the framework for the app, allowing the app to have a user
-- flask_pymongo - This module allows the flask framework to connect with the MongoDB database.
-- werkzeug.security - This module was used for the creation of user passwords and verification.
-- datetime - This module has been used to record timestamps by the app.
-
-## Outside libraries
-
-- Font Awesome - I used font awesome for some of my icons.
-
-## Flask modules
-
-- Flask - This is the main library of code for the framework
-- flash - This allows the app to display flash messages on the screen when a specific action has been completed by the user.
-- render_template - This directs the app to render a specific HTML template
-- redirect - This directs the app to an HTML page inside the app on a user action
-- request - This allows the app to interact with POST or GET requests from the HTML
-- session - This allows the app to create users sessions allowing the ability to have the user logged in to the app.
-- url_for - This allows the HTML to have links that can interact with the flask code.
-- g - I used this to set a global variable for users.
-
-## Software Used
-
-- Git: I used Git to manage the development of the app, committing regularly.
-
-- Git Desktop: I used this to manage commits and push them to the GitHub repository.
-
-- Source tree: I used this to manage my git branch and edit some of my commit messages.
-
-- GitHub: I used GitHub to store the version of the project remotely.
-
-- Adobe XD: I used XD to create and build the wireframes.
-
 ## User Input Validation
 
-I used a mixture of HTML and Python code to validate user input to ensure that it was correct before sending it to the server.
+I used a mixture of HTML and Python code to validate user input. This is to ensure that the user data is correct before being sent to the database.
 
 ### HTML
 
@@ -344,10 +348,10 @@ I used a mixture of HTML and Python code to validate user input to ensure that i
 
 ### Python
 
-- Username Validation - As the app uses emails as usernames. We needed a function to check that the user imputed email against the emails in the database.
+- Username Validation - As the app uses emails as user identifier's. We needed a function to check that the user imputed email against the emails in the database.
 - Password - For registering, we do basic checks to see if the two password inputs match for creating the user password.
 - Password - When the user is logging in, we grab the user data from the database and check the hashed password with the one stored for that user.
-  -Images - I am using `app.config['MAX_CONTENT_LENGTH']` to set the max size of the file, giving a flash message for the user.
+ - Images - I am using `app.config['MAX_CONTENT_LENGTH']` to set the max size of the file, giving a flash message for the user.
 
 ## Online resources
 
@@ -369,7 +373,7 @@ id="testing">
 
 ### HTML Test
 
-I used the [W3C HTML validator](https://validator.w3.org/) to validate each page. 
+I used the [W3C HTML validator](https://validator.w3.org/) to validate each page.
 
 I had a recurring error, which was to do with overfunded campaigns. Using a tooltip to illustrate the progress of a campaign throws an error in the validator when the percentage funded is larger than the max value of the tooltip. As this is vital to show the state of overfunded campaigns, I ignored this error. I have highlighted the error below on the page that is affected:
 
@@ -430,14 +434,14 @@ Browsers:
 - Chrome
 - Safari
 <span
-  id="testing-responsive">
+ id="testing-responsive">
 </span>
 
 ## Testing - Design Responsiveness
 
 ### Simulated Testing
 
-For each section on each page, I tested various screen sizes in the development environment. Using the Google Developer tools, I tested the responsiveness throughout the development process. I updated the code as I tested, noting anything that appeared irregular or out of sync with the page’s layout.
+For each page, I used the Google Developer tools to simulate different screen sizes.
 
 Tested with Chrome DevTools using profiles for with screen sizes:
 
@@ -471,11 +475,29 @@ I gave the app to three people to test and to populate the database with data.
 
 ### User Tests
 
-User One - This user used the app on his mobile phone and experienced some design issue’s with the home page. To solve these, I changed the amount of space that each tile takes up. He also shared a bug where he could add minus numbers when adding credits.
-
-User Two - This user accessed the app via a laptop did not experience any problems but commented that it was challenging to understand what the app was for at the start.
-
-User Three - This user used a laptop and experienced an issue when deleting some tester profiles. With them not being deleted at all, and campaigns were still available that had been made by the deleted profile.
+1. **User One** - This user accessed the app on his iPhone 11:
+   1. Experienced some design issue’s with the home page.
+       - To solve this, I changed the amount of space each tile took up and edited the name by removing the `.com` from the title.
+   2. He also shared a bug where he could add minus numbers when adding credits.
+        - This was fixed by adding `min="1"` to the input box.
+ 2. **User Two** - This user accessed the app via a ThinkBook laptop:
+   1. Commented that it was a challenge to understand what the app was designed to do.
+      - To solve this, I updated the home page when there was no session cookie, with an opening message explaining the use of the app.
+3. **User Three** - This user accessed the app a Dell laptop:
+   1. Highlighted a bug where deleting a profile would just log the user out and not delete the profile.
+      - To fix this, I changed the function to incorporate the process in the function instead of redirecting to `def log_out`:
+        -  ```
+           session.pop("user")
+           mongo.db.users.remove(
+                     {"_id": user["_id"]})
+           ```
+   1. Highlighted a bug where deleting a user would not delete the user campaigns.
+        - To fix this, I searched for campaigns connected to the user and then deleted them from the database:
+           -  ```
+               user_id = str(user["_id"])
+               mongo.db.campaigns.remove(
+                         {"creator_id": user_id})
+               ```
 
 ## Testing User Stories Checklists
 
@@ -552,6 +574,10 @@ Delete
 
 The main issue with the app was storing images in the database and then rendering them to the HTML. After researching this on the internet, I found an excellent video that explained the process.
 
+## Source Tree
+
+- I experienced a problem when I used SourceTree to edit previous commit messages. When I edit a message and try to push the current branch to GitHub, it will always show that the remote branch is ahead of the local branch. After spending time researching this, I could not understand why this was happening or how to fix it.
+
 ## Known bugs
 
 - Image bug - Experanicing file clashes when the files that are uploaded have the same name. To fix this issue, I could try and create an image_id for each image and recall the id instead of the image name.
@@ -577,7 +603,7 @@ Clone this project from GitHub by the terminal:
 - In your local IDE, open Git Bash
 - Change the current working directory to the location where you want the cloned directory to be made.
 - Type git clone and then paste the URL you copied in Step 2
-  <https://github.com/josephWoodland/MS3-beer-DB>
+ <https://github.com/josephWoodland/MS3-beer-DB>
 - Press Enter. Your local clone will then be created.
 
 Clone this project from GitHub by the Git Desktop:
@@ -595,12 +621,12 @@ To deploy the app locally, once you have cloned the repository, you will need to
 `
 import os
 
-    os.environ.setdefault("IP", "0.0.0.0")
-    os.environ.setdefault("PORT", "5000")
-    os.environ.setdefault("SECRET_KEY", "<Your secret key>")
-    os.environ.setdefault(
-        "MONGO_URI", "mongodb+srv://<user>:<password>@<project>.af8bz.mongodb.net/<database>?retryWrites=true&w=majority")
-    os.environ.setdefault("MONGO_DBNAME", "<database>")
+   os.environ.setdefault("IP", "0.0.0.0")
+   os.environ.setdefault("PORT", "5000")
+   os.environ.setdefault("SECRET_KEY", "<Your secret key>")
+   os.environ.setdefault(
+       "MONGO_URI", "mongodb+srv://<user>:<password>@<project>.af8bz.mongodb.net/<database>?retryWrites=true&w=majority")
+   os.environ.setdefault("MONGO_DBNAME", "<database>")
 
 `
 
@@ -617,14 +643,14 @@ You will need to have a `Procfile`, and you will have to update a requirements.t
 From there, you should be able to deploy the app.
 
 <span
- id="future">
+id="future">
 </span>
 
-## Future Features
+## Future Features - App Roadmap
 
 ### Message feature
 
-I would like to have a feature with a message section for the users to get updates on campaigns they have donated.
+A messaging feature in the app would be the next update that I would commission. Giving the users the ability to message anyone through the app that has dominated and includes automatic updates on campaigns they have donated to.
 
 ### Overfunded campaigns
 
@@ -642,12 +668,10 @@ id="credits">
 
 My mentor Jack helped guide me throughout the project.
 
-I used this youtube video from the pretty printed youtube channel to help me understand how to upload and recall files using MongoDB and Flask.
+I used this YouTube video from the pretty printed youtube channel to help me understand how to upload and recall files using MongoDB and Flask.
 
 [Pretty Printed](<https://www.youtube.com/watch?v=DsgAuceHha4>)
 
 I also used Code Institute support for a bug around deleting users.
 
 I used StackOverflow as a reference point throughout the project whenever I got stuck.
-
-
