@@ -7,7 +7,7 @@ Campaign.com is a GoFundMe style fundraising website. We are giving users the ab
 The Web app will need to have the following features to function completely:
 
 - The ability to create a profile.
-- The ability to add in-app funds to user profiles.
+- The ability to donate/add in-app funds to user profiles.
 - The ability to create a campaign.
 - The ability to donate to another user's campaign.
 
@@ -34,15 +34,15 @@ The Web app will need to have the following features to function completely:
 
 ## The App Brief
 
-Here is a copy of the brief [here](https://github.com/josephWoodland/MS3-beer-DB/blob/master/static/assets/readme/design_brief_campaign.pdf)
+A copy of the brief can be accessed [here](https://github.com/josephWoodland/MS3-beer-DB/blob/master/static/assets/readme/design_brief_campaign.pdf)
 
 ## Summary of the brief
 
 The client requested an MVP to test the concept of the app. A product that can be released into a small test group to gauge the interest of the idea.
 
-The app will be accessible from marketing campaigns through social media. Meaning that the app must be functional from mobile; even if the design on mobile is limited, the basic functionality must be there.
+The app will be accessible from marketing campaigns through social media. This means the app must be functional from mobile devices; even if the design on mobile device is limited, the basic functionality must be there.
 
-The app’s look must be clean and, more importantly, functional and clear to the user how to use the app. The client has expressed that the app’s design can be looked at further down the product road map and focus on the functionality.
+The app’s look must be clean and, more importantly, functional and clear to the user how to use the app. The client has expressed that the app’s design can be looked at further down the product road map, but for now has asked us to focus on the functionality.
 
 <span
 id="ux">
@@ -54,13 +54,13 @@ id="ux">
 
 I have separated the user base into two groups, Donors and Campaigners.
 
-### Donor's
+### Donors
 
-Professional users with a high level of disposable income, looking to donate to a good cause.
+Professional with a high level of disposable income, looking to donate to a good cause.
 
 ### Campaigners
 
-This group are goal-oriented people trying to do something to make a change, passionate about the issue that matters to them.
+This group are goal-oriented people trying to do something to make a change, passionate about the issue that matters to them and trying to raise funds to help them achieve a goal towards the cause they are supporting.
 
 ## Website Goals
 
@@ -68,8 +68,8 @@ This group are goal-oriented people trying to do something to make a change, pas
 
 To make a web application that:
 
-- is easy to use and understand.
-- will motivate/draw users back to the site each week.
+- is easy to use and understand
+- will motivate/draw users back to the site each week
 - needs to feel responsive
 
 ### Users
@@ -84,12 +84,12 @@ As a user, I want:
 
 The app must:
 
-- have the ability to have different user profiles.
-- have the ability to add credits to the user profile.
-- when a user donates, the amount donated is deducted from the user balance and added to the campaign balance.
-- when a campaign has hit its target, there is some sort of user feedback to suggest this.
-- have a way to track the user transaction activity.
-- have the ability to search through campaigns quickly.
+- have the ability to have different user profiles (for donors and campaigners)
+- have the ability to add credits to the donor profile
+- when a donor donates, the amount donated is deducted from the donor's balance and added to the campaign balance
+- when a campaign has hit its target, there is some sort of user feedback to suggest this
+- have a way to track the donor and campaigner transaction activity
+- have the ability to search through campaigns quickly
 
 ## User Journey
 
@@ -102,7 +102,7 @@ Here is the successful journey of a donor.
 - I have been redirected to the registration page.
 - I have successfully created an account and deposited some funds into my account.
 - I have managed to search or quickly find the campaign again so that I can donate.
-- I have successfully managed to donate to a campaign, I can see that the amount of the campaign pot has increased.
+- I have successfully made a donation to a campaign, I can see that the amount in the campaign pot has increased.
 - I can check my account to see that the correct amount has reduced my credits.
 - I can also verify this by looking at the transaction page to see a transaction report.
 
@@ -113,9 +113,9 @@ Here is the successful journey of a campaigner.
 - I can see that some campaigns have already been successful in raising their targeted amount of money.
 - I have been directed to the user sign up page.
 - I have managed to create a profile for myself.
-- I have managed to create an engaging campaign for the School.
+- I have managed to create an engaging campaign for the school.
 - I can see that money has come into the campaign from donations.
-- I can see which users have sent me the money via the transaction page.
+- I can see which users/donors have sent me the money via the transaction page.
 - I can withdraw money from the campaign pot, and it will credit my account.
 
 ## User Stories
@@ -132,7 +132,7 @@ The user story revolves around essential actions for each user and software inte
 
 - As a Campaigner, I want to see how much money a campaign has made to see if people support my cause.
 
-As a Campaigner, I want to withdraw money from the campaign account to fund the project.
+As a Campaigner, I want to withdraw money from the campaign account to fund my project/cause.
 
 - As a Campaigner, I want to see who has donated to me to send them a thank you email and keep them updated with the campaign’s progress.
 
@@ -146,7 +146,7 @@ The client is looking for an MVP product with an equally focused design for mobi
 
 The navigation bar should be simple and easy to understand.  The user should be able to identify if they are logged in or not.
 
-Having a side navigation bar with all the different pages a user can navigate will breed familiarity with the site and reduce the risk of users getting lost in the app.
+Having a side navigation bar with all the different pages a user can navigate will establish familiarity with the site and reduce the risk of users getting lost in the app.
 
 ### Home page
 
@@ -162,7 +162,7 @@ The campaign view page should be simple with the campaign details and an easily 
 
 ### Campaign create
 
-The campaign creates page should be a simple HTML form, with easily identifiable tags to fill out.
+The campaign create page should be a simple HTML form, with easily identifiable tags to fill out.
 
 ## Wireframes
 
@@ -208,7 +208,7 @@ HTML5 - I used HTML 5 for the layout and structure of the website.
 
 CSS - CSS has been used to style some HTML elements.
 
-jQuery - jQuery language has been used to create front end interactivity of some HTML elements
+jQuery - jQuery language has been used to create front end interactivity of some HTML elements.
 
 Python - Python, has been used so the app can interact with the database.
 
@@ -230,8 +230,8 @@ I have used Google Materialize to standardise the styling of this app. For examp
 
 I used modules to help me code the app faster using pre-written code to speed up the process.
 
-- os - This module allows the app to have access to the operating system, giving the app the ability to access environment variables
-- flask - This module is the framework for the app, allowing the app to have a user
+- os - This module allows the app to have access to the operating system, giving the app the ability to access environment variables.
+- flask - This module is the framework for the app, allowing the app to have a user.
 - flask_pymongo - This module allows the flask framework to connect with the MongoDB database.
 - werkzeug.security - This module has been used to create user passwords and for verification.
 - datetime - This module has been used to record timestamps by the app.
@@ -242,11 +242,11 @@ I used modules to help me code the app faster using pre-written code to speed up
 
 ## Flask modules
 
-- Flask - This is the main library of code for the framework
+- Flask - This is the main library of code for the framework.
 - flash - This allows the app to display flash messages on the screen when the user completes a specific action.
-- render_template - This directs the app to render a specific HTML template
-- redirect - This directs the app to an HTML page inside the app on a user action
-- request - This allows the app to interact with POST or GET requests from the HTML
+- render_template - This directs the app to render a specific HTML template.
+- redirect - This directs the app to an HTML page inside the app on a user action.
+- request - This allows the app to interact with POST or GET requests from the HTML.
 - session - This allows the app to create user sessions, allowing the user to log in to the app.
 - url_for - This allows the HTML to have links that can interact with the flask code.
 - g - I used this to set a global variable for users.
@@ -297,7 +297,7 @@ I am using MongoDB to store the data for the app, trying to take advantage of th
 
 I am using a one-to-few approach to the relationship of my data, using referencing to connect given data together. I have decided to split the database up into three main collections, with the rationale of limiting the size of each document and each document having its own `\_id`.
 
-This is because there is a hard limit in the size of documents that can be saved to MongoDB of 16MB. Each user can have an unlimited number of transactions and an unlimited number of campaigns, so I will have to hold each of these documents in a separate collection, with all the necessary tags to connect the user activity.
+This is because there is a hard limit on the size of documents that can be saved to MongoDB of 16MB. Each user can have an unlimited number of transactions and an unlimited number of campaigns, so I will have to hold each of these documents in a separate collection, with all the necessary tags to connect the user activity.
 
 ### Database collections
 
@@ -351,7 +351,7 @@ I used a mixture of HTML and Python code to validate user input. This is to ensu
 - Username Validation - As the app uses emails as user identifier's. We needed a function to check that the user imputed email against the emails in the database.
 - Password - For registering, we do basic checks to see if the two password inputs match for creating the user password.
 - Password - When the user is logging in, we grab the user data from the database and check the hashed password with the one stored for that user.
- - Images - I am using `app.config['MAX_CONTENT_LENGTH']` to set the max size of the file, giving a flash message for the user.
+- Images - I am using `app.config['MAX_CONTENT_LENGTH']` to set the max size of the file, giving a flash message for the user.
 
 ## Online resources
 
@@ -456,7 +456,7 @@ Tested with Chrome DevTools using profiles for with screen sizes:
 - iPad
 - iPad Pro
 
-Also used the responsive profiles preset in the dev tools of:
+I also used the responsive profiles preset in the dev tools of:
 
 - Mobile S (320px)
 - Mobile M (375px)
@@ -481,9 +481,9 @@ I gave the app to three people to test and to populate the database with data.
    2. He also shared a bug where he could add minus numbers when adding credits.
         - This was fixed by adding `min="1"` to the input box.
  2. **User Two** - This user accessed the app via a ThinkBook laptop:
-   1. Commented that it was a challenge to understand what the app was designed to do.
-      - To solve this, I updated the home page when there was no session cookie, with an opening message explaining the use of the app.
-3. **User Three** - This user accessed the app a Dell laptop:
+      1. Commented that it was a challenge to understand what the app was designed to do.
+         - To solve this, I updated the home page when there was no session cookie, with an opening message explaining the use of the app.
+2. **User Three** - This user accessed the app a Dell laptop:
    1. Highlighted a bug where deleting a profile would just log the user out and not delete the profile.
       - To fix this, I changed the function to incorporate the process in the function instead of redirecting to `def log_out`:
         -  ```
@@ -491,7 +491,7 @@ I gave the app to three people to test and to populate the database with data.
            mongo.db.users.remove(
                      {"_id": user["_id"]})
            ```
-   1. Highlighted a bug where deleting a user would not delete the user campaigns.
+   2. Highlighted a bug where deleting a user would not delete the user campaigns.
         - To fix this, I searched for campaigns connected to the user and then deleted them from the database:
            -  ```
                user_id = str(user["_id"])
@@ -580,9 +580,9 @@ The main issue with the app was storing images in the database and then renderin
 
 ## Known bugs
 
-- Image bug - Experanicing file clashes when the files that are uploaded have the same name. To fix this issue, I could try and create an image_id for each image and recall the id instead of the image name.
+- Image bug - Experiencing file clashes when the files that are uploaded have the same name. To fix this issue, I could try and create an image_id for each image and recall the id instead of the image name.
 
-- AttributeError - One test user experienced an `AttributError: user` Error, which went away with reloading the page; I have not been able to recreate this Error. The user was travelling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal. The time the app sends the user data to the server to populate the HTML, so it has no user Attribute, It throws the error. However, it clears once the user reloads the page. Again, I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am unsure if this would have the desired effect.
+- AttributeError - One test user experienced an `AttributError: user` Error, which went away with reloading the page; I have not been able to recreate this Error. The user was traveling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal. The time the app sends the user data to the server to populate the HTML, so it has no user Attribute, it throws the error. However, it clears once the user reloads the page. Again, I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am unsure if this would have the desired effect.
 
 <span
 id="deployment">
@@ -590,7 +590,7 @@ id="deployment">
 
 ## Deployment
 
-I just used one GitHub branch so clone the master branch.
+I used one GitHub branch to clone the master branch.
 
 ### How to deploy
 
@@ -618,7 +618,7 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 ### Running the code
 
 To deploy the app locally, once you have cloned the repository, you will need to create an env.py file in the directory to create the development environment.
-`
+```
 import os
 
    os.environ.setdefault("IP", "0.0.0.0")
@@ -628,7 +628,7 @@ import os
        "MONGO_URI", "mongodb+srv://<user>:<password>@<project>.af8bz.mongodb.net/<database>?retryWrites=true&w=majority")
    os.environ.setdefault("MONGO_DBNAME", "<database>")
 
-`
+```
 
 ### Deploying to Heroku
 
