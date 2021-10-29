@@ -76,7 +76,7 @@ def before_request_func():
             return
 
     except (AttributeError, KeyError):
-        return 
+        return
 
 
 @app.errorhandler(413)
@@ -196,11 +196,11 @@ def register():
         if not first_name.isalpha() or len(first_name) < 1:
             flash("Please type in your first name correctly")
             return redirect(url_for("register"))
-            
+
         if not last_name.isalpha() or len(last_name) < 1:
             flash("Please type in your last name correctly")
             return redirect(url_for("register"))
-        
+
         if not email_regex.match(email):
             flash("Email format not recognised")
             return redirect(url_for("register"))
@@ -307,7 +307,8 @@ def overfunded():
     """Searches for all the overfunded campaigns in the database
 
     Returns:
-        List: List of overfunded campaigns to be rendered in the overfunded HTML
+        List: List of overfunded campaigns to be rendered
+        in the overfunded HTML
     """
     campaign = mongo.db.campaigns
     campaigns = list(campaign.find({"percentage_complete": {'$gt': 100}}))
