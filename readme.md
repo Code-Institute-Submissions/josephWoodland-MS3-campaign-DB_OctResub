@@ -658,7 +658,11 @@ A messaging feature in the app would be the next update that I would commission.
 
 ### Home page redesign
 
-I would like to redesign the home screen with more sections to make it easier to find a campaign you want to donate to and highlight some specific campaigns.
+- I would like to redesign the home screen with more sections to make it easier to find a campaign you want to donate to and highlight some specific campaigns.
+
+### Self Donate
+
+- I would look at the  process of being able to donate ot your own campaign, I understand that all of these crowdfunding websites encourage you to donate yourself to start teh ball rolling, but I think it is something tha should be looked at in the futruer how to best achive this.
 
 <span
 id="credits">
