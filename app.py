@@ -492,12 +492,14 @@ def collect_campaign(campaign_id):
         mongo.db.users.update_one(
             {"email": session['user']},
             {"$set": {"credits": new_total}})
-        campaign = mongo.db.campaigns.update_one(
+        mongo.db.campaigns.update_one(
             {"_id": ObjectId(campaign_id)},
-            {"$set": {"current_amount": 0}},
-            {"$set": {"percentage_complete": 0}})
+            {"$set": {
+                        "current_amount": 0,
+                        "percentage_complete": 0
+                    }})
 
-        flash("You have debited the campign amount into your account")
+        flash("You have debited the campaign amount into your account")
 
         return redirect(url_for("profile", user=user))
 
@@ -668,4 +670,4 @@ def donate_campaign(campaign_id):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True) ## Change this
+            debug=False)
