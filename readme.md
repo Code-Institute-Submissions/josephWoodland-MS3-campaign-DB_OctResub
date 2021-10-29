@@ -34,7 +34,7 @@ The Web app will need to have the following features to function completely:
 
 ## The App Brief
 
-A copy of the brief can be accessed [here](https://github.com/josephWoodland/MS3-beer-DB/blob/master/static/assets/readme/design_brief_campaign.pdf)
+A copy of the brief can be accessed [here](static/assets/readme/design_brief.md)
 
 ## Summary of the brief
 
