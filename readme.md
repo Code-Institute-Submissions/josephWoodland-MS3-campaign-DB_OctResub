@@ -1,6 +1,6 @@
 # README for Campaign.com
 
-## Intro
+## 
 
 Campaign.com is a GoFundMe style fundraising website. We are giving users the ability to sign up and donate to other users' campaigns.
 
