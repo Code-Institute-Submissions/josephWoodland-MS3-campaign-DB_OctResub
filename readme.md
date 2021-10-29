@@ -235,6 +235,7 @@ I used modules to help me code the app faster using pre-written code to speed up
 - flask_pymongo - This module allows the flask framework to connect with the MongoDB database.
 - werkzeug.security - This module has been used to create user passwords and for verification.
 - datetime - This module has been used to record timestamps by the app.
+- re - I used this module for extra validation for checking the user email input.
 
 ## Outside libraries
 
@@ -337,7 +338,7 @@ Transactions - This will store data from each transaction in the app.
 
 ## User Input Validation
 
-I used a mixture of HTML and Python code to validate user input. This is to ensure that the user data is correct before being sent to the database.
+I used a mixture of HTML and Python code to validate user input. On HTML verification techniques I also used python code to validated, as HTML can be easily manipulated. This is to ensure that the user data is correct before being sent to the database.
 
 ### HTML
 
@@ -348,6 +349,8 @@ I used a mixture of HTML and Python code to validate user input. This is to ensu
 
 ### Python
 
+- Email - I used `not email_regex.match(email)` to check if the email was a normal structure.
+- First and Last name - I used `isalpha` method to check the characters inputed by a user.
 - Username Validation - As the app uses emails as user identifier's. We needed a function to check that the user imputed email against the emails in the database.
 - Password - For registering, we do basic checks to see if the two password inputs match for creating the user password.
 - Password - When the user is logging in, we grab the user data from the database and check the hashed password with the one stored for that user.
