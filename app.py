@@ -3,6 +3,8 @@ Main File app.py, for the campaign app by Joseph Woodland
 """
 
 import os
+from datetime import datetime
+import re
 
 from flask import (
     Flask, flash, render_template,
@@ -11,7 +13,6 @@ from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
-from datetime import datetime
 
 if os.path.exists("env.py"):
     import env
@@ -25,8 +26,6 @@ app.secret_key = os.environ.get("SECRET_KEY")
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 mongo = PyMongo(app)
-
-# --------------- Functions ------------------
 
 
 def create_transaction(user_from_id, user_to_id,
@@ -77,10 +76,8 @@ def before_request_func():
             return
 
     except (AttributeError, KeyError):
-        return
+        return 
 
-
-# --------------- Error Handling Functions ------------------
 
 @app.errorhandler(413)
 def file_to_large(err):
@@ -97,8 +94,6 @@ def not_found(e):
 def internal_error(e):
     return render_template("500.html", user=g.user)
 
-
-# ------------------ app.routes ---------------
 
 @app.route("/images/<filename>")
 def file(filename):
@@ -187,11 +182,28 @@ def register():
         Dictionary: User object to be stored on the database
     """
     if request.method == "POST":
+
+        email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
+
         email_check = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
         email = request.form.get("email")
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+
+        if not first_name.isalpha() or len(first_name) < 1:
+            flash("Please type in your first name correctly")
+            return redirect(url_for("register"))
+            
+        if not last_name.isalpha() or len(last_name) < 1:
+            flash("Please type in your last name correctly")
+            return redirect(url_for("register"))
+        
+        if not email_regex.match(email):
+            flash("Email format not recognised")
+            return redirect(url_for("register"))
 
         if 'profile_image' in request.files:
             profile_image = request.files["profile_image"]
@@ -565,6 +577,7 @@ def delete_user():
         {"_id": user["_id"]})
 
     flash("User Deleted")
+    g.user = None
 
     return redirect(url_for("home"))
 
@@ -670,4 +683,4 @@ def donate_campaign(campaign_id):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)

@@ -584,6 +584,8 @@ The main issue with the app was storing images in the database and then renderin
 
 - AttributeError - One test user experienced an `AttributError: user` Error, which went away with reloading the page; I have not been able to recreate this Error. The user was traveling on a train and accessing the app via a phone. I think it might have something to do with a drop in signal. The time the app sends the user data to the server to populate the HTML, so it has no user Attribute, it throws the error. However, it clears once the user reloads the page. Again, I am not sure how to recreate this or fix this problem. I added AttributError to be caught in the before request function, but I am unsure if this would have the desired effect.
 
+- Session Bug - If user deletes session cookie, the program will crash as we don't have a session checks to redirect to a area of the app where a user variable is not required. I could of tried a log in decorator to solve this issue but this would require me to recode the app.
+
 <span
 id="deployment">
 </span>
@@ -603,7 +605,7 @@ Clone this project from GitHub by the terminal:
 - In your local IDE, open Git Bash
 - Change the current working directory to the location where you want the cloned directory to be made.
 - Type git clone and then paste the URL you copied in Step 2
- <https://github.com/josephWoodland/MS3-beer-DB>
+ <https://github.com/josephWoodland/MS3-campaign-DB>
 - Press Enter. Your local clone will then be created.
 
 Clone this project from GitHub by the Git Desktop:
